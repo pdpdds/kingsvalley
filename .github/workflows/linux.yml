@@ -26,8 +26,8 @@ jobs:
         make       
         cp kings ../data/kings
         
-    - name: Upload a Build Artifact(kings-linux)                
+    - name: Upload a Build Artifact(kings-linux)                      
       uses: actions/upload-artifact@v2.1.4
       with:
           name: kings-linux
-          path: data/    
+          path: ${{env.GITHUB_WORKSPACE}}game/data/
