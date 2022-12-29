@@ -160,7 +160,7 @@ uint8_t get_enemy_color() {
 }
 
 #define MAP_W 32
-void ubox_render_background(int object_type, uint8_t x, uint8_t y, uint8_t frame)
+/*void ubox_render_background(int object_type, uint8_t x, uint8_t y, uint8_t frame)
 {
 
 	uint32_t tile = cur_map_data[self->roomId][(x / 8) + (y / 8) * MAP_W];
@@ -191,7 +191,7 @@ void ubox_render_background(int object_type, uint8_t x, uint8_t y, uint8_t frame
 	}
 
 
-}
+}*/
 
 void update_enemy() {
 
