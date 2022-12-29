@@ -49,4 +49,4 @@ jobs:
       uses: actions/upload-artifact@v2.1.4
       with:
           name: kings-win32
-          path: ${{env.GITHUB_WORKSPACE}}game/data/        
+          path: ${{env.GITHUB_WORKSPACE}}game/msvc/${{env.BUILD_CONFIGURATION}}
