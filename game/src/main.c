@@ -43,6 +43,10 @@ void draw_menu() {
                 g_gamestate = STATE_EXIT;
                 break;
             }
+
+            if (ctl != UBOX_MSX_CTL_FIRE1) {
+                continue;
+            }
 #endif
             mplayer_play_effect_p(EFX_START, EFX_CHAN_NO, 0);
             //mplayer_init(SONG, SONG_GAME_START);
@@ -172,13 +176,13 @@ uint8_t game_main() {
     ubox_load_music(SONG_GAME_OVER, "audio/gameover.wav", 0);
     ubox_load_music(SONG_GAME_START, "audio/start.wav", 0);
  
-    ubox_add_sprite(PAT_PLAYER_MOVE, "p_move.png", 1);
-    ubox_add_sprite(PAT_PLAYER_KNIFE, "p_knife.png", 1);
-    ubox_add_sprite(PAT_PLAYER_PICKAX, "p_pickax.png", 1);
-    ubox_add_sprite(PAT_DIGGING, "p_dig.png", 1);
-    ubox_add_sprite(PAT_ATTACK, "p_attack.png", 1);
-    ubox_add_sprite(PAT_ENEMY, "enemy.png", 1);
-    ubox_add_sprite(PAT_KNIFE, "knife.png", 1);
+    ubox_add_sprite(PAT_PLAYER_MOVE, "./p_move.png", 1);
+    ubox_add_sprite(PAT_PLAYER_KNIFE, "./p_knife.png", 1);
+    ubox_add_sprite(PAT_PLAYER_PICKAX, "./p_pickax.png", 1);
+    ubox_add_sprite(PAT_DIGGING, "./p_dig.png", 1);
+    ubox_add_sprite(PAT_ATTACK, "./p_attack.png", 1);
+    ubox_add_sprite(PAT_ENEMY, "./enemy.png", 1);
+    ubox_add_sprite(PAT_KNIFE, "./knife.png", 1);
    
 #else
 uint8_t main()

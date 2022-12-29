@@ -11,7 +11,7 @@
 
 // sub-songs matching our Arkos song
 // configure the song to use MSX AY
-#if defined(_WIN32) || defined(DJGPP)
+#if defined(_WIN32) || defined(DJGPP) || defined(__linux)
 enum songs
 {
     SONG_SILENCE = 0,

@@ -2,8 +2,8 @@
 #include <stdint.h>
 #include "cvector.h"
 
-#define IMAGE_LOAD_MODE
-//#define SPRITE_PIXEL_MODE
+//#define IMAGE_LOAD_MODE
+#define SPRITE_PIXEL_MODE
 
 #define TICK_INTERVAL    60
 

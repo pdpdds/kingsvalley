@@ -304,7 +304,7 @@ static void draw_map(uint8_t roomId)
 {
 	ubox_wait_vsync();
 
-#if defined(__ANDROID__) || defined(WIN32) || defined(DJGPP)
+#if defined(__ANDROID__) || defined(WIN32) || defined(DJGPP) || defined(__linux)
 	uint8_t* video_memory = 0;
 #else
 	uint8_t* video_memory = (uint8_t*)0x1800;
@@ -437,7 +437,7 @@ void process_door_animation(uint8_t start)
 			ubox_wait();
 			spman_update();
 
-#if defined(_WIN32) || defined(__ANDROID__)
+#if defined(_WIN32) || defined(__ANDROID__) || defined(__linux)
 			draw_map(g_cur_room_id);
 			draw_static_object();
 			draw_hud();
@@ -494,7 +494,7 @@ void run_game(int stage) {
 			case STATE_IN_GAME:
 			case STATE_GAME_RESET:
 			case STATE_GAME_OVER:
-#if defined(_WIN32) || defined(__ANDROID__) || defined(DJGPP) 
+#if defined(_WIN32) || defined(__ANDROID__) || defined(DJGPP) || defined(__linux)
 				draw_map(g_cur_room_id);
 				draw_static_object();
 				draw_hud();

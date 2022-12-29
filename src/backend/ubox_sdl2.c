@@ -187,19 +187,19 @@ void ubox_init_game_system(int screen_width, int screen_height, uint8_t map_widt
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 #endif
 	{
-		//printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 		return;
 	}
 
 
 #if defined(__ANDROID__)
 	g_window = SDL_CreateWindow("MSX1 2D Platformer for Android", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 448, SDL_WINDOW_FULLSCREEN);
-#elif defined(linux)
+#elif defined(__linux)
 	g_window = SDL_CreateWindow("MSX1 2D Platformer for LINUX", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
 #else
 	g_window = SDL_CreateWindow("MSX1 2D Platformer for WIN32", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		screen_width, screen_height, SDL_WINDOW_SHOWN);
-
+#endif
 	if (g_window == NULL)
 	{
 		printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -211,8 +211,8 @@ void ubox_init_game_system(int screen_width, int screen_height, uint8_t map_widt
 #elif defined(WIN32)
 	set_icon();
 	g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-#elif defined(linux)
-	g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED);
+#elif defined(__linux)
+	g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 #else
 	g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_SOFTWARE);
 #endif
@@ -225,10 +225,8 @@ void ubox_init_game_system(int screen_width, int screen_height, uint8_t map_widt
 
 	SDL_RenderSetLogicalSize(g_renderer, g_map_width * 8, (g_map_height + 2) * 8);
 
-#endif
-
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
-		SDL_QuitSubSystem(SDL_INIT_AUDIO);
+		SDL_QuitSubSystem(SDL_INIT_AUDIO);		
 		return;
 	}
 }

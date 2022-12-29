@@ -156,9 +156,9 @@ int APIENTRY WinMain(HINSTANCE hInstance,
     LPSTR     lpCmdLine,
     int       nCmdShow)
 
-#elif defined(WIN32) || defined(__linux)
+#elif defined(WIN32)
 int SDL_main(int argc, char** argv)
-#elif defined(SKYOS32) 
+#elif defined(SKYOS32) || defined(__linux)
 int main(int argc, char** argv)
 #elif defined(__ANDROID__)
 int SDL_main(int argc, char** argv)
