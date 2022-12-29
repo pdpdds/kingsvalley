@@ -4,16 +4,17 @@
 
 # Compiler settings - Can be customized.
 CC = gcc
-CFLAGS = -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include
+CFLAGS = -Wall -DSDL2 -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include
 CXXFLAGS = -fpermissive -std=c++11 -Wall -g -I../../include -I../generated -I../../tools/apultra/src/libdivsufsort/include -I../../tools/apultra/src -I../src
 LDFLAGS = -lSDL2 -lGL -lGLEW -lSDL2_image -lSDL2_image -lSDL2_mixer
 
 # Makefile settings - Can be customized.
-APPNAME = platformer
+APPNAME = kings
 EXT = .c
 SRCDIR = ../src
-SRC2DIR = ../msvc/src
+SRC2DIR = ../../src/backend
 SRC3DIR = ../../tools/apultra/src
+SRC4DIR = ./src
 OBJDIR = obj
 
 ############## Do not change anything from here downwards! #############
@@ -24,8 +25,8 @@ SRC4 = $(wildcard $(SRC4DIR)/*$(EXT))
 
 OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
 OBJ2 = $(SRC2:$(SRC2DIR)/%$(EXT)=$(OBJDIR)/%.o)
-OBJ3 = $(SRC3DIR)/expand.o
 
+OBJ3 = $(SRC3DIR)/expand.o
 OBJ3 += $(SRC3DIR)/matchfinder.o
 OBJ3 += $(SRC3DIR)/shrink.o
 OBJ3 += $(SRC3DIR)/libdivsufsort/lib/divsufsort.o

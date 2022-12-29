@@ -438,9 +438,9 @@ void process_door_animation(uint8_t start)
 			spman_update();
 
 #if defined(_WIN32) || defined(__ANDROID__)
-			//draw_map(g_cur_room_id);
-			//draw_static_object();
-			//draw_hud();
+			draw_map(g_cur_room_id);
+			draw_static_object();
+			draw_hud();
 #endif
 		}
 	}
