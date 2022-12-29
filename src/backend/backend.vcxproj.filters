@@ -13,9 +13,6 @@
     <Filter Include="src\sdl2">
       <UniqueIdentifier>{b8216959-d6ba-4c49-810f-f155bc2b59ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\sdl1">
-      <UniqueIdentifier>{72bf1b33-1a16-4208-b6f5-d0a1aaac03ad}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cvector.h">
@@ -30,24 +27,6 @@
     <ClInclude Include="ubox_sdl_common.h">
       <Filter>src\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_framerate.h">
-      <Filter>src\sdl1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_gfxBlitFunc.h">
-      <Filter>src\sdl1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_gfxPrimitives.h">
-      <Filter>src\sdl1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_gfxPrimitives_font.h">
-      <Filter>src\sdl1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_imageFilter.h">
-      <Filter>src\sdl1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_rotozoom.h">
-      <Filter>src\sdl1</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ubox_allegro.c">
@@ -56,29 +35,11 @@
     <ClCompile Include="ubox_common.c">
       <Filter>src\common</Filter>
     </ClCompile>
-    <ClCompile Include="ubox_sdl1.c">
-      <Filter>src\sdl1</Filter>
-    </ClCompile>
     <ClCompile Include="ubox_sdl2.c">
       <Filter>src\sdl2</Filter>
     </ClCompile>
     <ClCompile Include="ubox_sdl_common.c">
       <Filter>src\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_framerate.c">
-      <Filter>src\sdl1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_gfxBlitFunc.c">
-      <Filter>src\sdl1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_gfxPrimitives.c">
-      <Filter>src\sdl1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_imageFilter.c">
-      <Filter>src\sdl1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_rotozoom.c">
-      <Filter>src\sdl1</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

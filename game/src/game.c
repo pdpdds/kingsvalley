@@ -385,10 +385,10 @@ uint8_t process_game() {
 
 	control = ubox_read_ctl(ctl);
 
-	/*for (i = 0, self = entities; i < g_maxEntities; i++, self++) {
+	for (i = 0, self = entities; i < g_maxEntities; i++, self++) {
 		if (self->type != ET_UNUSED)
 			self->update();
-	}*/
+	}
 
 	return 0;
 }
@@ -495,9 +495,9 @@ void run_game(int stage) {
 			case STATE_GAME_RESET:
 			case STATE_GAME_OVER:
 #if defined(_WIN32) || defined(__ANDROID__) || defined(DJGPP) 
-				//draw_map(g_cur_room_id);
-				//draw_static_object();
-				//draw_hud();
+				draw_map(g_cur_room_id);
+				draw_static_object();
+				draw_hud();
 #endif
 
 				end = process_game();

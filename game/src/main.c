@@ -161,8 +161,8 @@ uint8_t game_main() {
     int game_width = 320;
     int game_height = 200;
 #else
-    int game_width = 320;
-    int game_height = 200;
+    int game_width = 640;
+    int game_height = 480;
 #endif
     
     ubox_init_game_system(game_width, game_height, 32, 24);

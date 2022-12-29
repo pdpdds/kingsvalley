@@ -19,28 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_framerate.h" />
-    <ClInclude Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_gfxBlitFunc.h" />
-    <ClInclude Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_gfxPrimitives.h" />
-    <ClInclude Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_gfxPrimitives_font.h" />
-    <ClInclude Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_imageFilter.h" />
-    <ClInclude Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_rotozoom.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="cvector.h" />
     <ClInclude Include="ubox_common.h" />
     <ClInclude Include="ubox_sdl_common.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_framerate.c" />
-    <ClCompile Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_gfxBlitFunc.c" />
-    <ClCompile Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_gfxPrimitives.c" />
-    <ClCompile Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_imageFilter.c" />
-    <ClCompile Include="..\..\thirdparty\sdl1\sdl_gfx\SDL_rotozoom.c">
-      <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</WholeProgramOptimization>
-    </ClCompile>
     <ClCompile Include="ubox_allegro.c" />
     <ClCompile Include="ubox_common.c" />
-    <ClCompile Include="ubox_sdl1.c" />
     <ClCompile Include="ubox_sdl2.c" />
     <ClCompile Include="ubox_sdl_common.c" />
   </ItemGroup>
@@ -113,7 +99,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>SDL1;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SDL2;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>./;../../tools/apultra/src;../../include;C:\GitHub\allegro4_dos\msvc15\include;C:\github\allegro4_dos\msvc15\alpng13\src;C:\nas\msx\kings\thirdparty\sdl1\SDL-1.2.12\include;C:\nas\msx\kings\thirdparty\sdl1\SDL_mixer-1.2.12;C:\nas\msx\kings\thirdparty\sdl1\SDL_gfx;C:\nas\msx\kings\thirdparty\sdl1\SDLimage-1.2.12</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4090;4819;4113</DisableSpecificWarnings>
