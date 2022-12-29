@@ -49,6 +49,9 @@ WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
 
 all: $(APPNAME)
 
+$(OBJDIR):
+    mkdir -p $(OBJDIR)
+
 # Builds the app
 $(APPNAME): $(OBJ) $(OBJ2) $(OBJ3)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
@@ -81,6 +84,7 @@ $(OBJDIR)/%.o: $(SRC3DIR)/%$(EXT)
 .PHONY: clean
 clean:
 	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
+	rm -rf obj
 
 # Cleans only all files with the extension .d
 .PHONY: cleandep
