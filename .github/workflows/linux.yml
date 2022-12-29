@@ -16,7 +16,7 @@ jobs:
     steps:
     
     - name: build king's valley
-      working-directory: ./game/linux
+      working-directory: ../game/linux
       run: |           
         make
         cp kings ../data
