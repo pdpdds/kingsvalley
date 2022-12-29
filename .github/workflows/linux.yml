@@ -16,7 +16,7 @@ jobs:
     steps:
     
     - name: build king's valley
-      run: |   
-        working-directory: ${{env.GITHUB_WORKSPACE}}game/linux
+      working-directory: ${{env.GITHUB_WORKSPACE}}game/linux
+      run: |           
         make
         cp kings ../data
