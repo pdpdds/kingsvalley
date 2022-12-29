@@ -54,3 +54,4 @@ dkms.conf
 bin
 game/build
 src/backend/Debug
+game/linux/kings

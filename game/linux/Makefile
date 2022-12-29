@@ -42,18 +42,18 @@ DELOBJ = $(OBJ) $(OBJ2) $(OBJ3)
 DEL = del
 EXE = .exe
 WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
-
+TEMP_DIR = obj
 ########################################################################
 ####################### Targets beginning here #########################
 ########################################################################
 
-all: $(APPNAME)
+all: $(TEMP_DIR) $(APPNAME)
 	
-$(OBJDIR):
+$(TEMP_DIR):
 	mkdir -p $(OBJDIR)
 
 # Builds the app
-$(APPNAME): $(OBJDIR) $(OBJ) $(OBJ2) $(OBJ3)	
+$(APPNAME):  $(OBJ) $(OBJ2) $(OBJ3)	
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Creates the dependecy rules
