@@ -48,10 +48,12 @@ WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
 ########################################################################
 
 all: $(APPNAME)
+	
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
 
 # Builds the app
-$(APPNAME): $(OBJ) $(OBJ2) $(OBJ3)
-	mkdir -p $(OBJDIR)
+$(APPNAME): $(OBJDIR) $(OBJ) $(OBJ2) $(OBJ3)	
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Creates the dependecy rules
@@ -81,7 +83,7 @@ $(OBJDIR)/%.o: $(SRC3DIR)/%$(EXT)
 # Cleans complete project
 .PHONY: clean
 clean:
-	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
+	$(RM) -rf $(DELOBJ) $(DEP) $(APPNAME)
 	rm -rf obj
 
 # Cleans only all files with the extension .d
