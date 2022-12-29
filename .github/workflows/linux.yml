@@ -23,7 +23,7 @@ jobs:
         sudo apt install libfreetype6-dev libsdl2-ttf-dev libsdl2-ttf-2.0-0 -y;
         sudo apt-get install libglew-dev
         make       
-        cp kings ../bin/
+        cp kings ../bin/kings
         
     - name: Upload a Build Artifact(kings-linux)
       uses: actions/upload-artifact@v2.1.4
