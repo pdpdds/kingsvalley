@@ -1,0 +1,59 @@
+name: msx
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    
+    strategy:
+      matrix:
+        python-version: [3.9] 
+    steps:
+    - name: sdcc
+      uses: wei/wget@v1
+      with:
+        args: https://sourceforge.net/projects/sdcc/files/sdcc-linux-amd64/4.0.0/sdcc-4.0.0-amd64-unknown-linux2.5.tar.bz2
+    - run: |
+        tar xvjf sdcc-4.0.0-amd64-unknown-linux2.5.tar.bz2
+        cd sdcc-4.0.0 
+        sudo cp -r * /usr/local
+    - name: hex2bin
+      uses: wei/wget@v1
+      with:
+        args: https://sourceforge.net/projects/hex2bin
+    - run: |
+        sudo cp -r hex2bin /usr/local/bin
+    - name: Disark
+      uses: wei/wget@v1
+      with:
+        args: http://www.julien-nevo.com/arkostracker/release/linux64/Arkos%20Tracker%202%20Linux64.zip
+    - run: |
+        unzip Arkos%20Tracker%202%20Linux64.zip
+        sudo cp -r "Arkos Tracker 2/tools/Disark" /usr/local/bin
+        
+    - uses: actions/checkout@v2
+    - name: Set up python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install python package 
+      run: |        
+        pip install pillow
+        
+    - name: build king's valley
+      run: |       
+        make clean
+        chmod 777 -R tools/chksize
+        make game
+    - name: Upload a Build Artifact(kings.rom)
+      uses: actions/upload-artifact@v2.1.4
+      with:
+          name: kings.rom
+          path: bin/kings.rom
+    
