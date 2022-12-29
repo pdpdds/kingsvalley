@@ -1,0 +1,9 @@
+XL2
+H 1 areas 2 global symbols
+S .__.ABS. Def0000
+A _CODE size B flags 0 addr 0
+S _ubox_wvdp Def0000
+T 00 00
+R 00 00 00 00
+T 00 00 21 02 00 39 4E 23 46 CD 47 00 C9
+R 00 00 00 00

@@ -1,0 +1,11 @@
+XL2
+H 1 areas 3 global symbols
+M mplayer
+S _PLY_AKM_PLAYSOUNDEFFECT Ref0000
+S .__.ABS. Def0000
+A _CODE size C flags 0 addr 0
+S _mplayer_play_effect Def0000
+T 00 00
+R 00 00 00 00
+T 00 00 21 02 00 39 7E 23 4E 23 46 C3 00 00
+R 00 00 00 00 02 0C 00 00

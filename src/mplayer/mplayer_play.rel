@@ -1,0 +1,11 @@
+XL2
+H 1 areas 3 global symbols
+M mplayer
+S .__.ABS. Def0000
+S _PLY_AKM_PLAY Ref0000
+A _CODE size 3 flags 0 addr 0
+S _mplayer_play Def0000
+T 00 00
+R 00 00 00 00
+T 00 00 C3 00 00
+R 00 00 00 00 02 03 01 00

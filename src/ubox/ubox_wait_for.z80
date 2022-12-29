@@ -1,0 +1,14 @@
+.globl _ubox_wait_for
+.globl _ubox_wait
+.globl ubox_isr_wait_ticks
+.globl ubox_isr_wait_tick
+
+_ubox_wait_for::
+	ld b, l
+wait_for_loop:
+	push bc
+	call _ubox_wait
+	pop bc
+	djnz wait_for_loop
+	ret
+

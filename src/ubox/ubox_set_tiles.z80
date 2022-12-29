@@ -1,0 +1,22 @@
+.globl _ubox_set_tiles
+
+LDIRVM = 0x005c
+BG_TILES = 0x0
+
+_ubox_set_tiles::
+	ld de, #BG_TILES
+	ld bc, #256 * 8
+	push hl
+	call LDIRVM
+	pop hl
+
+	ld de, #BG_TILES + #256 * 8
+	ld bc, #256 * 8
+	push hl
+	call LDIRVM
+	pop hl
+
+	ld de, #BG_TILES + #256 * 8 * 2
+	ld bc, #256 * 8
+	jp LDIRVM
+

@@ -1,0 +1,42 @@
+.globl _ubox_select_ctl
+
+GTTRIG = 0x00d8
+
+_ubox_select_ctl::
+	ld b, #3
+loop:
+	ld a, b
+	dec a
+	push bc
+	call GTTRIG
+	pop bc
+	or a
+	jr nz, trigger
+	djnz loop
+
+	; 2nd button
+
+	ld b, #4
+	ld a, b
+	push bc
+	call GTTRIG
+	pop bc
+	or a
+	jr nz, trigger_b
+
+	dec b
+	ld a, b
+	push bc
+	call GTTRIG
+	pop bc
+	or a
+	jr nz, trigger_b
+
+	ld l, #0xff
+	ret
+trigger_b:
+	dec b
+trigger:
+	dec b
+	ld l, b
+	ret

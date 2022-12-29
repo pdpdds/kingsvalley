@@ -1,0 +1,9 @@
+.globl _ubox_get_vsync_freq
+
+_ubox_get_vsync_freq::
+	ld a, (#0x002b)
+	and #128
+	ld l, a
+	ret z
+	ld l, #1
+	ret

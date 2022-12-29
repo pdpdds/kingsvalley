@@ -1,0 +1,64 @@
+.globl _ubox_set_sprite_pat16_flip
+
+WRTVRM = 0x004d
+SP_PATTERNS = 0x3800
+
+_ubox_set_sprite_pat16_flip::
+	ld hl, #2
+	add hl, sp
+
+	ld e, (hl)
+	inc hl
+	ld d, (hl)
+	inc hl
+
+	ld l, (hl)
+	ld h, #0
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	ld bc, #SP_PATTERNS
+	add hl, bc
+
+	push de
+	ld bc, #16
+	ex de, hl
+	add hl, bc
+	ex de, hl
+	call flip
+
+	pop de
+	call flip
+
+	ret
+
+flip:
+	ld b, #16
+flip0:
+	call flip_and_copy
+	inc hl
+	inc de
+	djnz flip0
+	ret
+
+flip_and_copy:
+	ld a, (de)
+	ld c, a
+  	rlca
+  	rlca
+  	xor c
+ 	and #0xaa
+	xor c
+	ld c, a
+	rlca
+	rlca
+	rlca
+	rrc c
+	xor c
+	and #0x66
+	xor c
+
+	jp WRTVRM
+

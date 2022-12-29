@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+import sys
+
+
+def main():
+    if len(sys.argv) != 4:
+        sys.exit("usage: %s code_limit_hex data_limit_hex filename.map" %
+                 sys.argv[0])
+
+    sizes = {"CODE": 0, "DATA": 0,
+             "INITIALIZER": 0, "GSINIT": 0, "GSFINAL": 0}
+
+    with open(sys.argv[3], "r") as fd:
+        for line in fd.readlines():
+            for seg in sizes.keys():
+                if "l__%s" % seg in line:
+                    sizes[seg] = int(line.split()[0], base=16)
+
+    sizes["INIT"] = sizes["INITIALIZER"] +  sizes["GSINIT"] + sizes["GSFINAL"]
+    sizes["ROM"] = sizes["CODE"] + sizes["INIT"]
+
+    print("\nROM: CODE  %(CODE)05d bytes\n"
+          "     INIT  %(INIT)05d bytes\n"
+          "     Total %(ROM)05d bytes\n"
+          "RAM:       %(DATA)05d bytes\n" % sizes)
+
+    if sizes["CODE"] > int(sys.argv[1], 16):
+        sys.exit("ROM is over the limit")
+    if sizes["DATA"] > int(sys.argv[2], 16):
+        sys.exit("RAM is over the limit")
+
+
+if __name__ == "__main__":
+    main()

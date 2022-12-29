@@ -1,0 +1,11 @@
+XL2
+H 1 areas 2 global symbols
+S .__.ABS. Def0000
+A _CODE size 1A flags 0 addr 0
+S _ubox_get_tile Def0000
+T 00 00
+R 00 00 00 00
+T 00 00 21 02 00 39 06 00 4E 23 6E 26 00 29 29 29
+R 00 00 00 00
+T 0E 00 29 29 09 01 00 18 09 CD 4A 00 6F C9
+R 00 00 00 00

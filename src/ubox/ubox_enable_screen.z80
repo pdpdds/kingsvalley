@@ -1,0 +1,7 @@
+.globl _ubox_enable_screen
+
+ENASCR = 0x0044
+
+_ubox_enable_screen::
+	jp ENASCR
+

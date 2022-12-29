@@ -1,0 +1,100 @@
+.globl _ubox_read_ctl
+
+RDPSG = 0x0096
+WRTPSG = 0x0093
+SNSMAT = 0x0141
+
+_ubox_read_ctl::
+	ld a, l
+	or a
+	jr z, is_keyb
+	dec a
+	jr z, is_joy1
+	dec a
+	jr z, is_joy2
+
+	ld l, #0
+	ret
+
+is_joy2:
+	; select
+	ld e, #0xcf
+	jr call_psg
+
+is_joy1:
+	; select
+	ld e, #0x8f
+
+call_psg:
+	ld a, #0x0f
+	call WRTPSG
+
+	ld a, #0x0e
+
+	di
+	call RDPSG
+	ei
+	cpl
+        and #0x3f
+        ld e, a
+
+	; button 2 (M)
+	ld a, #4
+	call SNSMAT
+	rra
+	rra
+	rra
+	ld a, #0x20
+	jr nc, joy_extra_m
+        xor a
+joy_extra_m:
+        or e
+	ld l, a
+	ret
+
+is_keyb:
+	; button 2 (M)
+	ld a, #4
+	call SNSMAT
+	rra
+	rra
+	rra
+	ld e, #0x20
+	jr nc, is_keyb_dir
+
+	ld e, #0
+
+is_keyb_dir:
+	; direction
+	ld a, #8
+	call SNSMAT
+	cpl
+	rrca
+	rrca
+	ld c, a
+
+	and #4
+	ld b, a
+	; b has left
+
+	ld a, c
+	rrca
+	rrca
+	ld c, a
+
+	and #0x18
+	or b
+	ld b, a
+	; added space and right
+
+	ld a, c
+	rrca
+	and #3
+	or b
+	; added down and up
+
+	or e
+	; added 2nd fire (M)
+
+	ld l, a
+	ret

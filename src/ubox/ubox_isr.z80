@@ -1,0 +1,79 @@
+.globl _ubox_init_isr
+.globl _ubox_tick
+.globl ubox_isr_wait_ticks
+.globl ubox_isr_wait_tick
+.globl ubox_usr_isr
+.globl ___sdcc_call_hl
+
+HTIMI_HOOK = 0xfd9f
+
+SCNCNT = 0xf3f6
+REPCNT = 0xf3f7
+
+_ubox_init_isr::
+	di
+	ld a, l
+	ld (ubox_isr_wait_ticks), a
+	xor a
+	ld (ubox_isr_wait_tick), a
+	ld (_ubox_tick), a
+	ld (ubox_usr_isr), a
+	ld (ubox_usr_isr+1), a
+	ld hl, #ubox_isr
+	ex de, hl
+	ld hl, #HTIMI_HOOK
+	ld a, #0xc3
+	ld (hl), a
+	inc hl
+	ld (hl), e
+	inc hl
+	ld (hl), d
+	ei
+	ret
+
+ubox_isr:
+        push af
+	push ix
+	push iy
+	push bc
+	push hl
+	push de
+
+	; stop BIOS reading keyboard buffer
+	xor a
+	ld (SCNCNT), a
+	ld (REPCNT), a
+
+	ld hl, #ubox_isr_wait_tick
+	inc (hl)
+	inc hl
+	inc (hl)
+	inc hl
+	inc hl
+
+	; check user isr, only MSB
+	ld a, (hl)
+	or a
+	jr z, no_user_isr
+
+	dec hl
+	ld l, (hl)
+	ld h, a
+	call ___sdcc_call_hl
+
+no_user_isr:
+	pop de
+	pop hl
+	pop bc
+	pop iy
+	pop ix
+        pop af
+	ret
+
+.area _DATA
+
+ubox_isr_wait_ticks: .ds 1
+ubox_isr_wait_tick: .ds 1
+_ubox_tick: .ds 1
+
+ubox_usr_isr: .ds 2

@@ -1,0 +1,48 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/mnt/c/GitHub/ubox_2dplatformer/game/linux'
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/warp_logic.o -c ../src/warp_logic.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/item_logic.o -c ../src/item_logic.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/game_util.o -c ../src/game_util.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/helpers.o -c ../src/helpers.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/enemy_logic.o -c ../src/enemy_logic.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/foothold_logic.o -c ../src/foothold_logic.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/game.o -c ../src/game.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/main.o -c ../src/main.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/exit_logic.o -c ../src/exit_logic.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/player_logic.o -c ../src/player_logic.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/data.o -c ../src/data.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/ubox_sdl.o -c ../msvc/src/ubox_sdl.c	
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/ubox_mplayer_sdl.o -c ../msvc/src/ubox_mplayer_sdl.c	
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o obj/ubox_spman_sdl.o -c ../msvc/src/ubox_spman_sdl.c	
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include   -c -o ../../tools/apultra/src/expand.o ../../tools/apultra/src/expand.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include   -c -o ../../tools/apultra/src/matchfinder.o ../../tools/apultra/src/matchfinder.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include   -c -o ../../tools/apultra/src/shrink.o ../../tools/apultra/src/shrink.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include   -c -o ../../tools/apultra/src/libdivsufsort/lib/divsufsort.o ../../tools/apultra/src/libdivsufsort/lib/divsufsort.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include   -c -o ../../tools/apultra/src/libdivsufsort/lib/divsufsort_utils.o ../../tools/apultra/src/libdivsufsort/lib/divsufsort_utils.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include   -c -o ../../tools/apultra/src/libdivsufsort/lib/sssort.o ../../tools/apultra/src/libdivsufsort/lib/sssort.c
+ 
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include   -c -o ../../tools/apultra/src/libdivsufsort/lib/trsort.o ../../tools/apultra/src/libdivsufsort/lib/trsort.c
+gcc -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include -o platformer obj/warp_logic.o obj/item_logic.o obj/game_util.o obj/helpers.o obj/enemy_logic.o obj/foothold_logic.o obj/game.o obj/main.o obj/exit_logic.o obj/player_logic.o obj/data.o obj/ubox_sdl.o obj/ubox_mplayer_sdl.o obj/ubox_spman_sdl.o ../../tools/apultra/src/expand.o ../../tools/apultra/src/matchfinder.o ../../tools/apultra/src/shrink.o ../../tools/apultra/src/libdivsufsort/lib/divsufsort.o ../../tools/apultra/src/libdivsufsort/lib/divsufsort_utils.o ../../tools/apultra/src/libdivsufsort/lib/sssort.o ../../tools/apultra/src/libdivsufsort/lib/trsort.o -lSDL2 -lGL -lGLEW -lSDL2_image -lSDL2_image -lSDL2_mixer
+ 
+make: Leaving directory '/mnt/c/GitHub/ubox_2dplatformer/game/linux'
+ 

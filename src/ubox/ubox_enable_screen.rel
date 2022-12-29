@@ -1,0 +1,9 @@
+XL2
+H 1 areas 2 global symbols
+S .__.ABS. Def0000
+A _CODE size 3 flags 0 addr 0
+S _ubox_enable_screen Def0000
+T 00 00
+R 00 00 00 00
+T 00 00 C3 44 00
+R 00 00 00 00

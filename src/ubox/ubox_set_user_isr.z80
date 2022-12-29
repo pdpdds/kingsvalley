@@ -1,0 +1,8 @@
+.globl _ubox_set_user_isr
+.globl ubox_usr_isr
+
+_ubox_set_user_isr::
+	di
+	ld (ubox_usr_isr), hl
+	ei
+	ret

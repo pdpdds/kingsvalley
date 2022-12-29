@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "game.h": "c",
+        "string.h": "c",
+        "spman.h": "c",
+        "ubox.h": "c",
+        "map4.h": "c",
+        "enemy.h": "c",
+        "player.h": "c",
+        "foothold.h": "c",
+        "stdint.h": "c",
+        "map": "c",
+        "map5.h": "c",
+        "map_summary.h": "c",
+        "map1.h": "c",
+        "enemy_logic.h": "c"
+    }
+}

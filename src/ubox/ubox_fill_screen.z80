@@ -1,0 +1,11 @@
+.globl _ubox_fill_screen
+
+FILVRM = 0x0056
+BG_TILE_MAP = 0x1800
+
+_ubox_fill_screen::
+	ld a, l
+	ld hl, #BG_TILE_MAP
+	ld bc, #768
+	jp FILVRM
+

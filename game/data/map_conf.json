@@ -1,0 +1,60 @@
+{
+    "entities": [
+        {
+            "bytes": 0,
+            "name": "unused",
+            "w": 1
+        },
+        {
+            "bytes": 0,
+            "name": "player",
+            "w": 1
+        },
+		{
+            "bytes": 0,
+            "name": "enemy",
+            "w": 1
+        },
+        {
+            "bytes": 0,
+            "name": "jewel",
+            "w": 1
+        },
+		{
+            "bytes": 0,
+            "name": "knife",
+            "w": 1
+        },
+		{
+            "bytes": 0,
+            "name": "pickax",
+            "w": 1
+        },
+		{
+            "bytes": 0,
+            "name": "start",
+            "w": 1
+        },
+		{
+            "bytes": 0,
+            "name": "exit",
+            "w": 1
+        },
+		{
+            "bytes": 0,
+            "name": "lock",
+            "w": 1
+        },
+		{
+            "bytes": 0,
+            "name": "trap",
+            "w": 1
+        },
+		{
+            "bytes": 0,
+            "name": "pushdoor",
+            "w": 1
+        }
+		
+    ]
+}

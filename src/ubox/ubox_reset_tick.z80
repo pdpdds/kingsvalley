@@ -1,0 +1,10 @@
+.globl _ubox_reset_tick
+.globl _ubox_tick
+
+_ubox_reset_tick::
+	xor a
+	di
+	ld (_ubox_tick), a
+	ei
+	ret
+

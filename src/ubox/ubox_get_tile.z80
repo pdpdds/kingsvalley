@@ -1,0 +1,29 @@
+.globl _ubox_get_tile
+
+RDVRM = 0x004a
+BG_TILE_MAP = 0x1800
+
+_ubox_get_tile::
+	ld hl, #2
+	add hl, sp
+
+	ld b, #0
+	ld c, (hl)
+	inc hl
+	ld l, (hl)
+
+	ld h, #0
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, bc
+
+	ld bc, #BG_TILE_MAP
+	add hl, bc
+
+	call RDVRM
+	ld l, a
+	ret
+

@@ -1,0 +1,7 @@
+.globl _ubox_disable_screen
+
+DISSCR = 0x0041
+
+_ubox_disable_screen::
+	jp DISSCR
+

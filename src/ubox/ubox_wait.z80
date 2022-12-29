@@ -1,0 +1,23 @@
+.globl _ubox_wait
+.globl ubox_isr_wait_ticks
+.globl ubox_isr_wait_tick
+
+_ubox_wait::
+	ld hl, #ubox_isr_wait_tick
+	ld a, (ubox_isr_wait_ticks)
+	ld c, a
+
+wait_loop:
+	ld a, (hl)
+	cp c
+	jr nc, wait_done
+	halt
+	jr wait_loop
+
+wait_done:
+	xor a
+	di
+	ld (hl), a
+	ei
+	ret
+

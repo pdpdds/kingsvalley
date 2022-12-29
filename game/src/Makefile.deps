@@ -1,0 +1,38 @@
+../build/character.rel: character.c ../../include/ubox.h game_util.h game.h \
+ ../../include/spman.h ../../include/ubox.h ../../include/mplayer.h \
+ main.h character_move.h
+../build/character_move.rel: character_move.c ../../include/ubox.h game_util.h \
+ game.h character.h
+../build/data.rel: data.c ../generated/tiles.h ../generated/playermove.h \
+ ../generated/playerpickax.h ../generated/playerknife.h \
+ ../generated/playerattack.h ../generated/playerdigging.h \
+ ../generated/enemy.h ../generated/knife.h ../generated/map_summary.h \
+ ../generated/map.h
+../build/enemy.rel: enemy.c enemy.h game.h game_util.h ../../include/ubox.h \
+ ../../include/spman.h ../../include/ubox.h ../../include/mplayer.h \
+ main.h
+../build/game.rel: game.c ../../include/ubox.h ../../include/spman.h \
+ ../../include/ubox.h ../../include/mplayer.h ../../include/ap.h main.h \
+ game.h ../generated/map_summary.h ../generated/playermove.h \
+ ../generated/playerpickax.h ../generated/playerknife.h \
+ ../generated/playerattack.h ../generated/playerdigging.h \
+ ../generated/enemy.h ../generated/knife.h item.h gate.h pushdoor.h \
+ player.h enemy.h jewel.h trap.h character.h
+../build/game_util.rel: game_util.c game_util.h game.h ../../include/ubox.h \
+ ../../include/mplayer.h
+../build/gate.rel: gate.c ../../include/ubox.h ../../include/spman.h \
+ ../../include/ubox.h game_util.h game.h
+../build/item.rel: item.c ../../include/ubox.h
+../build/jewel.rel: jewel.c ../../include/ubox.h game_util.h game.h
+../build/knife.rel: knife.c ../../include/ubox.h ../../include/spman.h \
+ ../../include/ubox.h game_util.h game.h
+../build/main.rel: main.c ../../include/ubox.h ../../include/mplayer.h game.h \
+ game_util.h ../generated/map_summary.h ../generated/title.h \
+ ../generated/tiles.h ../generated/map.h main.h ../../include/ap.h
+../build/player.rel: player.c ../../include/ubox.h game.h game_util.h \
+ ../../include/spman.h ../../include/ubox.h ../../include/mplayer.h \
+ character.h main.h
+../build/pushdoor.rel: pushdoor.c ../../include/ubox.h ../../include/spman.h \
+ ../../include/ubox.h game_util.h game.h
+../build/trap.rel: trap.c ../../include/ubox.h ../../include/spman.h \
+ ../../include/ubox.h item.h game_util.h game.h

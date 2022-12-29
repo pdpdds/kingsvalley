@@ -1,0 +1,829 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 4.2.1
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2016 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+ 
+
+# Make data base, printed on Sun Jul 17 15:48:11 2022
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# environment
+WSLENV = VSCODE_WSL_EXT_LOCATION/up
+# default
+.SHELLFLAGS := -c
+# makefile (from 'Makefile', line 25)
+OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
+# makefile (from 'Makefile', line 20)
+SRC = $(wildcard $(SRCDIR)/*$(EXT))
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# makefile (from 'Makefile', line 23)
+SRC4 = $(wildcard $(SRC4DIR)/*$(EXT))
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# makefile (from 'Makefile', line 42)
+EXE = .exe
+# automatic
+@F = $(notdir $@)
+# makefile
+CURDIR := /mnt/c/GitHub/ubox_2dplatformer/game/linux
+# makefile
+SHELL = /bin/sh
+# makefile (from 'Makefile', line 38)
+RM = rm
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
+# environment
+_ = /home/retro/.vscode-server/bin/92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9/node
+# makefile (from 'Makefile', line 7)
+CFLAGS = -Wall -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include
+# makefile (from 'data.d', line 1)
+MAKEFILE_LIST :=  Makefile warp_logic.d item_logic.d game_util.d helpers.d enemy_logic.d foothold_logic.d game.d main.d exit_logic.d player_logic.d data.d
+# 'override' directive
+GNUMAKEFLAGS := 
+# makefile (from 'Makefile', line 8)
+CXXFLAGS = -fpermissive -std=c++11 -Wall -g -I../../include -I../generated -I../../tools/apultra/src/libdivsufsort/include -I../../tools/apultra/src -I../src
+# environment
+XDG_DATA_DIRS = /usr/local/share:/usr/share:/var/lib/snapd/desktop
+# makefile (from 'Makefile', line 41)
+DEL = del
+# environment
+LESSOPEN = | /usr/bin/lesspipe %s
+# environment
+VSCODE_CWD = /mnt/c/Users/juhan/AppData/Local/Programs/Microsoft VS Code
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+PATH = /home/retro/.vscode-server/bin/92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9/bin/remote-cli:/home/retro/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/devkitPro/msys2/usr/bin:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/cc65-snapshot-win32/bin:/mnt/c/Arkos Tracker 2/tools:/mnt/c/msys/bin:/mnt/c/Program Files/CMake/bin:/mnt/c/Program Files/TortoiseSVN/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/juhan/AppData/Local/Programs/Python/Python310/Scripts/:/mnt/c/Users/juhan/AppData/Local/Programs/Python/Python310/:/mnt/c/Users/juhan/.cargo/bin:/mnt/c/Users/juhan/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/juhan/AppData/Local/GitHubDesktop/bin:/mnt/c/Program Files (x86)/blueMSX:/mnt/c/openmsx:/mnt/c/DOSBox-X:/mnt/c/qemu:/mnt/c/Program Files (x86)/Debugging Tools for Windows:/mnt/c/nasm:/mnt/c/Program Files/JetBrains/PyCharm Community Edition 2022.1/bin:/mnt/c/Users/juhan/AppData/Local/Pandoc/:/mnt/c/Tool/gnumake:/mnt/c/Program Files/SDCC/bin:/mnt/c/3dodev/bin:/snap/bin
+# makefile (from 'Makefile', line 36)
+DEP = $(OBJ:$(OBJDIR)/%.o=%.d)
+# makefile (from 'Makefile', line 21)
+SRC2 = $(wildcard $(SRC2DIR)/*$(EXT))
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-96b53cf0-1ba0-4688-9f71-71b662f05f3e.sock
+# makefile (from 'Makefile', line 9)
+LDFLAGS = -lSDL2 -lGL -lGLEW -lSDL2_image -lSDL2_image -lSDL2_mixer
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
+# environment
+LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+# makefile (from 'Makefile', line 15)
+SRC2DIR = ../msvc/src
+# makefile (from 'Makefile', line 14)
+SRCDIR = ../src
+# automatic
+%F = $(notdir $%)
+# environment
+PWD = /mnt/c/GitHub/ubox_2dplatformer/game/linux
+# default
+.LOADED := 
+# environment
+WSL_INTEROP = /run/WSL/11_interop
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /home/retro
+# environment
+LESSCLOSE = /usr/bin/lesspipe %s %s
+# environment
+LOGNAME = retro
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# makefile (from 'Makefile', line 39)
+DELOBJ = $(OBJ) $(OBJ2) $(OBJ3)
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# makefile (from 'Makefile', line 22)
+SRC3 = $(wildcard $(SRC3DIR)/*$(EXT))
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# environment
+SHLVL = 0
+# makefile (from 'Makefile', line 6)
+CC = gcc
+# default
+MAKE_VERSION := 4.2.1
+# environment
+USER = retro
+# makefile
+.DEFAULT_GOAL := all
+# environment
+NAME = TABLET-U0S17BEP
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# makefile (from 'Makefile', line 26)
+OBJ2 = $(SRC2:$(SRC2DIR)/%$(EXT)=$(OBJDIR)/%.o)
+# makefile (from 'Makefile', line 16)
+SRC3DIR = ../../tools/apultra/src
+# environment
+VSCODE_WSL_EXT_LOCATION = /mnt/c/Users/juhan/.vscode/extensions/ms-vscode-remote.remote-wsl-0.66.3
+# default
+MAKE_COMMAND := make
+# default
+.VARIABLES := 
+# automatic
+*F = $(notdir $*)
+# makefile (from 'Makefile', line 13)
+EXT = .c
+# makefile
+MAKEFLAGS = pqrR
+# environment
+MFLAGS = -pqrR
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# makefile (from 'Makefile', line 12)
+APPNAME = platformer
+# environment
+VSCODE_HANDLES_SIGPIPE = true
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# makefile (from 'Makefile', line 17)
+OBJDIR = obj
+# environment
+LC_ALL = C
+# makefile (from 'Makefile', line 43)
+WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
+# environment
+HOSTTYPE = x86_64
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# makefile (from 'Makefile', line 34)
+OBJ3 = $(SRC3DIR)/expand.o $(SRC3DIR)/matchfinder.o $(SRC3DIR)/shrink.o $(SRC3DIR)/libdivsufsort/lib/divsufsort.o $(SRC3DIR)/libdivsufsort/lib/divsufsort_utils.o $(SRC3DIR)/libdivsufsort/lib/sssort.o $(SRC3DIR)/libdivsufsort/lib/trsort.o
+# default
+.RECIPEPREFIX := 
+# environment
+LANG = C
+# environment
+TERM = xterm-256color
+# environment
+WSL_DISTRO_NAME = Ubuntu-20.04
+# environment
+MOTD_SHOWN = update-motd
+# variable set hash-table stats:
+# Load=87/1024=8%, Rehash=0, Collisions=7/194=4%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# ../msvc/src (device 46, inode 1970324837930220): 6 files, no impossibilities.
+# . (device 46, inode 3659174697625661): 18 files, no impossibilities.
+# ../src (device 46, inode 1970324837930230): 31 files, no impossibilities.
+# ../../tools/apultra/src (device 46, inode 2251799814681584): No files, no impossibilities so far.
+
+# 55 files, no impossibilities in 4 directories.
+
+# Implicit Rules
+
+%.d: ../src/%.c
+#  recipe to execute (from 'Makefile', line 57):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+%.d: ../msvc/src/%.c
+#  recipe to execute (from 'Makefile', line 60):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@	
+
+%.d: ../../tools/apultra/src/%.c
+#  recipe to execute (from 'Makefile', line 63):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@			
+
+obj/%.o: ../src/%.c
+#  recipe to execute (from 'Makefile', line 70):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+obj/%.o: ../msvc/src/%.c
+#  recipe to execute (from 'Makefile', line 73):
+	$(CC) $(CFLAGS) -o $@ -c $<	
+
+obj/%.o: ../../tools/apultra/src/%.c
+#  recipe to execute (from 'Makefile', line 76):
+	$(CC) $(CFLAGS) -o $@ -c $<			
+
+# 6 implicit rules, 0 (0.0%) terminal.
+
+# Files
+
+# Not a target:
+../src/main.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4419562
+#  File has been updated.
+#  Successfully updated.
+
+obj/game.o: ../src/game.c ../src/game.c ../../include/ubox.h ../../include/spman.h ../../include/ubox.h ../../include/mplayer.h ../../include/ap.h ../src/helpers.h ../src/main.h ../src/game.h ../generated/map_summary.h ../generated/player.h ../generated/enemy.h ../generated/foothold.h ../src/foothold_logic.h ../src/enemy_logic.h ../src/player_logic.h ../src/exit_logic.h ../src/warp_logic.h ../src/item_logic.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'game'
+#  Last modified 2022-07-13 19:52:38.4640095
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 70):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+obj/exit_logic.o: ../src/exit_logic.c ../src/exit_logic.c ../src/exit_logic.h ../src/game.h ../src/game_util.h ../../include/spman.h ../../include/ubox.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'exit_logic'
+#  Last modified 2022-07-13 19:52:39.2154485
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 70):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+# Not a target:
+../src/helpers.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 01:14:49.9882055
+#  File has been updated.
+#  Successfully updated.
+
+obj/foothold_logic.o: ../src/foothold_logic.c ../src/foothold_logic.c ../src/game.h ../src/game_util.h ../../include/spman.h ../../include/ubox.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'foothold_logic'
+#  Last modified 2022-07-13 19:52:38.3024198
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 70):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+# Not a target:
+../src/warp_logic.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4527438
+#  File has been updated.
+#  Successfully updated.
+
+all: platformer
+ 
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../src/item_logic.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4176549
+#  File has been updated.
+#  Successfully updated.
+
+.PHONY: clean cleandep cleanw cleandepw
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+obj/enemy_logic.o: ../src/enemy_logic.c ../src/enemy_logic.c ../src/enemy_logic.h ../src/game.h ../src/game_util.h ../../include/spman.h ../../include/ubox.h ../../include/mplayer.h ../src/main.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'enemy_logic'
+#  Last modified 2022-07-13 19:52:38.2061036
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 70):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+# Not a target:
+../src/helpers.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4075555
+#  File has been updated.
+#  Successfully updated.
+
+obj/data.o: ../src/data.c ../src/data.c ../generated/tiles.h ../generated/player.h ../generated/enemy.h ../generated/foothold.h ../generated/map_summary.h ../generated/map.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'data'
+#  Last modified 2022-07-13 19:52:39.4053237
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 70):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+# Not a target:
+../../tools/apultra/src/expand.o:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 19:52:41.8733955
+#  File has been updated.
+#  Successfully updated.
+
+game_util.d: ../src/game_util.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'game_util'
+#  Last modified 2022-07-17 15:48:10.5239682
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 57):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+obj/main.o: ../src/main.c ../src/main.c ../../include/ubox.h ../../include/mplayer.h ../src/helpers.h ../src/game.h ../generated/map_summary.h ../generated/tiles.h ../src/main.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'main'
+#  Last modified 2022-07-13 19:52:39.1134482
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 70):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+# Not a target:
+../src/item_logic.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4278198
+#  File has been updated.
+#  Successfully updated.
+
+item_logic.d: ../src/item_logic.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'item_logic'
+#  Last modified 2022-07-17 15:48:10.6055038
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 57):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 18:51:51.7918683
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../../include/mplayer.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 01:37:01.6751105
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../src/player_logic.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4176549
+#  File has been updated.
+#  Successfully updated.
+
+platformer: obj/warp_logic.o obj/item_logic.o obj/game_util.o obj/helpers.o obj/enemy_logic.o obj/foothold_logic.o obj/game.o obj/main.o obj/exit_logic.o obj/player_logic.o obj/data.o obj/ubox_sdl.o obj/ubox_mplayer_sdl.o obj/ubox_spman_sdl.o ../../tools/apultra/src/expand.o ../../tools/apultra/src/matchfinder.o ../../tools/apultra/src/shrink.o ../../tools/apultra/src/libdivsufsort/lib/divsufsort.o ../../tools/apultra/src/libdivsufsort/lib/divsufsort_utils.o ../../tools/apultra/src/libdivsufsort/lib/sssort.o ../../tools/apultra/src/libdivsufsort/lib/trsort.o
+#  Implicit rule search has not been done.
+#  Last modified 2022-07-13 19:52:45.2492052
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 53):
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+
+# Not a target:
+../msvc/src/ubox_mplayer_sdl.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 01:27:27.4967013
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../../tools/apultra/src/libdivsufsort/lib/divsufsort.o:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 19:52:43.1005623
+#  File has been updated.
+#  Successfully updated.
+
+obj/warp_logic.o: ../src/warp_logic.c ../src/warp_logic.c ../src/warp_logic.h ../src/game_util.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'warp_logic'
+#  Last modified 2022-07-13 19:52:37.7958132
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 70):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+# Not a target:
+../msvc/src/ubox_sdl.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 01:43:16.8440152
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../generated/tiles.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 18:49:30.5199717
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../generated/player.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 18:49:30.6937641
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../msvc/src/ubox_spman_sdl.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 01:27:51.355414
+#  File has been updated.
+#  Successfully updated.
+
+game.d: ../src/game.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'game'
+#  Last modified 2022-07-17 15:48:10.1771746
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 57):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+obj/helpers.o: ../src/helpers.c ../src/helpers.c ../../include/ubox.h ../src/helpers.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'helpers'
+#  Last modified 2022-07-13 19:52:38.0984775
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 70):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+foothold_logic.d: ../src/foothold_logic.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'foothold_logic'
+#  Last modified 2022-07-17 15:48:10.2697404
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 57):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+# Not a target:
+../src/player_logic.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4278198
+#  File has been updated.
+#  Successfully updated.
+
+cleanw:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 93):
+	$(DEL) $(WDELOBJ) $(DEP) $(APPNAME)$(EXE)
+
+# Not a target:
+../src/game_util.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4075555
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../../include/ap.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:04.7661278
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../../tools/apultra/src/libdivsufsort/lib/trsort.o:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 19:52:44.5002407
+#  File has been updated.
+#  Successfully updated.
+
+obj/item_logic.o: ../src/item_logic.c ../src/item_logic.c ../src/item_logic.h ../src/game_util.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'item_logic'
+#  Last modified 2022-07-13 19:52:37.891511
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 70):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+main.d: ../src/main.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'main'
+#  Last modified 2022-07-17 15:48:10.0214046
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 57):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+# Not a target:
+../../tools/apultra/src/matchfinder.o:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 19:52:42.207422
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../../tools/apultra/src/libdivsufsort/lib/sssort.o:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 19:52:44.0045408
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../src/game_util.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4176549
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+cleandep:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+ 
+#  recipe to execute (from 'Makefile', line 87):
+	$(RM) $(DEP)
+
+cleandepw:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 98):
+	$(DEL) $(DEP)
+
+# Not a target:
+../src/game.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 01:47:54.8658412
+#  File has been updated.
+#  Successfully updated.
+
+obj/player_logic.o: ../src/player_logic.c ../src/player_logic.c ../src/player_logic.h ../src/game.h ../src/game_util.h ../../include/spman.h ../../include/ubox.h ../../include/mplayer.h ../src/main.h ../src/foothold_logic.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'player_logic'
+#  Last modified 2022-07-13 19:52:39.3414188
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 70):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 82):
+	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
+
+# Not a target:
+../generated/map_summary.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 18:49:31.4590915
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../src/foothold_logic.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4419562
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../src/exit_logic.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4419562
+#  File has been updated.
+#  Successfully updated.
+
+warp_logic.d: ../src/warp_logic.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'warp_logic'
+#  Last modified 2022-07-17 15:48:10.7032668
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 57):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+obj/ubox_mplayer_sdl.o: ../msvc/src/ubox_mplayer_sdl.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'ubox_mplayer_sdl'
+#  Last modified 2022-07-13 19:52:40.8402735
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 73):
+	$(CC) $(CFLAGS) -o $@ -c $<	
+
+data.d: ../src/data.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'data'
+#  Last modified 2022-07-17 15:48:09.1098347
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 57):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+obj/ubox_sdl.o: ../msvc/src/ubox_sdl.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'ubox_sdl'
+#  Last modified 2022-07-13 19:52:40.1604499
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 73):
+	$(CC) $(CFLAGS) -o $@ -c $<	
+
+# Not a target:
+../src/enemy_logic.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4419562
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../generated/map.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 18:49:31.3238768
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../src/game.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-11 13:12:56.390782
+#  File has been updated.
+#  Successfully updated.
+
+obj/game_util.o: ../src/game_util.c ../src/game_util.c ../src/game_util.h ../src/game.h ../../include/ubox.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'game_util'
+#  Last modified 2022-07-13 19:52:38.0058825
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 70):
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+obj/ubox_spman_sdl.o: ../msvc/src/ubox_spman_sdl.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'ubox_spman_sdl'
+#  Last modified 2022-07-13 19:52:41.5131822
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 73):
+	$(CC) $(CFLAGS) -o $@ -c $<	
+
+# Not a target:
+../generated/foothold.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 18:49:31.0159872
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../src/data.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-19 10:09:10.1577433
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../src/foothold_logic.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4527438
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../generated/enemy.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 18:49:30.8373588
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../src/main.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 01:10:51.5722067
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../src/exit_logic.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4419562
+#  File has been updated.
+#  Successfully updated.
+
+player_logic.d: ../src/player_logic.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'player_logic'
+#  Last modified 2022-07-17 15:48:09.2302381
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 57):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+exit_logic.d: ../src/exit_logic.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'exit_logic'
+#  Last modified 2022-07-17 15:48:09.316279
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 57):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+# Not a target:
+../src/enemy_logic.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4527438
+#  File has been updated.
+#  Successfully updated.
+
+enemy_logic.d: ../src/enemy_logic.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'enemy_logic'
+#  Last modified 2022-07-17 15:48:10.3611875
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 57):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+# Not a target:
+../src/warp_logic.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:05.4379572
+#  File has been updated.
+#  Successfully updated.
+
+helpers.d: ../src/helpers.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'helpers'
+#  Last modified 2022-07-17 15:48:10.428972
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 57):
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+
+# Not a target:
+../../include/ubox.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 01:01:59.4870275
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../../tools/apultra/src/shrink.o:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 19:52:42.6591624
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../../tools/apultra/src/libdivsufsort/lib/divsufsort_utils.o:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-13 19:52:43.5126109
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+../../include/spman.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 13:45:04.7661278
+#  File has been updated.
+#  Successfully updated.
+
+# files hash-table stats:
+# Load=76/1024=7%, Rehash=0, Collisions=11/285=4%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 140 / storage = 2245 B / avg = 16 B
+# current buf: size = 8162 B / used = 2245 B / count = 140 / avg = 16 B
+
+# strcache performance: lookups = 322 / hit rate = 56%
+# hash-table stats:
+# Load=140/8192=2%, Rehash=0, Collisions=5/322=2%
+# Finished Make data base on Sun Jul 17 15:48:11 2022
+
+ 

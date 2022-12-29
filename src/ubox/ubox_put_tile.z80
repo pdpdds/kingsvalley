@@ -1,0 +1,31 @@
+.globl _ubox_put_tile
+
+WRTVRM = 0x004d
+BG_TILE_MAP = 0x1800
+
+_ubox_put_tile::
+	ld hl, #2
+	add hl, sp
+
+	ld c, (hl)
+	inc hl
+	ld b, (hl)
+	inc hl
+
+	ld a, (hl)
+
+	ld h, #0
+	ld l, b
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	ld b, #0
+	add hl, bc
+
+	ld bc, #BG_TILE_MAP
+	add hl, bc
+
+	jp WRTVRM
+

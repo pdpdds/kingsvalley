@@ -1,0 +1,8 @@
+.globl _ubox_update
+
+WRITEVDP = 0x0047
+
+_ubox_update::
+	ld l, #1
+	ret
+
