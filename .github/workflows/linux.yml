@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 defaults:
   run:
-    working-directory: game/linux    
+    working-directory: game
 
 jobs:
   build:
@@ -15,7 +15,8 @@ jobs:
        
     steps:
     - uses: actions/checkout@v2
-    - name: build king's valley           
+    - name: build king's valley                 
+      working-directory: game/linux    
       run: |      
         sudo apt install libsdl2-dev libsdl2-2.0-0 -y;
         sudo apt install libjpeg-dev libwebp-dev libtiff5-dev libsdl2-image-dev libsdl2-image-2.0-0 -y;
@@ -25,8 +26,8 @@ jobs:
         make       
         cp kings ../data/kings
         
-    - name: Upload a Build Artifact(kings-linux)
+    - name: Upload a Build Artifact(kings-linux)                
       uses: actions/upload-artifact@v2.1.4
       with:
           name: kings-linux
-          path: ../data/    
+          path: data/    
