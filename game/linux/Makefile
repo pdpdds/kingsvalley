@@ -49,7 +49,6 @@ WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
 
 all: $(APPNAME)
 
-$(OBJDIR):
     mkdir -p $(OBJDIR)
 
 # Builds the app
