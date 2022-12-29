@@ -1,4 +1,4 @@
-name: linux
+name: win32
 
 on:
   push:
