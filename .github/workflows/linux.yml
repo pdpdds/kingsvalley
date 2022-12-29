@@ -5,15 +5,17 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+defaults:
+  run:
+    working-directory: game/linux    
 
 jobs:
   build:
     runs-on: ubuntu-20.04
        
     steps:
-    
-    - name: build king's valley      
-      working-directory: ${{ env.working-directory }}game/linux/
+    - uses: actions/checkout@v2
+    - name: build king's valley           
       run: |          
         make
         cp kings ../data
