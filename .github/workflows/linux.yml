@@ -1,4 +1,4 @@
-name: msx
+name: linux
 
 on:
   push:
