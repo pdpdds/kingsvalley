@@ -15,7 +15,7 @@ SRCDIR = ../src
 SRC2DIR = ../../src/backend
 SRC3DIR = ../../tools/apultra/src
 SRC4DIR = ./src
-OBJDIR := obj
+OBJDIR = obj
 
 ############## Do not change anything from here downwards! #############
 SRC = $(wildcard $(SRCDIR)/*$(EXT))
@@ -49,10 +49,9 @@ WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
 
 all: $(APPNAME)
 
-    mkdir -p $(OBJDIR)
-
 # Builds the app
 $(APPNAME): $(OBJ) $(OBJ2) $(OBJ3)
+	mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Creates the dependecy rules
