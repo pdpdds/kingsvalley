@@ -9,14 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    
-    strategy:
-      matrix:
-        python-version: [3.9] 
+       
     steps:
     
     - name: build king's valley      
-      run: |  
-        working-directory: ${{ env.working-directory }}game/linux
+      working-directory: ${{ env.working-directory }}game/linux
+      run: |          
         make
         cp kings ../data
