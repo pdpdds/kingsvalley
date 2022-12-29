@@ -17,5 +17,5 @@ jobs:
     
     - name: build king's valley
       run: |   
-        cd game/linux
+        cd ./game/linux
         make
