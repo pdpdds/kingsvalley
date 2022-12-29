@@ -15,8 +15,8 @@ jobs:
         python-version: [3.9] 
     steps:
     
-    - name: build king's valley
-      working-directory: ../game/linux
-      run: |           
+    - name: build king's valley      
+      run: |  
+        working-directory: ${{ env.working-directory }}game/linux
         make
         cp kings ../data
