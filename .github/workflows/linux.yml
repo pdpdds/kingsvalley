@@ -13,7 +13,7 @@ jobs:
     steps:
     
     - name: build king's valley      
-      working-directory: ${{ env.working-directory }}game/linux
+      working-directory: ${{ env.working-directory }}game
       run: |          
         make
         cp kings ../data
