@@ -15,7 +15,7 @@ SRCDIR = ../src
 SRC2DIR = ../../src/backend
 SRC3DIR = ../../tools/apultra/src
 SRC4DIR = ./src
-OBJDIR = obj
+OBJDIR := obj
 
 ############## Do not change anything from here downwards! #############
 SRC = $(wildcard $(SRCDIR)/*$(EXT))
