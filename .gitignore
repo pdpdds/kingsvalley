@@ -53,5 +53,4 @@ dkms.conf
 
 bin
 game/build
-game/generated
 src/backend/Debug
