@@ -1,15 +1,25 @@
 # 왕가의 계곡 1(King's Valley 1) 
 MSX 게임 왕가의 계곡 1(킹스밸리) C 재구현 프로젝트입니다.  
 
-
-![kings](kings.png)
+[![왕가의 계곡](https://img.youtube.com/vi/yWfRj2l0rsU/0.jpg)](https://youtu.be/yWfRj2l0rsU) 
 
 본 프로젝트의 대상층은 다음과 같습니다.
 * 최대한 손쉽게 MSX 게임을 제작하고 싶으신 분   
 * 서적 '레트로 게임 개발 바이블'을 읽은다음 좀더 정교한 레트로 게임 개발을 원하시는 분   
 * 과거 유명했던 MSX1 게임을 C 언어로 복원하는데 관심있으신 분   
 
-[레트로 게임 개발 바이블](https://github.com/pdpdds/retrogamedev)    
+[레트로 게임 개발 바이블](https://github.com/pdpdds/retrogamedev)   
+
+
+## 게임 플레이 해보기
+WebMSX로 웹상에서 플레이해 보실 수 있습니다.
+
+게임 플레이중 진행이 불가할시에는 P키를 누르시면 됩니다.  
+킹스밸리의 엔딩을 봤다는 가정하에 맵을 제작했기 때문에 난이도가 꽤 높습니다.  
+
+[버전1](https://webmsx.org/?ROM=https://github.com/pdpdds/ubox_example/releases/download/v1.0/kings_ver2.rom)  
+[버전2](https://webmsx.org/?ROM=https://github.com/pdpdds/ubox_example/releases/download/v1.0/kings.rom)
+
 
 ## 특징
 * 윈도우 10,11 운영체제에서 비쥬얼 스튜디오로 게임 개발 
