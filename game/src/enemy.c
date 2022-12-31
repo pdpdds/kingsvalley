@@ -104,7 +104,7 @@ void render_enemy_sprite(uint8_t sprite_attribute)
 
 	sp.pattern = self->pat + (current_frame + (self->dir) * 6) * 4;
 	sp.attr = sprite_attribute;
-	spman_alloc_fixed_sprite(&sp);
+	spman_alloc_sprite(&sp);
 }
 
 void update_common_state() {

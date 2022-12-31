@@ -112,12 +112,15 @@ make
 ```
 
 ## 안드로이드
+안드로이드 스튜디오를 사용해서 프로젝트를 빌드합니다.   
 WIP
 
 ## MS-DOS
+WIN32용 DJGPP를 활용해서 프로젝트를 빌드합니다.
 WIP
 
 ## YUZA-OS
+비쥬얼 스튜디오 2022를 활용해서 프로젝트를 빌드합니다.
 WIP
 
 ## 감사의 말씀
@@ -127,4 +130,7 @@ Juan J. Martinez께서 개발하신 ubox MSX lib가
 Juan J. Martinez님께 다시한번 감사의 말씀 전합니다.   
 
 [ubox MSX lib 홈페이지](https://www.usebox.net/jjm/ubox-msx-lib/)
+
+## 라이선스 
+ubox MSX lib의 라이센스를 따릅니다.   
 

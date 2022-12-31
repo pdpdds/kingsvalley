@@ -213,7 +213,7 @@ void render_knife() {
 
 	sp.pattern = self->pat + (current_frame + (self->dir) * 8) * 4;
 	sp.attr = 14;
-	spman_alloc_fixed_sprite(&sp);
+	spman_alloc_sprite(&sp);
 }
 
 void update_knife() {
