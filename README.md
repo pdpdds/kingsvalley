@@ -9,7 +9,14 @@ MSX 게임 왕가의 계곡 1(킹스밸리) C 재구현 프로젝트입니다.
 * 서적 '레트로 게임 개발 바이블'을 읽은다음 좀더 정교한 레트로 게임을 개발을 원하시는 분   
 * 과거 유명했던 MSX1 게임을 C 언어로 복원하는데 관심있으신 분   
 
-[레트로 게임 개발 바이블](https://github.com/pdpdds/retrogamedev)     
+[레트로 게임 개발 바이블](https://github.com/pdpdds/retrogamedev)    
+
+## 특징
+* 윈도우 10,11 운영체제에서 비쥬얼 스튜디오로 게임 발 
+* C 언어로 게임 제작
+* 코드를 수정하지 않고 레벨 추가 가능
+* 크로스 플랫폼 지원(SDL2, ALLEGRO4)  
+* 프로그래밍 입문자분도 도전가능하도록 개발 인터페이스를 최대한 단순화   
 
 ## 지원 플랫폼
 * MSX
@@ -81,7 +88,7 @@ kingsvalley.sln 솔루션을 실행한 다음 빌드합니다.
 ## MSX
 WSL2, 우분투 20.04 LTS에서 테스트하였습니다.    
 환경구축은 서적 '레트로 게임 개발 바이블'  
-또는 아래 링크를 참조하세요.
+또는 아래 링크를 참조하세요.   
 [MSX 빌드 환경구축](https://wikidocs.net/154093)   
 
 ## 리눅스
@@ -114,5 +121,10 @@ WIP
 WIP
 
 ## 감사의 말씀
-ubox MSX library Present.
+저의 레트로 게임 프로그래밍의 시작은  
+Juan J. Martinez께서 개발하신 ubox MSX lib가   
+아니었다면 시작할 수 없었습니다.   
+Juan J. Martinez님께 다시한번 감사의 말씀 전합니다.   
+
+[ubox MSX lib 홈페이지](https://www.usebox.net/jjm/ubox-msx-lib/)
 
