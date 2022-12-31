@@ -1,7 +1,7 @@
-# King's Valley 1 
+# 왕가의 계곡 1(King's Valley 1) 
 MSX 게임 왕가의 계곡 1(킹스밸리) C 재구현 프로젝트입니다.  
 
-# 지원 플랫폼
+## 지원 플랫폼
 * MSX
 * WIN32
 * 리눅스
@@ -32,13 +32,13 @@ git clone https://github.com/microsoft/vcpkg
 
 그런다음 콘솔 프로그램을 실행하고 vcpkg 폴더로 이동한 뒤, 다음 명령을 입력합니다.
 
-'''
+```
 bootstrap-vcpkg.bat
-'''
+```
 
 이제 vcpkg가 설치되었습니다. 이제 프로젝트를 빌드하기 위한 라이브러리를 설치합니다.
 
-'''
+```
 vcpkg install sdl2
 vcpkg install sdl2-image
 vcpkg install sdl2-mixer
@@ -47,19 +47,19 @@ vcpkg install libflac
 vcpkg install smpeg2
 vcpkg install libvorbis
 vcpkg install tiff
-'''
+```
 
 그런 다음 비쥬얼 스튜디오에서 vcpkg 시스템을 활용하기 위해 다음 명령을 입력합니다.
 
-'''
+```
 vcpkg integrate install
-'''
+```
 
 vcpkg를 비활성화하고 싶다면 아래 명령을 입력합니다.
 
-'''
+```
 vcpkg intergrate remove
-'''
+```
 
 ### 프로젝트 빌드
 kingsvalley.sln 솔루션을 실행한 다음 빌드합니다.
