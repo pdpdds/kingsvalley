@@ -13,7 +13,7 @@ env:
   # Configuration type to build.
   # You can convert this to a build matrix if you need coverage of multiple configuration types.
   # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-  BUILD_CONFIGURATION: Debug
+  BUILD_CONFIGURATION: Release
 
 permissions:
   contents: read
@@ -38,15 +38,15 @@ jobs:
         vcpkg install sdl2-mixer
         
     - name: Build
-      working-directory: ${{env.GITHUB_WORKSPACE}}game/msvc
+      # working-directory: ${{env.GITHUB_WORKSPACE}}game/msvc
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: |
         msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}} /p:Platform=x86
-        copy ..\data .\${{env.BUILD_CONFIGURATION}} 
+        copy .\game\data .\${{env.BUILD_CONFIGURATION}} 
         
     - name: Upload a Build Artifact(kings-win32)                      
       uses: actions/upload-artifact@v2.1.4
       with:
           name: kings-win32
-          path: ${{env.GITHUB_WORKSPACE}}game/msvc/${{env.BUILD_CONFIGURATION}}
+          path: ${{env.GITHUB_WORKSPACE}}${{env.BUILD_CONFIGURATION}}
