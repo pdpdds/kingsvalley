@@ -54,4 +54,9 @@ dkms.conf
 bin
 game/build
 src/backend/Debug
+src/backend/Release
 game/linux/kings
+Debug
+Release
+x64
+.vs

@@ -141,7 +141,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>backend.lib;apultra_debug.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../../tools/apultra/VS2017/bin;..\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)tools/apultra/VS2017/bin;$(SolutionDir)Debug</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcmtd.lib;msvcrt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -156,7 +156,6 @@
       <AdditionalIncludeDirectories>./;../../../tools/apultra/src;../../generated;../../src;../../../include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4090;4819</DisableSpecificWarnings>
       <BufferSecurityCheck>false</BufferSecurityCheck>
-      <AdditionalOptions>/arch:IA32 %(AdditionalOptions)</AdditionalOptions>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -165,10 +164,12 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\github\allegro4_dos\msvc15\alpng13;C:\GitHub\allegro4_dos\msvc15\build\release;../../../tools/apultra/VS2017/bin;C:\nas\msx\kings\game\msvc\release\;C:\nas\msx\kings\thirdparty\sdl1\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sdlmixer.lib;sdlimage.lib;sdl.lib;msvcrt.lib;Kernel32.lib;apultra.lib;backend.lib;</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <AdditionalLibraryDirectories>$(SolutionDir)tools/apultra/VS2017/bin;$(SolutionDir)Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>apultra.lib;backend.lib</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

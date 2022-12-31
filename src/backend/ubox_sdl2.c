@@ -5,11 +5,9 @@
 #include "ubox_common.h"
 #include "ubox_sdl_common.h"
 
-
 SDL_Window* g_window;
 SDL_Renderer* g_renderer;
 SDL_Texture* g_tile_texture;
-
 
 void set_icon()
 {
@@ -60,12 +58,6 @@ void ubox_enable_screen()
 {
 	SDL_RenderPresent(g_renderer);
 }
-
-
-
-
-
-
 
 
 void ubox_set_tiles(uint8_t* tiles)
@@ -157,7 +149,6 @@ void ubox_put_tile(uint8_t x, uint8_t y, uint8_t tile)
 	srcRect.w = 8;
 	srcRect.h = 8;
 
-
 	dstRect.x = x * 8;
 	dstRect.y = y * 8;
 	dstRect.w = 8;
@@ -167,9 +158,6 @@ void ubox_put_tile(uint8_t x, uint8_t y, uint8_t tile)
 	SDL_RenderCopy(g_renderer, g_tile_texture, &srcRect, &dstRect);
 
 }
-
-
-
 
 
 void ubox_init_game_system(int screen_width, int screen_height, uint8_t map_width, uint8_t map_height)
@@ -187,22 +175,21 @@ void ubox_init_game_system(int screen_width, int screen_height, uint8_t map_widt
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 #endif
 	{
-		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+		//ubox_log("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 		return;
 	}
 
-
 #if defined(__ANDROID__)
-	g_window = SDL_CreateWindow("MSX1 2D Platformer for Android", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 448, SDL_WINDOW_FULLSCREEN);
+	g_window = SDL_CreateWindow("MSX King's Valley for Android", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 448, SDL_WINDOW_FULLSCREEN);
 #elif defined(__linux)
-	g_window = SDL_CreateWindow("MSX1 2D Platformer for LINUX", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
+	g_window = SDL_CreateWindow("MSX King's Valley for LINUX", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
 #else
-	g_window = SDL_CreateWindow("MSX1 2D Platformer for WIN32", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+	g_window = SDL_CreateWindow("MSX King's Valley for WIN32", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		screen_width, screen_height, SDL_WINDOW_SHOWN);
 #endif
 	if (g_window == NULL)
 	{
-		printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
+		//printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
 		return;
 	}
 
@@ -219,7 +206,7 @@ void ubox_init_game_system(int screen_width, int screen_height, uint8_t map_widt
 
 	if (g_renderer == NULL)
 	{
-		printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+		//printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 		return;
 	}
 

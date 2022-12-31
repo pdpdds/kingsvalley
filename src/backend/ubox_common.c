@@ -4,6 +4,12 @@
 #include "common.h"
 #include <expand.h>
 
+/*#ifdef WIN32
+#if defined(_DEBUG) && defined(SDL2)
+#pragma comment(lib, "sdl2maind.lib")
+#endif
+#endif*/
+
 #define VM_WIDTH 32
 #define VM_HEIGHT 24
 
@@ -49,9 +55,6 @@ color_info sprite_pallete[16] =
 
 uint8_t ubox_read_ctl(uint8_t control)
 {
-#if defined(SDL)
-	return read_key(control);
-#endif
 	read_control_key();
 	return control_key;
 }
@@ -139,25 +142,18 @@ void ubox_set_sprite_pat16_flip(uint8_t* data, uint8_t pattern)
 
 }
 
-#ifdef WIN32
-#if defined(_DEBUG) && defined(SDL2)
-#pragma comment(lib, "sdl2maind.lib")
-
-#endif
-#endif
-
 extern uint8_t game_main();
 #if defined(DJGPP)
 int main(void)
-#elif defined(SDL1) ||  defined(ALLEGRO4)
+#elif defined(WIN32)
 #include <windows.h>
 int APIENTRY WinMain(HINSTANCE hInstance,
     HINSTANCE hPrevInstance,
     LPSTR     lpCmdLine,
     int       nCmdShow)
 
-#elif defined(WIN32)
-int SDL_main(int argc, char** argv)
+//#elif defined(WIN32)
+//int SDL_main(int argc, char** argv)
 #elif defined(SKYOS32) || defined(__linux)
 int main(int argc, char** argv)
 #elif defined(__ANDROID__)
@@ -384,6 +380,8 @@ uint8_t spman_alloc_pat(uint8_t type, uint8_t* data, uint8_t len, uint8_t flip)
 	void* texture = create_texture_from_array(data, len, 16, flip);
 
 #if defined(SDL2)
+	extern void* create_sdl_texture(void* texture);
+
 	texture = create_sdl_texture(texture);
 #endif
 
