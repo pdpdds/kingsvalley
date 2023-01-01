@@ -172,7 +172,6 @@ static void init_map_entities(uint8_t stage) {
 	for (uint8_t i = 0; i < roomCount; i++) {
 		const uint8_t* m = (const uint8_t*)(cur_map[i]);
 		ap_uncompress(cur_map_data[i], cur_map[i] + 3);
-
 		m += (uint16_t)(m[0] | m[1] << 8) + 3;
 
 		while (*m != 0xff) {
@@ -446,7 +445,7 @@ void process_door_animation(uint8_t start)
 	}
 }
 
-void run_game(int stage) {
+void run_game(uint8_t stage) {
 	invuln = 0;
 	gameover_delay = 0;
 	g_cur_room_id = 0;

@@ -190,7 +190,7 @@ struct PLAYER_INFO
     
 };
 
-void run_game(int stage);
+void run_game(uint8_t stage);
 
 
 LOCAL struct entity entities[MAX_ENTITIES];
