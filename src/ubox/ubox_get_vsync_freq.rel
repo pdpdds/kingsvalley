@@ -1,9 +1,0 @@
-XL2
-H 1 areas 2 global symbols
-S .__.ABS. Def0000
-A _CODE size A flags 0 addr 0
-S _ubox_get_vsync_freq Def0000
-T 00 00
-R 00 00 00 00
-T 00 00 3A 2B 00 E6 80 6F C8 2E 01 C9
-R 00 00 00 00

@@ -1,9 +1,0 @@
-XL2
-H 1 areas 2 global symbols
-S .__.ABS. Def0000
-A _CODE size A flags 0 addr 0
-S _ubox_fill_screen Def0000
-T 00 00
-R 00 00 00 00
-T 00 00 7D 21 00 18 01 00 03 C3 56 00
-R 00 00 00 00
