@@ -195,6 +195,23 @@
                  "width":16,
                  "x":104,
                  "y":152
+                }, 
+                {
+                 "class":"",
+                 "height":16,
+                 "id":30,
+                 "name":"ENEMY",
+                 "properties":[
+                        {
+                         "name":"extra",
+                         "type":"string",
+                         "value":"2"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":80,
+                 "y":72
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -203,7 +220,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":30,
+ "nextobjectid":31,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
