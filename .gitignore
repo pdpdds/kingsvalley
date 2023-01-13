@@ -60,3 +60,6 @@ Debug
 Release
 x64
 .vs
+*.rel
+*.lst
+*.sym
