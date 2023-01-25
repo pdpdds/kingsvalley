@@ -10,6 +10,12 @@ game: bin libs
 	
 openmsx: game
 	openmsx.exe -carta ./bin/kings.rom -machine C-BIOS_MSX2
+	
+gulkave: bin libs
+	make -C gulkave clean
+	make -C tools
+	make -C gulkave	
+	openmsx.exe -carta ./bin/gulkave.rom -machine C-BIOS_MSX2
 
 docs:
 	make -C docs

@@ -156,7 +156,7 @@ void draw_stage_reset() {
 }
 
 #if !defined(__SDCC)
-extern void ubox_init_game_system(int screen_width, int screen_height, uint8_t map_width, uint8_t map_height);
+extern void ubox_init_game_system(const char* szTitle, int screen_width, int screen_height, uint8_t map_width, uint8_t map_height);
 extern void ubox_load_music(uint8_t music_index, char* filename, uint8_t loop);
 extern void ubox_add_sprite(uint8_t music_index, char* filename, uint8_t loop);
 
@@ -169,7 +169,7 @@ uint8_t game_main() {
     int game_height = 480;
 #endif
     
-    ubox_init_game_system(game_width, game_height, 32, 24);
+    ubox_init_game_system("King's Valley", game_width, game_height, 32, 24);
 
     ubox_load_music(SONG_SILENCE, "", 0);
     ubox_load_music(SONG_IN_GAME, "audio/bgm.wav",1);

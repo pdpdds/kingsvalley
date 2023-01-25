@@ -330,7 +330,7 @@ void ubox_putpixel(void* texture, int x, int y, int attr) {
 
 
 
-void ubox_init_game_system(int screen_width, int screen_height, uint8_t map_width, uint8_t map_height)
+void ubox_init_game_system(const char* szTitle, int screen_width, int screen_height, uint8_t map_width, uint8_t map_height)
 {
 	g_screen_width = screen_width;
 	g_screen_height = screen_height;

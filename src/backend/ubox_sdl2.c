@@ -160,7 +160,7 @@ void ubox_put_tile(uint8_t x, uint8_t y, uint8_t tile)
 }
 
 
-void ubox_init_game_system(int screen_width, int screen_height, uint8_t map_width, uint8_t map_height)
+void ubox_init_game_system(const char* szTitle, int screen_width, int screen_height, uint8_t map_width, uint8_t map_height)
 {
 	g_map_width = map_width;
 	g_map_height = map_height;
@@ -180,11 +180,11 @@ void ubox_init_game_system(int screen_width, int screen_height, uint8_t map_widt
 	}
 
 #if defined(__ANDROID__)
-	g_window = SDL_CreateWindow("MSX King's Valley for Android", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 448, SDL_WINDOW_FULLSCREEN);
+	g_window = SDL_CreateWindow(szTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 448, SDL_WINDOW_FULLSCREEN);
 #elif defined(__linux)
-	g_window = SDL_CreateWindow("MSX King's Valley for LINUX", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
+	g_window = SDL_CreateWindow(szTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
 #else
-	g_window = SDL_CreateWindow("MSX King's Valley for WIN32", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+	g_window = SDL_CreateWindow(szTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		screen_width, screen_height, SDL_WINDOW_SHOWN);
 #endif
 	if (g_window == NULL)
