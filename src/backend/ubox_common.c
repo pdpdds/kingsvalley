@@ -190,8 +190,8 @@ void ubox_fill_screen(uint8_t tile)
 {
 	uint8_t x = 0, y = 0;
 
-	for (y = 0; y < g_map_height; y++)
-		for (x = 0; x < g_map_width; x++)
+	for (y = 0; y < g_room_height; y++)
+		for (x = 0; x < g_room_width; x++)
 		{
 			ubox_put_tile(x, y, tile);
 		}
@@ -203,8 +203,8 @@ void ubox_write_vm_(uint8_t* dst, uint16_t len, uint8_t* src)
 	if (len >= 256)
 		return;
 
-	uint8_t pivot_x = (uint8_t)((uint32_t)dst % g_map_width);
-	uint8_t y = (uint8_t)((uint32_t)dst / g_map_width);
+	uint8_t pivot_x = (uint8_t)((uint32_t)dst % g_room_width);
+	uint8_t y = (uint8_t)((uint32_t)dst / g_room_width);
 
 
 	//for (y = 0; y < map_height; y++)
@@ -235,28 +235,28 @@ void ubox_write_vm(uint8_t* dst, uint16_t len, uint8_t* src)
 		return;
 	}
 
-	uint8_t pivot_x = (uint8_t)((uint32_t)dst % g_map_width);
-	uint8_t pivot_y = (uint8_t)((uint32_t)dst / g_map_width);
+	uint8_t pivot_x = (uint8_t)((uint32_t)dst % g_room_width);
+	uint8_t pivot_y = (uint8_t)((uint32_t)dst / g_room_width);
 	uint8_t x = pivot_x;
 
-	for (uint8_t i = 0; x < g_map_width; x++, i++) // ÇÑÁÙ ·»´õ¸µ
+	for (uint8_t i = 0; x < g_room_width; x++, i++) // ÇÑÁÙ ·»´õ¸µ
 	{
 		uint8_t tile = src[i];
 		ubox_put_tile(x, pivot_y, tile);
 	}
 
-	if ((pivot_x + len) <= g_map_width)
+	if ((pivot_x + len) <= g_room_width)
 		return;
 
 	len -= pivot_x;
 	x = 0;
 
-	uint8_t height = len / g_map_width;
+	uint8_t height = len / g_room_width;
 
 	for (uint8_t y = 0; y < height; y++)
-		for (; x < g_map_width; x++)
+		for (; x < g_room_width; x++)
 		{
-			uint8_t tile = src[g_map_width - pivot_x + x + y * g_map_width];
+			uint8_t tile = src[g_room_width - pivot_x + x + y * g_room_width];
 			ubox_put_tile(x, pivot_y + y + 1, tile);
 		}
 }

@@ -16,6 +16,13 @@ gulkave: bin libs
 	make -C tools
 	make -C gulkave	
 	openmsx.exe -carta ./bin/gulkave.rom -machine C-BIOS_MSX2
+	
+bomb: bin libs
+	make -C bomb clean
+	make -C tools
+	make -C bomb	
+	openmsx.exe -carta ./bin/bomb.rom -machine C-BIOS_MSX2
+	
 
 docs:
 	make -C docs

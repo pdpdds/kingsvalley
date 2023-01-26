@@ -14,6 +14,9 @@ uint8_t read_key_4;
 uint8_t g_map_width;
 uint8_t g_map_height;
 
+uint8_t g_room_width;
+uint8_t g_room_height;
+
 uint32_t g_screen_width;
 uint32_t g_screen_height;
 

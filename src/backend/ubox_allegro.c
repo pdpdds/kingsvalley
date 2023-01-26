@@ -60,7 +60,7 @@ void ubox_enable_screen()
 
 void ubox_put_tile(uint8_t x, uint8_t y, uint8_t tile)
 {
-	blit(g_bitmap_tiles, g_backbuffer, (int)(tile % g_map_width) * 8, (int)(tile / g_map_width) * 8, x * 8, y * 8, 8, 8); //전면버퍼에 후면버퍼를 블리팅한다.
+	blit(g_bitmap_tiles, g_backbuffer, (int)(tile % g_room_width) * 8, (int)(tile / g_room_width) * 8, x * 8, y * 8, 8, 8); //전면버퍼에 후면버퍼를 블리팅한다.
 
 }
 
@@ -330,10 +330,13 @@ void ubox_putpixel(void* texture, int x, int y, int attr) {
 
 
 
-void ubox_init_game_system(const char* szTitle, int screen_width, int screen_height, uint8_t map_width, uint8_t map_height)
+void ubox_init_game_system(const char* szTitle, int screen_width, int screen_height, uint8_t room_width, uint8_t room_height, uint8_t map_width, uint8_t map_height)
 {
 	g_screen_width = screen_width;
 	g_screen_height = screen_height;
+
+	g_room_width = room_width;
+	g_room_height = room_height;
 
 	g_map_width = map_width;
 	g_map_height = map_height;

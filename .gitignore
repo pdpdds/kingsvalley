@@ -63,5 +63,6 @@ x64
 *.rel
 *.lst
 *.sym
-bomberman
+bomb
 gulkave
+game/data/kings

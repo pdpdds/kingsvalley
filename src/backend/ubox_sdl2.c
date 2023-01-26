@@ -140,8 +140,8 @@ void ubox_put_tile(uint8_t x, uint8_t y, uint8_t tile)
 	SDL_Rect srcRect;
 	SDL_Rect dstRect;
 
-	uint8_t src_x = tile % g_map_width;
-	uint8_t src_y = tile / g_map_width;
+	uint8_t src_x = tile % g_room_width;
+	uint8_t src_y = tile / g_room_width;
 
 
 	srcRect.x = src_x * 8;
@@ -160,8 +160,10 @@ void ubox_put_tile(uint8_t x, uint8_t y, uint8_t tile)
 }
 
 
-void ubox_init_game_system(const char* szTitle, int screen_width, int screen_height, uint8_t map_width, uint8_t map_height)
+extern void ubox_init_game_system(const char* szTitle, int screen_width, int screen_height, uint8_t room_width, uint8_t room_height, uint8_t map_width, uint8_t map_height)
 {
+	g_room_width = room_width;
+	g_room_height = room_height;
 	g_map_width = map_width;
 	g_map_height = map_height;
 
@@ -210,7 +212,7 @@ void ubox_init_game_system(const char* szTitle, int screen_width, int screen_hei
 		return;
 	}
 
-	SDL_RenderSetLogicalSize(g_renderer, g_map_width * 8, (g_map_height + 2) * 8);
+	SDL_RenderSetLogicalSize(g_renderer, g_room_width * 8, (g_room_height + 2) * 8);
 
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);		
