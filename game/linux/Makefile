@@ -4,7 +4,7 @@
 
 # Compiler settings - Can be customized.
 CC = gcc
-CFLAGS = -Wall -DSDL2 -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include
+CFLAGS = -Wall -fcommon -DSDL2 -g -I../../include -I../generated -I../../tools/apultra/src -I../src -I../../tools/apultra/src/libdivsufsort/include
 CXXFLAGS = -fpermissive -std=c++11 -Wall -g -I../../include -I../generated -I../../tools/apultra/src/libdivsufsort/include -I../../tools/apultra/src -I../src
 LDFLAGS = -lSDL2 -lGL -lGLEW -lSDL2_image -lSDL2_image -lSDL2_mixer
 
