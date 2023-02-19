@@ -170,6 +170,7 @@ extern void ubox_init_game_system(const char* szTitle, int screen_width, int scr
 	control_key = 0;
 	read_key_7 = 0;
 	read_key_4 = 0;
+	read_key_5 = 0;
 
 #if defined(__ANDROID__)
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) < 0)

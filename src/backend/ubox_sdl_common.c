@@ -79,6 +79,9 @@ void read_control_key()
 
 uint8_t read_key(int row)
 {
+	if (row == 5)
+		return read_key_5;
+
 	return read_key_7;
 }
 
@@ -117,6 +120,9 @@ uint8_t ubox_update() {
 				read_key_7 |= UBOX_MSX_KEY_ESC;
 				control_key |= UBOX_MSX_CTL_EXIT;
 				break;
+			case SDLK_z:
+				read_key_5 |= UBOX_MSX_KEY_Z;
+				break;
 			}
 			break;
 
@@ -145,6 +151,10 @@ uint8_t ubox_update() {
 				control_key &= ~(UBOX_MSX_CTL_EXIT);
 				read_key_7 &= ~(UBOX_MSX_KEY_ESC);
 				break;
+			case SDLK_z:
+				control_key &= ~(UBOX_MSX_CTL_EXIT);
+				read_key_5 &= ~(UBOX_MSX_KEY_Z);
+				break;
 			}
 			break;
 		}
@@ -159,6 +169,7 @@ void spman_hide_all_sprites()
 {
 	control_key = 0;
 	read_key_7 = 0;
+	read_key_5 = 0;
 	read_key_4 = 0;
 }
 
