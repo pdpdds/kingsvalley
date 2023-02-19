@@ -2,14 +2,15 @@
 #include <stdint.h>
 #include "cvector.h"
 
-//#define IMAGE_LOAD_MODE
-#define SPRITE_PIXEL_MODE
+#define IMAGE_LOAD_MODE
+//#define SPRITE_PIXEL_MODE
 
 #define TICK_INTERVAL    60
 
 uint8_t control_key;
 uint8_t read_key_7;
 uint8_t read_key_4;
+uint8_t read_key_5;
 
 uint8_t g_map_width;
 uint8_t g_map_height;
