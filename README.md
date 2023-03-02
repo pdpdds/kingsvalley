@@ -18,7 +18,7 @@ WebMSX로 웹상에서 플레이해 보실 수 있습니다.
 킹스밸리의 엔딩을 봤다는 가정하에 맵을 제작했기 때문에 난이도가 꽤 높습니다.  
 
 [버전1](https://webmsx.org/?ROM=https://github.com/pdpdds/ubox_example/releases/download/v1.0/kings_ver2.rom)  
-[버전2](https://webmsx.org/?ROM=https://github.com/pdpdds/ubox_example/releases/download/v1.0/kings.rom)
+[버전2](https://webmsx.org/?ROM=https://github.com/pdpdds/ubox_example/releases/download/v1.0/kings.rom)   
 [오리지널](https://webmsx.org/?ROM=https://github.com/pdpdds/ubox_example/releases/download/v1.0/kings_original.rom)
 
 
