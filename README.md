@@ -19,6 +19,7 @@ WebMSX로 웹상에서 플레이해 보실 수 있습니다.
 
 [버전1](https://webmsx.org/?ROM=https://github.com/pdpdds/ubox_example/releases/download/v1.0/kings_ver2.rom)  
 [버전2](https://webmsx.org/?ROM=https://github.com/pdpdds/ubox_example/releases/download/v1.0/kings.rom)
+[오리지널](https://webmsx.org/?ROM=https://github.com/pdpdds/ubox_example/releases/download/v1.0/kings_original.rom)
 
 
 ## 특징
