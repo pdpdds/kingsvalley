@@ -45,10 +45,11 @@ jobs:
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: |
         msbuild kings_sdl2.sln /t:Build /p:Configuration=Release /p:Platform=x86        
-        copy .\game\data .\${{env.BUILD_CONFIGURATION}} 
+        copy .\${{env.BUILD_CONFIGURATION}}\*.exe .\game\data  
+        copy .\${{env.BUILD_CONFIGURATION}}\*.dll .\game\data          
         
     - name: Upload a Build Artifact(kings-win32)                      
       uses: actions/upload-artifact@v2.1.4
       with:
           name: kings-win32
-          path: ${{env.GITHUB_WORKSPACE}}${{env.BUILD_CONFIGURATION}}
+          path: .\game\data
