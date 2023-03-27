@@ -40,6 +40,8 @@
 #define UBOX_EXPORT_API
 #endif
 
+extern uint8_t* VIDEO_MEMORY_ADDRESS;
+
 #if defined(WIN32) || (__ANDROID__) || defined(SKYOS32) || defined(__linux) || defined(DJGPP) 
 #define __z88dk_fastcall
 #endif

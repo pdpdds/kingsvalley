@@ -223,11 +223,7 @@ static void init_map_entities(uint8_t stage) {
 				g_cur_room_id = i;
 				entities[last].update = update_player;
 				entities[last].pivot_x = 4;
-#if defined(__SDCC)
-				entities[last].pivot_y = 1;
-#else
 				entities[last].pivot_y = 0;
-#endif
 				entities[last].x += entities[last].pivot_x;
 				entities[last].y += entities[last].pivot_y;
 				entities[last].width = 8;
@@ -242,11 +238,7 @@ static void init_map_entities(uint8_t stage) {
 				entities[last].width = 8;
 				entities[last].height = 16;
 				entities[last].pivot_x = 4;
-#if defined(__SDCC)
-				entities[last].pivot_y = 1;
-#else
 				entities[last].pivot_y = 0;
-#endif
 				entities[last].x += entities[last].pivot_x;
 				entities[last].y += entities[last].pivot_y;
 
@@ -315,13 +307,7 @@ static void draw_map(uint8_t roomId)
 {
 	ubox_wait_vsync();
 
-#if defined(__ANDROID__) || defined(WIN32) || defined(DJGPP) || defined(__linux)
-	uint8_t* video_memory = 0;
-#else
-	uint8_t* video_memory = (uint8_t*)0x1800;
-#endif
-
-	ubox_write_vm(video_memory, MAP_W * MAP_H, cur_map_data[roomId]);
+	ubox_write_vm(VIDEO_MEMORY_ADDRESS, MAP_W * MAP_H, cur_map_data[roomId]);
 }
 
 void draw_hud()
@@ -354,11 +340,7 @@ void draw_hud()
 	put_text(2, MAP_H, (uint8_t*)"KONAMI");
 	put_text(12, MAP_H, (uint8_t*)"PYRAMID");
 	ubox_put_tile(19, MAP_H, 32);
-
-
-	//sprintf(buffer, "%d", g_stage);
-	//put_text(20, MAP_H, (uint8_t*)buffer);
-
+	
 	if (g_stage > 10)
 	{
 		ubox_put_tile(20, MAP_H, (g_stage / 10) + 16);
@@ -406,6 +388,8 @@ uint8_t process_game() {
 
 void process_door_animation(uint8_t start)
 {
+	self = player;
+
 	uint8_t tile_x = player->x >> 3;
 	uint8_t tile_y = player->y >> 3;
 

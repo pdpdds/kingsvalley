@@ -37,6 +37,9 @@ void ap_uncompress(const uint8_t* dst, const uint8_t* src)
 
     apultra_decompress(src, (uint8_t*)dst, 768, 32 * 24, 0, 0);
 }
+uint8_t* VIDEO_MEMORY_ADDRESS = 0;
+#else
+uint8_t* VIDEO_MEMORY_ADDRESS = 0x1800;
 #endif
 
 void draw_menu() {
@@ -49,13 +52,7 @@ void draw_menu() {
     cur_map = (const uint8_t**)map0;
     ap_uncompress(cur_map_data[0], cur_map[0] + 3);
 
-#if defined(__SDCC)
-    uint8_t* video_memory = (uint8_t*)0x1800;
-#else
-    uint8_t* video_memory = 0;
-#endif
-
-    ubox_write_vm(video_memory, MAP_W * 24, (uint8_t*)cur_map_data);
+    ubox_write_vm(VIDEO_MEMORY_ADDRESS, MAP_W * 24, (uint8_t*)cur_map_data);
 
     ubox_enable_screen();
     
@@ -230,7 +227,6 @@ void main()
     ubox_load_music(SONG_GAME_START, "./audio/start.wav", 0);
 
     ubox_load_effect(EFX_DEAD, "./audio/caught.wav", 0);
-
 
     if (info._sprite_mode == SPRITE_PATTERN_IMAGE) {
         ubox_load_sprite(PAT_PLAYER_MOVE, "./p_move.png", 1);

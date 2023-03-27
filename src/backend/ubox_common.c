@@ -237,6 +237,8 @@ void ubox_load_music(uint8_t music_index, char* filename, uint8_t loop) {
 	void* music = 0;
 	if (strlen(filename) != 0) {
 		music = load_music(filename);
+
+		assert(music);
 	}
 
 	music_info element = { music_index, loop, music };
