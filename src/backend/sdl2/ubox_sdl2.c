@@ -215,6 +215,11 @@ extern void ubox_init_game_system(GameSystemInfo* info)
 	int frameCount = 0;
 	lastTime = SDL_GetTicks();
 
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
+		SDL_QuitSubSystem(SDL_INIT_AUDIO);
+		return;
+	}
+
 	if (TTF_Init() == -1) {
 		SDL_Log("Could not initialize TTF: %s", TTF_GetError());
 		return;
@@ -224,12 +229,7 @@ extern void ubox_init_game_system(GameSystemInfo* info)
 	if (g_font == NULL) {
 		SDL_Log("Could not load font: %s", TTF_GetError());
 		return;
-	}
-	
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
-		SDL_QuitSubSystem(SDL_INIT_AUDIO);		
-		return;
-	}
+	}	
 }
 
 void* create_flip_texture(void* texture, int sprite_size) {
