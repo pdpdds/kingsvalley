@@ -288,7 +288,7 @@ uint8_t render_sprite_image(void* texture, uint8_t src_x, uint8_t src_y, uint8_t
 	return 1;
 }
 
-uint8_t render_sprite_texture(void* texture, int x, int y, int patternIndex, uint8_t flip) {
+/*uint8_t render_sprite_texture(void* texture, int x, int y, int patternIndex, uint8_t flip) {
 
 	SDL_Rect srcRect;
 	SDL_Rect dstRect;
@@ -309,7 +309,7 @@ uint8_t render_sprite_texture(void* texture, int x, int y, int patternIndex, uin
 	SDL_RenderCopyEx(g_renderer, texture, &srcRect, &dstRect, 0, 0, 0);
 	
 	return 1;
-}
+}*/
 
 void show_fps() {
 	SDL_Color textColor = { 255, 255, 255 };
@@ -333,8 +333,8 @@ void spman_update() {
 	SDL_RenderCopy(g_renderer, g_background_texture, NULL, NULL);
 	render_sprites();
 
-	if(g_system_info->_show_fps)
-		show_fps();
+	//if(g_system_info->_show_fps)
+		//show_fps();
 
 	SDL_RenderPresent(g_renderer);
 	SDL_SetRenderTarget(g_renderer, NULL);	
