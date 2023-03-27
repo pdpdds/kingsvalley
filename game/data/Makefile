@@ -9,19 +9,19 @@ $(OUTPUT)/tiles.h: tiles.png
 $(OUTPUT)/title.h: tiles.png
 	python ../tools/png2tiles.py -i title $< > $@	
 
-$(OUTPUT)/playermove.h: playermove.png
+$(OUTPUT)/playermove.h: p_move.png
 	python ../tools/png2sprites.py -i playermove_sprite $< > $@
 	
-$(OUTPUT)/playerknife.h: playerknife.png
+$(OUTPUT)/playerknife.h: p_knife.png
 	python ../tools/png2sprites.py -i playerknife_sprite $< > $@
 
-$(OUTPUT)/playerpickax.h: playerpickax.png
+$(OUTPUT)/playerpickax.h: p_pickax.png
 	python ../tools/png2sprites.py -i playerpickax_sprite $< > $@	
 	
-$(OUTPUT)/playerattack.h: playerattack.png
+$(OUTPUT)/playerattack.h: p_attack.png
 	python ../tools/png2sprites.py -i playerattack_sprite $< > $@	
 
-$(OUTPUT)/playerdigging.h: playerdigging.png
+$(OUTPUT)/playerdigging.h: p_dig.png
 	python ../tools/png2sprites.py -i playerdigging_sprite $< > $@		
 	
 $(OUTPUT)/enemy.h: enemy.png

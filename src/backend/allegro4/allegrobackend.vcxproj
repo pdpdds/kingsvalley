@@ -24,8 +24,8 @@
     <ClInclude Include="..\ubox_common.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\ubox_allegro.c" />
     <ClCompile Include="..\ubox_common.c" />
+    <ClCompile Include="ubox_allegro.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

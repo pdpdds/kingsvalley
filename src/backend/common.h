@@ -54,6 +54,9 @@ typedef struct tag_image_info
 }image_info;
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 void* create_flip_texture(void* texture, int sprite_size);
 //deprecated
 uint8_t render_sprite_texture(void* texture, int x, int y, int patternIndex, uint8_t flip);
@@ -79,3 +82,7 @@ extern color_info transparent_color;
 extern color_info sprite_pallete[16];
 extern uint8_t g_tiles_rgb[2048 * 8 * 4];
 extern cvector_vector_type(image_info) g_sprite_list;
+
+#ifdef __cplusplus
+}
+#endif

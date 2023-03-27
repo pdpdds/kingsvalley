@@ -176,9 +176,9 @@ extern void ubox_init_game_system(GameSystemInfo* info)
 	}
 
 #if defined(__ANDROID__)
-	g_window = SDL_CreateWindow(szTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 448, SDL_WINDOW_FULLSCREEN);
+	g_window = SDL_CreateWindow(info->_title_name, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 448, SDL_WINDOW_FULLSCREEN);
 #elif defined(__linux)
-	g_window = SDL_CreateWindow(szTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
+	g_window = SDL_CreateWindow(info->_title_name, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, info->_screen_width, info->_screen_height, SDL_WINDOW_SHOWN);
 #else
 	g_window = SDL_CreateWindow(info->_title_name, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		info->_screen_width, info->_screen_height, SDL_WINDOW_SHOWN);

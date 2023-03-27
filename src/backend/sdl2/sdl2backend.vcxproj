@@ -25,9 +25,9 @@
     <ClInclude Include="..\ubox_sdl_common.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\sdl_common\ubox_sdl_common.c" />
     <ClCompile Include="..\ubox_common.c" />
-    <ClCompile Include="..\ubox_sdl2.c" />
-    <ClCompile Include="..\ubox_sdl_common.c" />
+    <ClCompile Include="ubox_sdl2.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

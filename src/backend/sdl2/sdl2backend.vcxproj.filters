@@ -29,10 +29,10 @@
     <ClCompile Include="..\ubox_common.c">
       <Filter>src\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\ubox_sdl_common.c">
+    <ClCompile Include="..\sdl_common\ubox_sdl_common.c">
       <Filter>src\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\ubox_sdl2.c">
+    <ClCompile Include="ubox_sdl2.c">
       <Filter>src\sdl2</Filter>
     </ClCompile>
   </ItemGroup>
