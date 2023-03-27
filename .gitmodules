@@ -1,0 +1,3 @@
+[submodule "sdl4dos"]
+	path = sdl4dos
+	url = https://github.com/pdpdds/sdl4dos
