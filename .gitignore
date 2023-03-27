@@ -56,6 +56,8 @@ game/build
 src/backend/Debug
 src/backend/Release
 game/linux/kings
+/game/djgpp
+/src/backend/sdl1
 Debug
 Release
 x64
