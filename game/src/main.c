@@ -11,6 +11,34 @@
 #include "main.h"
 #include <ap.h>
 
+
+#if !defined(__SDCC)
+#include <ubox_common.h>
+#include <expand.h>
+
+GameSystemInfo info;
+
+uint8_t SONG[] = { 0,0,0,0,0 };
+uint8_t EFFECTS[] = { 0,0,0,0,0 };
+
+size_t GetMapDataSize(const uint8_t* map)
+{
+    unsigned short count = map[1];
+    count = count << 8;
+    count = count | map[0];
+
+    return count;
+}
+
+void ap_uncompress(const uint8_t* dst, const uint8_t* src)
+{
+
+   // size_t n = GetMapDataSize(src - 3);
+
+    apultra_decompress(src, (uint8_t*)dst, 768, 32 * 24, 0, 0);
+}
+#endif
+
 void draw_menu() {
     uint8_t i = 0;
 
@@ -49,7 +77,7 @@ void draw_menu() {
             }
 #endif
             mplayer_play_effect_p(EFX_START, EFX_CHAN_NO, 0);
-            //mplayer_init(SONG, SONG_GAME_START);
+            mplayer_init(SONG, SONG_GAME_START);
 
 #ifdef _DEBUG
 
@@ -154,39 +182,62 @@ void draw_stage_reset() {
     g_gamestate = STATE_IN_GAME;
     
 }
-
-#if !defined(__SDCC)
-extern void ubox_init_game_system(const char* szTitle, int screen_width, int screen_height, uint8_t room_width, uint8_t room_height, uint8_t map_width, uint8_t map_height);
-extern void ubox_load_music(uint8_t music_index, char* filename, uint8_t loop);
-extern void ubox_add_sprite(uint8_t music_index, char* filename, uint8_t loop);
-
-uint8_t game_main() {
-#if defined(DJGPP)
-    int game_width = 320;
-    int game_height = 200;
+#if defined(__SDCC)
+uint8_t main() 
 #else
-    int game_width = 640;
-    int game_height = 480;
+#if defined(DJGPP) 
+int main(void)
+#elif defined(WIN32)
+#include <windows.h>
+int APIENTRY WinMain(HINSTANCE hInstance,
+    HINSTANCE hPrevInstance,
+    LPSTR     lpCmdLine,
+    int       nCmdShow)
+#elif defined(SKYOS32) || defined(__linux)
+int main(int argc, char** argv)
+#elif defined(__ANDROID__)
+int SDL_main(int argc, char** argv)
+#else
+void main()
 #endif
-    
-    ubox_init_game_system("King's Valley", game_width, game_height, 32, 24, 32, 24);
+#endif
+{
+#if !defined(__SDCC)
+
+#if defined(DJGPP)
+    info._screen_width = 320;
+    info._screen_height = 200;    
+#else
+    info._screen_width = 640;
+    info._screen_height = 480;    
+#endif    
+
+    info._msx_screen_width = 256;
+    info._msx_screen_height = 192;
+    info._color_depth = 8;
+    info._room_width = 32;
+    info._room_height = 24;  
+    info._fps = 30;
+    info._show_fps = 0;
+    info._sprite_mode = SPRITE_PATTERN_IMAGE;
+    strcpy(info._title_name, "King's Valley 1 - Recreation");
+
+    ubox_init_game_system(&info);
 
     ubox_load_music(SONG_SILENCE, "", 0);
-    ubox_load_music(SONG_IN_GAME, "audio/bgm.wav",1);
+    ubox_load_music(SONG_IN_GAME, "audio/bgm.wav", 1);
     ubox_load_music(SONG_GAME_OVER, "audio/gameover.wav", 0);
     ubox_load_music(SONG_GAME_START, "audio/start.wav", 0);
- 
-    ubox_add_sprite(PAT_PLAYER_MOVE, "./p_move.png", 1);
-    ubox_add_sprite(PAT_PLAYER_KNIFE, "./p_knife.png", 1);
-    ubox_add_sprite(PAT_PLAYER_PICKAX, "./p_pickax.png", 1);
-    ubox_add_sprite(PAT_DIGGING, "./p_dig.png", 1);
-    ubox_add_sprite(PAT_ATTACK, "./p_attack.png", 1);
-    ubox_add_sprite(PAT_ENEMY, "./enemy.png", 1);
-    ubox_add_sprite(PAT_KNIFE, "./knife.png", 1);
-   
-#else
-uint8_t main()
-{
+
+    ubox_load_effect(EFX_DEAD, "audio/caught.wav", 0);
+
+    ubox_load_sprite(PAT_PLAYER_MOVE, "./p_move.png", 1);
+    ubox_load_sprite(PAT_PLAYER_KNIFE, "./p_knife.png", 1);
+    ubox_load_sprite(PAT_PLAYER_PICKAX, "./p_pickax.png", 1);
+    ubox_load_sprite(PAT_DIGGING, "./p_dig.png", 1);
+    ubox_load_sprite(PAT_ATTACK, "./p_attack.png", 1);
+    ubox_load_sprite(PAT_ENEMY, "./enemy.png", 1);
+    ubox_load_sprite(PAT_KNIFE, "./knife.png", 1);
 #endif
     ubox_init_isr(2);
 
@@ -240,6 +291,8 @@ uint8_t main()
          ubox_wait();
     }
 
+#if !defined(__SDCC)
+    ubox_finalize();
+#endif
     return 0;
-   
 }

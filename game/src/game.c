@@ -32,6 +32,7 @@
 #include "trap.h"
 #include "character.h"
 
+extern void ap_uncompress(const uint8_t* dst, const uint8_t* src);
 
 //enemy animation
 const uint8_t enemy_reborn_frames[ENEMY_REBORN_CYCLE] = { 4, 5 };
@@ -222,7 +223,11 @@ static void init_map_entities(uint8_t stage) {
 				g_cur_room_id = i;
 				entities[last].update = update_player;
 				entities[last].pivot_x = 4;
+#if defined(__SDCC)
+				entities[last].pivot_y = 1;
+#else
 				entities[last].pivot_y = 0;
+#endif
 				entities[last].x += entities[last].pivot_x;
 				entities[last].y += entities[last].pivot_y;
 				entities[last].width = 8;
@@ -237,7 +242,14 @@ static void init_map_entities(uint8_t stage) {
 				entities[last].width = 8;
 				entities[last].height = 16;
 				entities[last].pivot_x = 4;
+#if defined(__SDCC)
+				entities[last].pivot_y = 1;
+#else
 				entities[last].pivot_y = 0;
+#endif
+				entities[last].x += entities[last].pivot_x;
+				entities[last].y += entities[last].pivot_y;
+
 				entities[last].regentime = ENEMY_REBORN_CYCLE * 2;
 				
 				entities[last].state = PS_NONE;
@@ -432,15 +444,8 @@ void process_door_animation(uint8_t start)
 				}
 			}
 
-
 			ubox_wait();
 			spman_update();
-
-#if defined(_WIN32) || defined(__ANDROID__) || defined(__linux)
-			draw_map(g_cur_room_id);
-			draw_static_object();
-			draw_hud();
-#endif
 		}
 	}
 }
@@ -493,12 +498,6 @@ void run_game(uint8_t stage) {
 			case STATE_IN_GAME:
 			case STATE_GAME_RESET:
 			case STATE_GAME_OVER:
-#if defined(_WIN32) || defined(__ANDROID__) || defined(DJGPP) || defined(__linux)
-				draw_map(g_cur_room_id);
-				draw_static_object();
-				draw_hud();
-#endif
-
 				end = process_game();
 				break;
 			}

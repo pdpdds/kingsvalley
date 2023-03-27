@@ -1,18 +1,24 @@
-#ifdef SDL2
-
 #include <ubox.h>
 #include <expand.h>
 #include "ubox_common.h"
 #include "ubox_sdl_common.h"
 
+void set_pixel(SDL_Surface* surface, int x, int y, int color);
+SDL_Surface* load_png(const char* filename);
+
 SDL_Window* g_window;
 SDL_Renderer* g_renderer;
 SDL_Texture* g_tile_texture;
+SDL_Texture* g_background_texture;
+TTF_Font* g_font = 0;
 
-void set_icon()
-{
-	SDL_Surface* surface;
 
+#define ICON_SIZE_X 16
+#define ICON_SIZE_Y 16
+#define ICON_DEPTH 16
+#define ICON_PITCH 32
+
+void set_icon() {	
 	//SDL Icon
 	Uint16 pixels[16 * 16] =
 	{
@@ -49,56 +55,52 @@ void set_icon()
 	  0x0fff, 0x0fff, 0x0fff, 0x0fff, 0x0fff, 0x0fff, 0x0fff, 0x0fff,
 	  0x0fff, 0x0fff, 0x0fff, 0x0fff, 0x0fff, 0x0fff, 0x0fff, 0x0fff
 	};
-	surface = SDL_CreateRGBSurfaceFrom(pixels, 16, 16, 16, 16 * 2, 0x0f00, 0x00f0, 0x000f, 0xf000);
 
+	SDL_Surface* icon = SDL_CreateRGBSurfaceFrom(pixels, ICON_SIZE_X, 
+		                                                 ICON_SIZE_Y, 
+														 ICON_DEPTH, 
+		                                                 ICON_PITCH, 
+		                                                 0x0f00, 
+		                                                 0x00f0, 
+		                                                 0x000f, 
+		                                                 0xf000);
+	SDL_SetWindowIcon(g_window, icon);
+	SDL_FreeSurface(icon);	
+}
+
+void ubox_set_tiles_from_file(const char* filename)
+{
+
+	SDL_Surface* surface = load_png(filename);
+	g_tile_texture = SDL_CreateTextureFromSurface(g_renderer, surface);
 	SDL_FreeSurface(surface);
+
 }
 
-void ubox_enable_screen()
-{
-	SDL_RenderPresent(g_renderer);
-}
-
-
-void ubox_set_tiles(uint8_t* tiles)
-{
-	int i = 0, j = 0, k = 0, t = 0;
-	uint32_t rmask = 0x000000ff;
-	uint32_t gmask = 0x0000ff00;
-	uint32_t bmask = 0x00ff0000;
-	uint32_t amask = 0;
+void ubox_set_tiles(uint8_t* tiles) {
 
 	g_tiles = tiles;
 
+	if (g_tile_texture)
+		SDL_DestroyTexture(g_tile_texture);
 
-#ifdef IMAGE_LOAD_MODE
-	SDL_Surface* temp;
-	temp = load_png("tiles.png");
+	g_tile_texture = NULL;	
 
+	int i = 0, j = 0, k = 0, t = 0;
+	for (i = 0; i < TILESET_COUNT_Y; i++) {
+		for (j = 0; j < TILESET_COUNT_X; j++) {
+			for (k = 0; k < PIXELS_PER_TILE; k++) {
+				uint8_t pixel = g_tiles[(i * TILESET_COUNT_Y * TILESET_COUNT_X) + (j * PIXELS_PER_TILE) + k];
+				uint8_t color = g_tiles_colors[(i * TILESET_COUNT_Y * TILESET_COUNT_X) + (j * PIXELS_PER_TILE) + k];
 
-	g_tile_texture = SDL_CreateTextureFromSurface(g_renderer, temp);
-	SDL_FreeSurface(temp);
+				uint8_t color1 = (color >> 4);
+				uint8_t color2 = ((uint8_t)(color << 4)) >> 4;				
 
-#else
-	for (i = 0; i < 8; i++)
-	{
-		for (j = 0; j < 32; j++)
-		{
-			for (k = 0; k < 8; k++)
-			{
-				uint8_t tile_pixels = g_tiles[(i * 8 * 32) + (j * 8) + k];
-				uint8_t tile_color = g_tiles_colors[(i * 8 * 32) + (j * 8) + k];
-
-				uint8_t color = (tile_color >> 4);
-				uint8_t color2 = (tile_color << 4);
-				color2 = color2 >> 4;
-
-				for (t = 0; t < 8; t++)
-				{
+				for (t = 0; t < 8; t++) {
 					uint8_t mask = 1 << (7 - t);
-					int index = ((i * 8 * 8 * 32) + (k) * 8 * 32 + (j * 8 + t)) * 3;
+					int index = ((i * TILE_HEIGHT * TILE_WIDTH * TILESET_COUNT_X) + (k) * TILE_WIDTH * TILESET_COUNT_X + (j * TILE_WIDTH + t)) * 3;
 
-					uint8_t pixel_color = (tile_pixels & mask) ? color : color2;
+					uint8_t pixel_color = (pixel & mask) ? color1 : color2;
 
 					g_tiles_rgb[index] = sprite_pallete[pixel_color].r;
 					g_tiles_rgb[index + 1] = sprite_pallete[pixel_color].g;
@@ -108,69 +110,60 @@ void ubox_set_tiles(uint8_t* tiles)
 		}
 	}
 
-	SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)g_tiles_rgb, 256, 64, 24, 3 * 256,
+	//24bit Surface
+	SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)g_tiles_rgb, TILESET_COUNT_X * TILE_WIDTH, TILESET_COUNT_Y * TILE_HEIGHT, 24, 3 * TILESET_COUNT_X * TILE_WIDTH,
 		rmask, gmask, bmask, amask);
 
 	if (surface == NULL) {
-		SDL_Log("Creating surface failed: %s", SDL_GetError());		
+		SDL_Log("Creating surface failed: %s", SDL_GetError());
 		exit(1);
 	}
 
-	if(g_tile_texture)
-		SDL_DestroyTexture(g_tile_texture);
-
 	g_tile_texture = SDL_CreateTextureFromSurface(g_renderer, surface);
-
 	SDL_FreeSurface(surface);
-
-#endif
-
 }
 
 
-void* create_sdl_texture(void* texture) {
+void* create_texture(void* surface) {
 
-	return SDL_CreateTextureFromSurface(g_renderer, texture);
+	assert(surface != NULL);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(g_renderer, surface);
+	SDL_FreeSurface((SDL_Surface*)surface);
+
+	assert(texture != NULL);
+
+	return texture;
 	
 }
-
 
 void ubox_put_tile(uint8_t x, uint8_t y, uint8_t tile)
 {
 	SDL_Rect srcRect;
 	SDL_Rect dstRect;
 
-	uint8_t src_x = tile % g_room_width;
-	uint8_t src_y = tile / g_room_width;
+	uint8_t src_x = tile % TILE_MAP_X_COUNT;
+	uint8_t src_y = tile / TILE_MAP_X_COUNT;
 
+	srcRect.x = src_x * TILE_SIZE;
+	srcRect.y = src_y * TILE_SIZE;
+	srcRect.w = TILE_SIZE;
+	srcRect.h = TILE_SIZE;
 
-	srcRect.x = src_x * 8;
-	srcRect.y = src_y * 8;
-	srcRect.w = 8;
-	srcRect.h = 8;
-
-	dstRect.x = x * 8;
-	dstRect.y = y * 8;
-	dstRect.w = 8;
-	dstRect.h = 8;
-
-
-	SDL_RenderCopy(g_renderer, g_tile_texture, &srcRect, &dstRect);
-
+	dstRect.x = x * TILE_SIZE;
+	dstRect.y = y * TILE_SIZE;
+	dstRect.w = TILE_SIZE;
+	dstRect.h = TILE_SIZE;
+	
+	SDL_SetRenderTarget(g_renderer, g_background_texture);
+	SDL_RenderCopy(g_renderer, g_tile_texture, &srcRect, &dstRect);	
+	SDL_SetRenderTarget(g_renderer, NULL);
 }
 
-
-extern void ubox_init_game_system(const char* szTitle, int screen_width, int screen_height, uint8_t room_width, uint8_t room_height, uint8_t map_width, uint8_t map_height)
+extern void ubox_init_game_system(GameSystemInfo* info)
 {
-	g_room_width = room_width;
-	g_room_height = room_height;
-	g_map_width = map_width;
-	g_map_height = map_height;
+	g_system_info = info;
 
-	control_key = 0;
-	read_key_7 = 0;
-	read_key_4 = 0;
-	read_key_5 = 0;
+	init_key_values();
 
 #if defined(__ANDROID__)
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) < 0)
@@ -178,7 +171,7 @@ extern void ubox_init_game_system(const char* szTitle, int screen_width, int scr
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 #endif
 	{
-		//ubox_log("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+		SDL_Log("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 		return;
 	}
 
@@ -187,12 +180,12 @@ extern void ubox_init_game_system(const char* szTitle, int screen_width, int scr
 #elif defined(__linux)
 	g_window = SDL_CreateWindow(szTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
 #else
-	g_window = SDL_CreateWindow(szTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		screen_width, screen_height, SDL_WINDOW_SHOWN);
+	g_window = SDL_CreateWindow(info->_title_name, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+		info->_screen_width, info->_screen_height, SDL_WINDOW_SHOWN);
 #endif
-	if (g_window == NULL)
+	if (!g_window)
 	{
-		//printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
+		SDL_Log("Window could not be created! SDL Error: %s\n", SDL_GetError());
 		return;
 	}
 
@@ -200,21 +193,39 @@ extern void ubox_init_game_system(const char* szTitle, int screen_width, int scr
 	g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED);
 #elif defined(WIN32)
 	set_icon();
-	g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
 #elif defined(__linux)
 	g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 #else
 	g_renderer = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_SOFTWARE);
 #endif
 
-	if (g_renderer == NULL)
+	if (!g_renderer)
 	{
-		//printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+		SDL_Log("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 		return;
 	}
 
-	SDL_RenderSetLogicalSize(g_renderer, g_room_width * 8, (g_room_height + 2) * 8);
+	g_background_texture = SDL_CreateTexture(g_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, g_system_info->_msx_screen_width, g_system_info->_msx_screen_height);
 
+	SDL_RenderSetLogicalSize(g_renderer, g_system_info->_room_width * TILE_WIDTH, (g_system_info->_room_height) * TILE_HEIGHT);	
+	
+	SDL_initFramerate(&fpsManager);
+	SDL_setFramerate(&fpsManager, g_system_info->_fps);
+	int frameCount = 0;
+	lastTime = SDL_GetTicks();
+
+	if (TTF_Init() == -1) {
+		SDL_Log("Could not initialize TTF: %s", TTF_GetError());
+		return;
+	}
+
+	g_font = TTF_OpenFont("arial.ttf", 10);
+	if (g_font == NULL) {
+		SDL_Log("Could not load font: %s", TTF_GetError());
+		return;
+	}
+	
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);		
 		return;
@@ -225,37 +236,29 @@ void* create_flip_texture(void* texture, int sprite_size) {
 	return texture;
 }
 
-void* ubox_create_texture(int width, int height) {
-	
-	uint32_t rmask = 0x000000ff;
-	uint32_t gmask = 0x0000ff00;
-	uint32_t bmask = 0x00ff0000;
-	uint32_t amask = 0;
-
+void* ubox_create_surface(int width, int height, int color_depth) {
+		
 	SDL_Surface* temp = SDL_CreateRGBSurface(0, width, height, 24, rmask, gmask, bmask, amask);
 	SDL_SetColorKey(temp, SDL_TRUE, SDL_MapRGB(temp->format, 255, 0, 255));
 	return temp;
 }
 
 
-
-void ubox_putpixel(void* texture, int x, int y, int attr) {
-	
+void ubox_putpixel(void* texture, uint8_t x, uint8_t y, int attr) {
+		
 	SDL_SetRenderDrawColor(g_renderer, sprite_pallete[attr].r, sprite_pallete[attr].g, sprite_pallete[attr].b, 255);
+	
 	if (texture) {
-
-		set_pixel(texture, x, y, (255 << 24) |(sprite_pallete[attr].r << 16) | (sprite_pallete[attr].g << 8) |  sprite_pallete[attr].b);
+		set_pixel(texture, x, y, (255 << 24) | (sprite_pallete[attr].b << 16) | (sprite_pallete[attr].g << 8) |  sprite_pallete[attr].r);
 	}
 	else
 		SDL_RenderDrawPoint(g_renderer, x, y);
 }
 
-
 void* load_texture(const char* filename)
 {
 	SDL_Surface* temp = load_png(filename);
-	//SDL_SetColorKey(temp, SDL_TRUE, SDL_MapRGB(temp->format, 28, 28, 28));
-	SDL_SetColorKey(temp, SDL_TRUE, SDL_MapRGB(temp->format, 255, 0, 255));
+	SDL_SetColorKey(temp, SDL_TRUE, SDL_MapRGB(temp->format, transparent_color.r, transparent_color.g, transparent_color.b));
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(g_renderer, temp);
 	SDL_FreeSurface(temp);
 
@@ -264,41 +267,23 @@ void* load_texture(const char* filename)
 
 
 
-uint8_t render_sprite_type(int type, int x, int y, int patternIndex, uint8_t flip)
+uint8_t render_sprite_image(void* texture, uint8_t src_x, uint8_t src_y, uint8_t x, uint8_t y, uint8_t flip)
 {
-	image_info* vec_info = (image_info*)g_sprite_list;
-	uint8_t found = 0;
-	;
-	image_info* info = cvector_begin(vec_info);
-	for (; info != cvector_end(vec_info); ++info) {
-
-		if (info->sprite_index == type) {
-			found = 1;
-			break;
-		}
-	}
-
-	assert(found);
 
 	SDL_Rect srcRect;
 	SDL_Rect dstRect;
 
-
-	uint8_t src_x = (patternIndex % 16) * 16;
-	uint8_t src_y = (patternIndex / 16) * 16;
-
-
 	srcRect.x = src_x;
 	srcRect.y = src_y;
-	srcRect.w = 16;
-	srcRect.h = 16;
+	srcRect.w = SPRITE_WIDTH;
+	srcRect.h = SPRITE_HEIGHT;
 
 	dstRect.x = x;
 	dstRect.y = y;
-	dstRect.w = 16;
-	dstRect.h = 16;
+	dstRect.w = SPRITE_WIDTH;
+	dstRect.h = SPRITE_HEIGHT;
 
-	SDL_RenderCopyEx(g_renderer, info->texture, &srcRect, &dstRect, 0, 0, flip);
+	SDL_RenderCopyEx(g_renderer, texture, &srcRect, &dstRect, 0, 0, flip);
 
 	return 1;
 }
@@ -308,33 +293,151 @@ uint8_t render_sprite_texture(void* texture, int x, int y, int patternIndex, uin
 	SDL_Rect srcRect;
 	SDL_Rect dstRect;
 
-
-	uint8_t src_x = patternIndex * 16;
+	uint8_t src_x = patternIndex * SPRITE_WIDTH;
 	uint8_t src_y = 0;
-
 
 	srcRect.x = src_x;
 	srcRect.y = src_y;
-	srcRect.w = 16;
-	srcRect.h = 16;
+	srcRect.w = SPRITE_WIDTH;
+	srcRect.h = SPRITE_HEIGHT;
 
 	dstRect.x = x;
 	dstRect.y = y;
-	dstRect.w = 16;
-	dstRect.h = 16;
+	dstRect.w = SPRITE_WIDTH;
+	dstRect.h = SPRITE_HEIGHT;
 
 	SDL_RenderCopyEx(g_renderer, texture, &srcRect, &dstRect, 0, 0, 0);
 	
 	return 1;
 }
 
+void show_fps() {
+	SDL_Color textColor = { 255, 255, 255 };
+	char fpsStr[20];
+	sprintf(fpsStr, "FPS: %.2f", fps);
+	SDL_Surface* surface = TTF_RenderText_Blended(g_font, fpsStr, textColor);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(g_renderer, surface);
 
-void spman_update()
-{
+	int width = 0;
+	int height = 0;
+	SDL_QueryTexture(texture, NULL, NULL, &width, &height);
+
+	SDL_Rect destRect = { 200 - width - 10, 0, width, height };
+	SDL_RenderCopy(g_renderer, texture, NULL, &destRect);
+
+	SDL_FreeSurface(surface);
+	SDL_DestroyTexture(texture);
+}
+void spman_update() {	
+	
+	SDL_RenderCopy(g_renderer, g_background_texture, NULL, NULL);
+	render_sprites();
+
+	if(g_system_info->_show_fps)
+		show_fps();
 
 	SDL_RenderPresent(g_renderer);
+	SDL_SetRenderTarget(g_renderer, NULL);	
+
+	
 }
 
+void ubox_enable_screen() {
+	SDL_RenderCopy(g_renderer, g_background_texture, NULL, NULL);
+	SDL_RenderPresent(g_renderer);
+	SDL_SetRenderTarget(g_renderer, NULL);
+}
 
+uint8_t ubox_update() {
 
-#endif
+	Uint32 frameStart = SDL_GetTicks();
+
+	// Calculate FPS
+	frameCount++;
+	Uint32 currentTime = SDL_GetTicks();
+	Uint32 elapsedTime = currentTime - lastTime;
+	if (elapsedTime >= 1000) {
+		fps = frameCount / (elapsedTime / 1000.0f);
+
+		// Reset the frame count and time
+		frameCount = 0;
+		lastTime = currentTime;
+	}
+
+	SDL_framerateDelay(&fpsManager);
+
+	SDL_Event event;
+
+	while (SDL_PollEvent(&event))
+	{
+		switch (event.type)
+		{
+
+		case SDL_KEYDOWN:
+			switch (event.key.keysym.sym)
+			{
+
+			case SDLK_SPACE:
+				g_key_info._control_key |= UBOX_MSX_CTL_FIRE1;
+				break;
+			case SDLK_m:
+				g_key_info._control_key |= UBOX_MSX_CTL_FIRE2;
+				break;
+			case SDLK_UP:
+				g_key_info._control_key |= UBOX_MSX_CTL_UP;
+				break;
+			case SDLK_LEFT:
+				g_key_info._control_key |= UBOX_MSX_CTL_LEFT;
+				break;
+			case SDLK_RIGHT:
+				g_key_info._control_key |= UBOX_MSX_CTL_RIGHT;
+				break;
+			case SDLK_DOWN:
+				g_key_info._control_key |= UBOX_MSX_CTL_DOWN;
+				break;
+			case SDLK_ESCAPE:
+				g_key_info._read_key_7 |= UBOX_MSX_KEY_ESC;
+				g_key_info._control_key |= UBOX_MSX_CTL_EXIT;
+				break;
+			case SDLK_z:
+				g_key_info._read_key_5 |= UBOX_MSX_KEY_Z;
+				break;
+			}
+			break;
+
+		case SDL_KEYUP:
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_SPACE:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_FIRE1);
+				break;
+			case SDLK_m:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_FIRE2);
+				break;
+			case SDLK_UP:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_UP);
+				break;
+			case SDLK_LEFT:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_LEFT);
+				break;
+			case SDLK_RIGHT:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_RIGHT);
+				break;
+			case SDLK_DOWN:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_DOWN);
+				break;
+			case SDLK_ESCAPE:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_EXIT);
+				g_key_info._read_key_7 &= ~(UBOX_MSX_KEY_ESC);
+				break;
+			case SDLK_z:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_EXIT);
+				g_key_info._read_key_5 &= ~(UBOX_MSX_KEY_Z);
+				break;
+			}
+			break;
+		}
+	}
+
+	return 1;
+}

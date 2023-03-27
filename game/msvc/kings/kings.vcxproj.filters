@@ -68,18 +68,6 @@
     <ClInclude Include="..\..\src\main.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\ap.h">
-      <Filter>logic\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\mplayer.h">
-      <Filter>logic\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\spman.h">
-      <Filter>logic\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\include\ubox.h">
-      <Filter>logic\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\generated\enemy.h">
       <Filter>generated</Filter>
     </ClInclude>
@@ -142,6 +130,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\character_move.h">
       <Filter>logic\object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ap.h">
+      <Filter>logic\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mplayer.h">
+      <Filter>logic\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\spman.h">
+      <Filter>logic\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ubox.h">
+      <Filter>logic\include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

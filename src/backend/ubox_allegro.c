@@ -1,154 +1,146 @@
-#ifdef ALLEGRO4
-#include <ubox.h>
-#include <allegro.h>
-#include <alpng.h>
-#include <mplayer.h>
 #include "ubox_common.h"
 #include "common.h"
-
+#include <allegro.h>
+#include <alpng.h>
 
 #ifdef WIN32
-
-#pragma comment(lib, "allegro.lib")
+#pragma comment(lib, "alleg.lib")
 #pragma comment(lib, "alpng.lib")
-
 #endif
-
-extern cvector_vector_type(image_info) g_sprite_list;
 
 int32_t g__tick_interval = 40;
 
 volatile int ticks = 0;
+volatile int update_flag = 0;
 
-BITMAP* g_backbuffer = 0; //Double buffer
-int g_color_depth = 32;
+BITMAP* g_tile_surface = 0;
+BITMAP* g_final_surface = 0;
 
-BITMAP* tile_surface;
-BITMAP* player_surface;
-BITMAP* enemy_surface;
-
-BITMAP* enemy_flip_surface;
-BITMAP* player_flip_surface;
-
-BITMAP* g_bitmap_tiles = NULL;
+BITMAP* g_tile_set = NULL;
 
 void keyupdate();
 
 /* MAIN TIMER FUNCTION */
 void ticker() {
 	ticks++;
+	update_flag = 1;
 }
 END_OF_FUNCTION(ticker);
 
 
 void redner_stretch() {
-	stretch_blit((BITMAP*)g_backbuffer, screen, 0, 0, 256, 192, 0, 0, screen->w, screen->h);
-	//blit(g_backbuffer, screen, 0, 0, 0, 0, screen->w, screen->h);
+#if defined(DJGPP)
+	stretch_blit((BITMAP*)g_final_surface, screen, 0, 0, g_system_info->_msx_screen_width, g_system_info->_msx_screen_height, 0, 0, screen->w, g_system_info->_msx_screen_height);
+#else
+	stretch_blit((BITMAP*)g_final_surface, screen, 0, 0, g_system_info->_msx_screen_width, g_system_info->_msx_screen_height, 0, 0, screen->w, screen->h);
+#endif
 }
 
-void ubox_enable_screen()
-{
-	redner_stretch();
-
+void ubox_put_tile(uint8_t x, uint8_t y, uint8_t tile) {
+	blit(g_tile_set, g_tile_surface, (int)(tile % g_system_info->_room_width) * 8, (int)(tile / g_system_info->_room_width) * 8, x * 8, y * 8, 8, 8); //전면버퍼에 후면버퍼를 블리팅한다.
 }
 
-
-
-
-
-
-
-void ubox_put_tile(uint8_t x, uint8_t y, uint8_t tile)
-{
-	blit(g_bitmap_tiles, g_backbuffer, (int)(tile % g_room_width) * 8, (int)(tile / g_room_width) * 8, x * 8, y * 8, 8, 8); //전면버퍼에 후면버퍼를 블리팅한다.
-
-}
-
-uint32_t TimeLeft(void)
-{
-	static uint32_t next_time = 0;
+uint32_t TimeLeft(void) {
+	return 0;
+	
+	/*static uint32_t next_time = 0;
 	uint32_t now;
 
 	now = ticks;
-	if (next_time <= now) {
+	if (next_time < now) {
 		next_time = now + g__tick_interval;
 		return(0);
 	}
-	return (next_time - now);
+	return (next_time - now);*/
 }
-
-
 
 void ubox_wait()
 {
-	
+	//while(!TimeLeft());
 }
 
-void ubox_set_tiles(uint8_t* tiles)
-{
-	g_tiles = tiles;
+void* ubox_create_surface(int width, int height, int color_depth) {
 
-	int i = 0, j = 0, k = 0, t = 0;
+	return create_bitmap_ex(color_depth, width, height);
+}
 
-#ifdef IMAGE_LOAD_MODE
-	g_bitmap_tiles = load_png("tiles.png", NULL);
+void ubox_set_tiles_from_file(const char* filename) {
 
-#else
-	if (g_bitmap_tiles) {
-		destroy_bitmap(g_bitmap_tiles);
-		g_bitmap_tiles = 0;
+	if (g_tile_set) {
+		destroy_bitmap(g_tile_set);
+		g_tile_set = 0;
 	}
 
-	g_bitmap_tiles = create_bitmap_ex(g_color_depth, 256, 64);
+	g_tile_set = load_png(filename, NULL);
 
-	for (i = 0; i < 8; i++)
-	{
-		for (j = 0; j < 32; j++)
-		{
-			for (k = 0; k < 8; k++)
-			{
-				uint8_t tile_pixels = g_tiles[(i * 8 * 32) + (j * 8) + k];
-				uint8_t tile_color = g_tiles_colors[(i * 8 * 32) + (j * 8) + k];
+}
 
-				uint8_t color = (tile_color >> 4);
-				uint8_t color2 = (tile_color << 4);
-				color2 = color2 >> 4;
+void ubox_set_tiles(uint8_t* tiles) {
 
-				for (t = 0; t < 8; t++)
-				{
+	if (tiles == NULL)
+		return;
+	
+	if (g_tile_set) {
+		destroy_bitmap(g_tile_set);
+		g_tile_set = 0;
+	}
+
+	g_tiles = tiles;
+	g_tile_set = create_bitmap_ex(g_system_info->_color_depth, 256, 64);
+
+	int i = 0, j = 0, k = 0, t = 0;
+	for (i = 0; i < TILESET_COUNT_Y; i++) {
+		for (j = 0; j < TILESET_COUNT_X; j++) {
+			for (k = 0; k < PIXELS_PER_TILE; k++) {
+				uint8_t pixel = g_tiles[(i * TILESET_COUNT_Y * TILESET_COUNT_X) + (j * PIXELS_PER_TILE) + k];
+				uint8_t color = g_tiles_colors[(i * TILESET_COUNT_Y * TILESET_COUNT_X) + (j * PIXELS_PER_TILE) + k];
+
+				uint8_t color1 = (color >> 4);
+				uint8_t color2 = ((uint8_t)(color << 4)) >> 4;
+
+				for (t = 0; t < 8; t++) {
 					uint8_t mask = 1 << (7 - t);
-					int index = ((i * 8 * 8 * 32) + (k) * 8 * 32 + (j * 8 + t)) * 3;
+					int index = ((i * TILE_HEIGHT * TILE_WIDTH * TILESET_COUNT_X) + (k)*TILE_WIDTH * TILESET_COUNT_X + (j * TILE_WIDTH + t)) * 3;
 
-					uint8_t pixel_color = (tile_pixels & mask) ? color : color2;
+					uint8_t pixel_color = (pixel & mask) ? color1 : color2;
 
 					g_tiles_rgb[index] = sprite_pallete[pixel_color].r;
 					g_tiles_rgb[index + 1] = sprite_pallete[pixel_color].g;
 					g_tiles_rgb[index + 2] = sprite_pallete[pixel_color].b;
 
-					putpixel(g_bitmap_tiles, j * 8 + t, i * 8 + k, makecol(g_tiles_rgb[index], g_tiles_rgb[index + 1], g_tiles_rgb[index + 2]));
-			
+					//putpixel(g_tile_set, j * 8 + t, i * 8 + k, makeacol_depth(g_color_depth, g_tiles_rgb[index], g_tiles_rgb[index + 1], g_tiles_rgb[index + 2], 0));
+					putpixel(g_tile_set, j * 8 + t, i * 8 + k, makecol8(g_tiles_rgb[index], g_tiles_rgb[index + 1], g_tiles_rgb[index + 2]));
 				}
 			}
 		}
-	}
-#endif
+	}	
 }
 
 void ubox_wait_for(uint8_t frames)
 {
 	uint32_t delay = (uint32_t)((frames / 60.0f) * 1000);
-	//SDL_Delay(delay);
+	rest(delay);		
 }
 
+
+#define FPS 30
+#define FRAME_TIME (1000 / FPS)
+long old_time = 0, current_time = 0, dt;
 uint8_t ubox_update() {
 
-	if (ticks) {
-		keyupdate();
-		ticks--;
-		return 1;
-	}
+	while (!update_flag);
 
-	return 0;
+	update_flag = 0;
+
+	/*old_time = current_time;
+	current_time = clock(); // 현재 시간 가져오기
+	dt = current_time - old_time;
+
+	if((FRAME_TIME - dt) > 0)
+		rest(FRAME_TIME - dt);*/
+
+	keyupdate();
+	return 1;
 }
 
 char keyPressed[KEY_MAX] = { 0 };
@@ -158,30 +150,12 @@ int lastKeyPressed = -1;
 int lastKeyReleased = -1;
 char anyKeyPressed = 0;
 
-void init_key_values() {
-	control_key = 0;
-	read_key_7 = 0;
-	read_key_4 = 0;
-
-	int i = 0;
-	for (; i < KEY_MAX; i++) {
-		lastTicksKey[i] = 0;
-	}
-
-
-}
-
-
-
-
-
 void keyupdate() {
 	// Reset last key
 	lastKeyPressed = -1;
 	lastKeyReleased = -1;
 	anyKeyPressed = 0;
 
-	
 
 	// Check key just pressed
 	for (int i = 0; i < KEY_MAX; i++) {
@@ -216,139 +190,98 @@ void keyupdate() {
 			lastTicksKey[i] = key[i];
 		}
 	}
-}
 
-uint8_t ubox_select_ctl()
-{
-	if (ticks) {
-		keyupdate();
-		ticks--;
-		
-	}
-
-	if (keyPressed[KEY_SPACE]) {
-		return UBOX_MSX_CTL_CURSOR;
-	}
-	if (keyPressed[KEY_M]) {
-		return UBOX_MSX_CTL_CURSOR;
-	}
-	if (keyPressed[KEY_ESC]) {
-		return UBOX_MSX_CTL_EXIT;
-	}
-
-	return UBOX_MSX_CTL_NONE;
-}
-
-
-void read_control_key()
-{
-
-	if (keyPressed[KEY_SPACE]) {
-		control_key |= UBOX_MSX_CTL_FIRE1;
-	}
-	if (keyPressed[KEY_M]) {
-		control_key |= UBOX_MSX_CTL_FIRE2;
-	}
-	if (keyPressed[KEY_UP]) {
-		control_key |= UBOX_MSX_CTL_UP;
-	}
-	if (keyPressed[KEY_LEFT]) {
-		control_key |= UBOX_MSX_CTL_LEFT;
-	}
-	if (keyPressed[KEY_RIGHT]) {
-		control_key |= UBOX_MSX_CTL_RIGHT;
-	}
-	if (keyPressed[KEY_DOWN]) {
-		control_key |= UBOX_MSX_CTL_DOWN;
-	}
-
-	if (keyReleased[KEY_SPACE]) {
-		control_key &= ~(UBOX_MSX_CTL_FIRE1);
-	}
-	if (keyReleased[KEY_M]) {
-		control_key &= ~(UBOX_MSX_CTL_FIRE2);
-	}
-	if (keyReleased[KEY_UP]) {
-		control_key &= ~(UBOX_MSX_CTL_UP);
-	}
-	if (keyReleased[KEY_LEFT]) {
-		control_key &= ~(UBOX_MSX_CTL_LEFT);
-	}
-	if (keyReleased[KEY_RIGHT]) {
-		control_key &= ~(UBOX_MSX_CTL_RIGHT);
-	}
-	if (keyReleased[KEY_DOWN]) {
-		control_key &= ~(UBOX_MSX_CTL_DOWN);
-	}
-}
-
-uint8_t read_key(int row)
-{
-
-	switch (row)
-	{
-	case 4:
-		if (keyPressed[KEY_P]) {
-			read_key_4 |= UBOX_MSX_KEY_P;
+	for (int i = 0; i < KEY_MAX; i++) {
+		if(keyPressed[i] == -1 && lastTicksKey[i] == key[i]) {
+			switch (i) {
+			case KEY_SPACE:
+				g_key_info._control_key |= UBOX_MSX_CTL_FIRE1;
+				break;
+			case KEY_M:
+				g_key_info._control_key |= UBOX_MSX_CTL_FIRE2;
+				break;
+			case KEY_UP:
+				g_key_info._control_key |= UBOX_MSX_CTL_UP;
+				break;
+			case KEY_LEFT:
+				g_key_info._control_key |= UBOX_MSX_CTL_LEFT;
+				break;
+			case KEY_RIGHT:
+				g_key_info._control_key |= UBOX_MSX_CTL_RIGHT;
+				break;
+			case KEY_DOWN:
+				g_key_info._control_key |= UBOX_MSX_CTL_DOWN;
+				break;
+			case KEY_ESC:
+				g_key_info._read_key_7 |= UBOX_MSX_KEY_ESC;
+				g_key_info._control_key |= UBOX_MSX_CTL_EXIT;
+				break;
+			case KEY_Z:
+				g_key_info._read_key_5 |= UBOX_MSX_KEY_Z;
+				break;
+			case KEY_P:
+				g_key_info._read_key_4 |= UBOX_MSX_KEY_P;
+				break;
+			}
+			
 		}
 
-
-		if (keyReleased[KEY_P]) {
-			read_key_4 &= ~(UBOX_MSX_KEY_P);
+		if(keyReleased[i] == -1 && lastTicksKey[i] == key[i]) {
+			switch (i) {
+			case KEY_SPACE:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_FIRE1);
+				break;
+			case KEY_M:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_FIRE2);
+				break;
+			case KEY_UP:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_UP);
+				break;
+			case KEY_LEFT:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_LEFT);
+				break;
+			case KEY_RIGHT:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_RIGHT);
+				break;
+			case KEY_DOWN:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_DOWN);
+				break;
+			case KEY_ESC:
+				g_key_info._control_key &= ~(UBOX_MSX_CTL_EXIT);
+				g_key_info._read_key_7 &= ~(UBOX_MSX_KEY_ESC);
+				break;
+			case KEY_Z:
+				g_key_info._read_key_5 &= ~(UBOX_MSX_KEY_Z);
+				break;
+			case KEY_P:
+				g_key_info._read_key_4 &= ~(UBOX_MSX_KEY_P);
+				break;
+			}
 		}
-
-		return read_key_4;
-
-		break;
-	case 7:
-		if (keyPressed[KEY_ESC]) {
-			read_key_7 |= UBOX_MSX_KEY_ESC;
-		}
-
-
-		if (keyReleased[KEY_ESC]) {
-			read_key_7 &= ~(UBOX_MSX_KEY_ESC);
-		}
-
-		return read_key_7;
-
 	}
-
-	return 0;
-
 
 }
 
-void ubox_putpixel(void* texture, int x, int y, int attr) {
+void ubox_putpixel(void* texture, uint8_t x, uint8_t y, int attr) {
 
 	if(texture)
-		putpixel(texture, x, y, makecol(sprite_pallete[attr].r, sprite_pallete[attr].g, sprite_pallete[attr].b));
+		putpixel(texture, x, y, makecol8(sprite_pallete[attr].r, sprite_pallete[attr].g, sprite_pallete[attr].b));
 	else
-		putpixel(g_backbuffer, x, y, makecol(sprite_pallete[attr].r, sprite_pallete[attr].g, sprite_pallete[attr].b));
+		putpixel(g_final_surface, x, y, makecol8(sprite_pallete[attr].r, sprite_pallete[attr].g, sprite_pallete[attr].b));
 }
 
-
-
-
-void ubox_init_game_system(const char* szTitle, int screen_width, int screen_height, uint8_t room_width, uint8_t room_height, uint8_t map_width, uint8_t map_height)
+void ubox_init_game_system(GameSystemInfo* info)
 {
-	g_screen_width = screen_width;
-	g_screen_height = screen_height;
-
-	g_room_width = room_width;
-	g_room_height = room_height;
-
-	g_map_width = map_width;
-	g_map_height = map_height;
+	g_system_info = info;
 
 	allegro_init();
 	install_keyboard();
 
 	install_timer(); //Setup the timer
 	LOCK_VARIABLE(ticks); //Set timer variable
-
+	
 	LOCK_FUNCTION(ticker); //Set timer function
-	install_int_ex(ticker, BPS_TO_TIMER(30));
+	install_int_ex(ticker, BPS_TO_TIMER(g_system_info->_fps));
 
 	//intialze sound
 	if (install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL)) {
@@ -358,21 +291,23 @@ void ubox_init_game_system(const char* szTitle, int screen_width, int screen_hei
 
 	set_volume(255, 255);
 
-
 #ifdef _WIN32
-	g_color_depth = 32;
-	set_color_depth(g_color_depth);
-	if (set_gfx_mode(GFX_AUTODETECT_WINDOWED, screen_width, screen_height, 0, 0)) {
+	set_color_depth(g_system_info->_color_depth);
+	if (set_gfx_mode(GFX_AUTODETECT_WINDOWED, g_system_info->_screen_width, g_system_info->_screen_height, 0, 0)) {
 #else
-	g_color_depth = 8;
-	set_color_depth(g_color_depth); //256 color mode, 8 bits
-	if (set_gfx_mode(GFX_AUTODETECT, screen_width, screen_height, 0, 0)) {
+	set_color_depth(g_system_info->_color_depth); 
+	if (set_gfx_mode(GFX_AUTODETECT, g_system_info->_screen_width, g_system_info->_screen_height, 0, 0)) {
 #endif
 		return;
 	}
 
+	set_window_title(g_system_info->_title_name);	
+
 	BITMAP* buffer = NULL; //create backbuffer surface
-	g_backbuffer = create_bitmap_ex(g_color_depth, 256, 192);
+	g_tile_surface = create_bitmap_ex(g_system_info->_color_depth, g_system_info->_msx_screen_width, g_system_info->_msx_screen_height);
+	g_final_surface = create_bitmap_ex(g_system_info->_color_depth, g_system_info->_msx_screen_width, g_system_info->_msx_screen_height);
+
+	install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL);
 
 	init_key_values();
 }
@@ -382,7 +317,8 @@ void* load_music(char* filename) {
 }
 
 void play_music(void* data, uint8_t loop) {
-	play_sample(data, 255, 128, 1000, loop);
+	//play_sample(data, 255, 128, 1000, loop);
+	play_sample(data, 255, 0, 1000, loop);
 }
 
 void stop_music(void* data) {
@@ -392,7 +328,6 @@ void stop_music(void* data) {
 void* ubox_create_texture(int width, int height) {
 	return create_bitmap(width, height);
 }
-
 
 
 void* create_flip_texture(void* texture, int sprite_size)
@@ -424,78 +359,31 @@ void* load_texture(const char* filename) {
 
 uint8_t render_sprite_texture(void* texture, int x, int y, int patternIndex, uint8_t flip) {
 
-	masked_blit(texture, g_backbuffer, patternIndex * 16, 0,x, y, 16, 16);
+	masked_blit(texture, g_tile_surface, patternIndex * 16, 0,x, y, 16, 16);
 	return 0;
 }
 
-uint8_t render_sprite_type(int type, int x, int y, int patternIndex, uint8_t flip)
-{
-	image_info* vec_info = (image_info*)g_sprite_list;
-	uint8_t found = 0;
-	;
-	image_info* info = cvector_begin(vec_info);
-	for (; info != cvector_end(vec_info); ++info) {
-
-		if (info->sprite_index == type) {
-			found = 1;
-			break;
-		}
-	}
-
-	assert(found);
-
-
-	uint8_t src_x = (patternIndex % 16) * 16;
-	uint8_t src_y = (patternIndex / 16) * 16;
-
-
-	masked_blit(info->texture, g_backbuffer, src_x, src_y, x, y, 16, 16);
-	//blit(info->texture, g_backbuffer, src_x, src_y, x, y, 16, 16);
-	return 0;
-}
-
-
-void spman_update()
-{
+void spman_update() {
+	blit(g_tile_surface, g_final_surface, 0, 0, 0, 0, screen->w, screen->h);
+	render_sprites();
 	redner_stretch();
+	
 }
 
-extern void init_key_values();
-
-void spman_hide_all_sprites()
-{
-	init_key_values();
-}
-
-
-
-
-
-
-
-
-void mplayer_play_effect(uint8_t effect_no, uint8_t chan, uint8_t inv_vol)
-{
+void ubox_enable_screen() {
+	blit(g_tile_surface, g_final_surface, 0, 0, 0, 0, screen->w, screen->h);
+	redner_stretch();
 
 }
 
+void* create_texture(void* surface) {
 
-void mplayer_play_effect_p(uint8_t effect_no, uint8_t chan, uint8_t inv_vol)
-{
-
-
-
+	return surface;
 }
 
-void mplayer_stop_effect_channel(uint8_t chan)
-{
-
-}
-
-uint8_t mplayer_is_sound_effect_on(uint8_t chan)
-{
+//direct image manipulation
+uint8_t render_sprite_image(void* texture, uint8_t src_x, uint8_t src_y, uint8_t x, uint8_t y, uint8_t flip) {
+	masked_blit(texture, g_final_surface, src_x, src_y, x, y, 16, 16);
+	
 	return 0;
 }
-
-#endif
-

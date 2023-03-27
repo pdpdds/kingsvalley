@@ -26,6 +26,20 @@
 
 #include <stdint.h>
 
+#if defined(_WIN32)
+ // Windows
+#if defined(UBOX_API_EXPORTS)
+#define UBOX_EXPORT_API __declspec(dllexport)
+#else
+#define UBOX_EXPORT_API __declspec(dllimport)
+#endif
+#elif defined(__linux)
+ // Linux
+#define UBOX_EXPORT_API __attribute__((visibility("default")))
+#else
+#define UBOX_EXPORT_API
+#endif
+
 #if defined(WIN32) || (__ANDROID__) || defined(SKYOS32) || defined(__linux) || defined(DJGPP) 
 #define __z88dk_fastcall
 #endif
@@ -68,12 +82,13 @@
  * ubox_set_mode(2);
  * ```
  */
-void ubox_set_mode(uint8_t mode) __z88dk_fastcall;
+
+UBOX_EXPORT_API void ubox_set_mode(uint8_t mode) __z88dk_fastcall;
 
 /**
  * Enables the screen.
  */
-void ubox_enable_screen();
+UBOX_EXPORT_API void ubox_enable_screen();
 
 /**
  * Disables the screen.
@@ -83,7 +98,7 @@ void ubox_enable_screen();
  *
  * Note that [ubox_set_mode](#ubox_set_mode) also enables the screen.
  */
-void ubox_disable_screen();
+UBOX_EXPORT_API void ubox_disable_screen();
 
 /**
  * Changes the screen colors.
@@ -98,7 +113,7 @@ void ubox_disable_screen();
  * ubox_set_colors(1, 1, 1);
  * ```
  */
-void ubox_set_colors(uint8_t fg, uint8_t bg, uint8_t border);
+UBOX_EXPORT_API void ubox_set_colors(uint8_t fg, uint8_t bg, uint8_t border);
 
 /**
  * Writes a block of `len` bytes from `src` in memory to `dst` in VRAM (video
@@ -111,13 +126,13 @@ void ubox_set_colors(uint8_t fg, uint8_t bg, uint8_t border);
  * ubox_write_vm((uint8_t*)0x1b00, 4 * 4, buffer);
  * ```
  */
-void ubox_write_vm(uint8_t *dst, uint16_t len, uint8_t *src);
+UBOX_EXPORT_API void ubox_write_vm(uint8_t *dst, uint16_t len, uint8_t *src);
 
 /**
  * Reads a block of `len` bytes from `src` in VMEM (video memory) to `dst`
  * in memory.
  */
-void ubox_read_vm(uint8_t *dst, uint16_t len, uint8_t *src);
+UBOX_EXPORT_API void ubox_read_vm(uint8_t *dst, uint16_t len, uint8_t *src);
 
 /**
  * Writes `data` to the `reg` VDP register.
@@ -150,7 +165,7 @@ void ubox_read_vm(uint8_t *dst, uint16_t len, uint8_t *src);
  * ubox_wvdp(1, 0xe2);
  * ```
  */
-void ubox_wvdp(uint8_t reg, uint8_t data);
+UBOX_EXPORT_API void ubox_wvdp(uint8_t reg, uint8_t data);
 
 /**
  * Returns the default interrupt frequency according to the BIOS.
@@ -162,7 +177,7 @@ void ubox_wvdp(uint8_t reg, uint8_t data);
  * | 0     | 60Hz      |
  * | 1     | 50Hz      |
  */
-uint8_t ubox_get_vsync_freq();
+UBOX_EXPORT_API uint8_t ubox_get_vsync_freq();
 
 // *INDENT-OFF*
 /**
@@ -201,7 +216,7 @@ uint8_t ubox_get_vsync_freq();
  * All the tiles functions use an index in this tile set (usually via a `tile`
  * parameter).
  */
-void ubox_set_tiles(uint8_t *tiles) __z88dk_fastcall;
+UBOX_EXPORT_API void ubox_set_tiles(uint8_t *tiles) __z88dk_fastcall;
 
 /**
  * Sets the current color table for current tile set to the color table pointed
@@ -211,7 +226,7 @@ void ubox_set_tiles(uint8_t *tiles) __z88dk_fastcall;
  * of the tiles table (8 rows, 8 bytes per tile). The colors will be loaded into
  * the VDP in all three screen sections.
  */
-void ubox_set_tiles_colors(uint8_t *colors) __z88dk_fastcall;
+UBOX_EXPORT_API void ubox_set_tiles_colors(uint8_t *colors) __z88dk_fastcall;
 
 /**
  * Puts a tile from current tile set on the screen. The tile is identified by
@@ -239,14 +254,14 @@ void ubox_set_tiles_colors(uint8_t *colors) __z88dk_fastcall;
  * ubox_write_vm((uint8_t *)0x1800, 32, buffer);
  * ```
  */
-void ubox_put_tile(uint8_t x, uint8_t y, uint8_t tile);
+UBOX_EXPORT_API void ubox_put_tile(uint8_t x, uint8_t y, uint8_t tile);
 
 /**
  * Returns the tile index at position (`x`, `y`).
  *
  * `x` and `y` units are tiles, and both are 0 based.
  */
-uint8_t ubox_get_tile(uint8_t x, uint8_t y);
+UBOX_EXPORT_API uint8_t ubox_get_tile(uint8_t x, uint8_t y);
 
 /**
  * Fills the screen with the tile from current tile set identified by `tile` index.
@@ -254,7 +269,7 @@ uint8_t ubox_get_tile(uint8_t x, uint8_t y);
  * See [ubox_set_tiles](#ubox_set_tiles) for for information on how to set a
  * tile set.
  */
-void ubox_fill_screen(uint8_t tile) __z88dk_fastcall;
+UBOX_EXPORT_API void ubox_fill_screen(uint8_t tile) __z88dk_fastcall;
 
 // @Interrupt and clock functions
 
@@ -294,7 +309,7 @@ void ubox_fill_screen(uint8_t tile) __z88dk_fastcall;
  * are disabled, and because of that some BIOS functions, such as `CHGET`,
  * won't work.
  */
-void ubox_init_isr(uint8_t wait_ticks) __z88dk_fastcall;
+UBOX_EXPORT_API void ubox_init_isr(uint8_t wait_ticks) __z88dk_fastcall;
 
 /**
  * Installs a user interrupt handler.
@@ -319,7 +334,7 @@ void ubox_init_isr(uint8_t wait_ticks) __z88dk_fastcall;
  * ubox_set_user_isr(my_isr);
  * ```
  */
-void ubox_set_user_isr(void (*fn)()) __z88dk_fastcall;
+UBOX_EXPORT_API void ubox_set_user_isr(void (*fn)()) __z88dk_fastcall;
 
 /**
  * Waits for a maximum `wait_ticks` interrupts (see [ubox_init_isr](#ubox_init_isr)).
@@ -355,7 +370,7 @@ void ubox_set_user_isr(void (*fn)()) __z88dk_fastcall;
  * }
  * ```
  */
-void ubox_wait();
+UBOX_EXPORT_API void ubox_wait();
 
 /**
  * Waits for `frames` frames.
@@ -372,7 +387,7 @@ void ubox_wait();
  * ubox_wait_for(250);
  * ```
  */
-void ubox_wait_for(uint8_t frames) __z88dk_fastcall;
+UBOX_EXPORT_API void ubox_wait_for(uint8_t frames) __z88dk_fastcall;
 
 extern uint8_t ubox_tick;
 
@@ -381,10 +396,10 @@ extern uint8_t ubox_tick;
  *
  * `ubox_tick` is a 8-bit global variable that is incremented on every interrupt.
  */
-void ubox_reset_tick();
+UBOX_EXPORT_API void ubox_reset_tick();
 
 // @dummy functions
-uint8_t ubox_update();
+UBOX_EXPORT_API uint8_t ubox_update();
 
 // @Sprite functions
 //
@@ -420,7 +435,7 @@ struct sprite_attr {
  *
  * See [ubox_set_sprite_pat16](#ubox_set_sprite_pat16) to set a 16x16 pixels pattern.
  */
-void ubox_set_sprite_pat8(uint8_t *data, uint8_t pattern);
+UBOX_EXPORT_API void ubox_set_sprite_pat8(uint8_t *data, uint8_t pattern);
 
 /**
  * Sets the sprite pattern data pointed by `data` into pattern number
@@ -433,7 +448,7 @@ void ubox_set_sprite_pat8(uint8_t *data, uint8_t pattern);
  * See [ubox_set_sprite_pat16_flip](#ubox_set_sprite_pat16_flip) to set a 16x16
  * pixels pattern.
  */
-void ubox_set_sprite_pat8_flip(uint8_t *data, uint8_t pattern);
+UBOX_EXPORT_API void ubox_set_sprite_pat8_flip(uint8_t *data, uint8_t pattern);
 
 /**
  * Sets the sprite attributes of sprite number `sprite` using the attributes
@@ -453,7 +468,7 @@ void ubox_set_sprite_pat8_flip(uint8_t *data, uint8_t pattern);
  * table, it is recommended to use [ubox_write_vm](#ubox_write_vm). The sprite
  * attribute table is in the memory address `0x1b00`.
  */
-void ubox_set_sprite_attr(struct sprite_attr *attr, uint8_t sprite);
+UBOX_EXPORT_API void ubox_set_sprite_attr(struct sprite_attr *attr, uint8_t sprite);
 
 /**
  * Sets the sprite pattern data pointed by `data` into pattern number
@@ -466,7 +481,7 @@ void ubox_set_sprite_attr(struct sprite_attr *attr, uint8_t sprite);
  *
  * See [ubox_set_sprite_pat8](#ubox_set_sprite_pat8) to set a 8x8 pixels pattern.
  */
-void ubox_set_sprite_pat16(uint8_t *data, uint8_t pattern);
+UBOX_EXPORT_API void ubox_set_sprite_pat16(uint8_t *data, uint8_t pattern);
 
 /**
  * Sets the sprite pattern data pointed by `data` into pattern number
@@ -480,7 +495,7 @@ void ubox_set_sprite_pat16(uint8_t *data, uint8_t pattern);
  * See [ubox_set_sprite_pat8_flip](#ubox_set_sprite_pat8_flip) to set a 8x8
  * pixels pattern.
  */
-void ubox_set_sprite_pat16_flip(uint8_t *data, uint8_t pattern);
+UBOX_EXPORT_API void ubox_set_sprite_pat16_flip(uint8_t *data, uint8_t pattern);
 
 /**
  * Sets the sprite attributes of sprite number `sprite` using the attributes
@@ -500,7 +515,7 @@ void ubox_set_sprite_pat16_flip(uint8_t *data, uint8_t pattern);
  * table, it is recommended to use [ubox_write_vm](#ubox_write_vm). The sprite
  * attribute table is in the memory address `0x1b00`.
  */
-void ubox_set_sprite_attr(struct sprite_attr *attr, uint8_t sprite);
+UBOX_EXPORT_API void ubox_set_sprite_attr(struct sprite_attr *attr, uint8_t sprite);
 
 // @Control functions
 //
@@ -517,7 +532,7 @@ void ubox_set_sprite_attr(struct sprite_attr *attr, uint8_t sprite);
  *
  * See [ubox_read_ctl](#ubox_read_ctl) for possible control values.
  */
-uint8_t ubox_select_ctl();
+UBOX_EXPORT_API uint8_t ubox_select_ctl();
 
 /**
  * Read the control identified by `control` and return the status of it.
@@ -550,7 +565,7 @@ uint8_t ubox_select_ctl();
  * }
  * ```
  */
-uint8_t ubox_read_ctl(uint8_t control) __z88dk_fastcall;
+UBOX_EXPORT_API uint8_t ubox_read_ctl(uint8_t control) __z88dk_fastcall;
 
 #define UBOX_MSX_CTL_CURSOR  0
 #define UBOX_MSX_CTL_PORT1   1
@@ -588,7 +603,7 @@ uint8_t ubox_read_ctl(uint8_t control) __z88dk_fastcall;
  * }
  * ```
  */
-uint8_t ubox_read_keys(uint8_t row) __z88dk_fastcall;
+UBOX_EXPORT_API uint8_t ubox_read_keys(uint8_t row) __z88dk_fastcall;
 
 // row 0
 #define UBOX_MSX_KEY_7           0x80

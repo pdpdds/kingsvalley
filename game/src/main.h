@@ -49,11 +49,11 @@ enum effects
 enum effects
 {
     EFX_NONE = 0,
-    EFX_START = 0,
-    EFX_DOOR = 0,
-    EFX_DIG = 0,
-    EFX_HIT = 0,
-    EFX_DEAD = 0,
+    EFX_START = 1,
+    EFX_DOOR = 2,
+    EFX_DIG = 3,
+    EFX_HIT = 4,
+    EFX_DEAD = 5,
 };
 #endif
 

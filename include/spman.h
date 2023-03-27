@@ -37,7 +37,7 @@
  *
  * it needs to be called before using any of the functions of the sprite manager.
  */
-void spman_init();
+UBOX_EXPORT_API void spman_init();
 
 /**
  * Allocates a pattern for sprite `type` using `data`.
@@ -77,7 +77,7 @@ void spman_init();
  * A `type` can't be reused with a different pattern, [spman_init](#spman_init)
  * has to be called again to free all the patterns.
  */
-uint8_t spman_alloc_pat(uint8_t type, uint8_t *data, uint8_t len, uint8_t flip);
+UBOX_EXPORT_API uint8_t spman_alloc_pat(uint8_t type, uint8_t *data, uint8_t len, uint8_t flip);
 
 // @Sprite allocation
 
@@ -97,7 +97,7 @@ uint8_t spman_alloc_pat(uint8_t type, uint8_t *data, uint8_t len, uint8_t flip);
  * Allocated sprites are shown on screen by calling to
  * [spman_update](#spman_update).
  */
-void spman_alloc_fixed_sprite(struct sprite_attr *sp);
+UBOX_EXPORT_API void spman_alloc_fixed_sprite(struct sprite_attr *sp);
 
 /**
  * Allocates a sprite described by `sp` to be shown on the screen on the next
@@ -114,14 +114,14 @@ void spman_alloc_fixed_sprite(struct sprite_attr *sp);
  * Allocated sprites are shown on screen by calling to
  * [spman_update](#spman_update).
  */
-void spman_alloc_sprite(struct sprite_attr *sp);
+UBOX_EXPORT_API void spman_alloc_sprite(struct sprite_attr *sp);
 
 /**
  * Any allocated sprite will be freed.
  *
  * This doesn't affect sprites currently being shown on the screen.
  */
-void spman_sprite_flush();
+UBOX_EXPORT_API void spman_sprite_flush();
 
 // @Sprites on screen
 
@@ -136,7 +136,7 @@ void spman_sprite_flush();
  * [spman_alloc_sprite](#spman_alloc_sprite).
  *
  */
-void spman_update();
+UBOX_EXPORT_API void spman_update();
 
 /**
  * Hides all the sprites currently shown on screen.
@@ -144,6 +144,6 @@ void spman_update();
  * This doesn't affect any allocated sprites. To free allocated sprites use
  * [spman_sprite_flush](#spman_sprite_flush).
  */
-void spman_hide_all_sprites();
+UBOX_EXPORT_API void spman_hide_all_sprites();
 
 #endif //  _SPMAN_H

@@ -60,7 +60,7 @@
  * See [exporting songs and effects](#exporting-songs-and-effects) for details
  * on how to add songs to your project.
  */
-void mplayer_init(uint8_t *song, uint8_t sub_song);
+UBOX_EXPORT_API void mplayer_init(uint8_t *song, uint8_t sub_song);
 
 /**
  * Inits the effects table.
@@ -81,7 +81,7 @@ void mplayer_init(uint8_t *song, uint8_t sub_song);
  * See [exporting songs and effects](#exporting-songs-and-effects) for details
  * on how to add effects to your project.
  */
-void mplayer_init_effects(uint8_t *effects) __z88dk_fastcall;
+UBOX_EXPORT_API void mplayer_init_effects(uint8_t *effects) __z88dk_fastcall;
 
 // @Playback
 
@@ -96,14 +96,14 @@ void mplayer_init_effects(uint8_t *effects) __z88dk_fastcall;
  * If the player is stopped, [mplayer_stop](#mplayer_stop) must be called to
  * silence the PSG.
  */
-void mplayer_play();
+UBOX_EXPORT_API void mplayer_play();
 
 /**
  * Silences the PSG, stopping any sound.
  *
  * This doesn't stop the player if [mplayer_play](#mplayer_play) is called.
  */
-void mplayer_stop();
+UBOX_EXPORT_API void mplayer_stop();
 
 // @Sound effects
 
@@ -134,7 +134,7 @@ void mplayer_stop();
  * mplayer_play_effect(1, 2, 0);
  * ```
  */
-void mplayer_play_effect(uint8_t effect_no, uint8_t chan, uint8_t inv_vol);
+UBOX_EXPORT_API void mplayer_play_effect(uint8_t effect_no, uint8_t chan, uint8_t inv_vol);
 
 /**
  * Plays `effect_no` on `chan` channel at `inv_vol` volume using priority.
@@ -169,17 +169,17 @@ void mplayer_play_effect(uint8_t effect_no, uint8_t chan, uint8_t inv_vol);
  * mplayer_play_effect_p(1, 2, 0);
  * ```
  */
-void mplayer_play_effect_p(uint8_t effect_no, uint8_t chan, uint8_t inv_vol);
+UBOX_EXPORT_API void mplayer_play_effect_p(uint8_t effect_no, uint8_t chan, uint8_t inv_vol);
 
 /**
  * Stops the effect being played on `chan` channel.
  */
-void mplayer_stop_effect_channel(uint8_t chan) __z88dk_fastcall;
+UBOX_EXPORT_API void mplayer_stop_effect_channel(uint8_t chan) __z88dk_fastcall;
 
 /**
  * Returns 0 if there's no sound effect being played on `chan` channel, or
  * a value different than 0 otherwise.
  */
-uint8_t mplayer_is_sound_effect_on(uint8_t chan) __z88dk_fastcall;
+UBOX_EXPORT_API uint8_t mplayer_is_sound_effect_on(uint8_t chan) __z88dk_fastcall;
 
 #endif // _MPLAYER_H

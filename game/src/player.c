@@ -75,9 +75,9 @@ void update_player()
 void render_player_sprite()
 {
 	sp.x = self->x - self->pivot_x;
-	sp.y = self->y + self->pivot_y - 1;
+	sp.y = self->y - self->pivot_y;
 
-	uint8_t vibration = self->state == PS_MOVE;
+	uint8_t vibration = (self->state == PS_MOVE);
 	uint8_t current_frame = walk_frames[self->frame];
 
 	if (vibration && !current_frame) // character vibration
@@ -156,13 +156,11 @@ void process_tile_object_interaction() {
 void process_object_interaction() {
 
 	struct entity* object = entities;
-	for (uint8_t i = 0; i < g_maxEntities; i++, object++)
-	{
+	for (uint8_t i = 0; i < g_maxEntities; i++, object++) {
 		if (object->state == PS_DEAD || object->roomId != g_cur_room_id)
 			continue;
 
-		switch (object->type)
-		{
+		switch (object->type) {
 		case ET_JEWEL:
 		{
 			if (is_intersect(self, object)) {
@@ -216,12 +214,9 @@ void process_object_interaction() {
 
 		}
 		break;
-		case ET_EXIT:
-		{
-			if (object->state == PS_ATTACK)
-			{
-				if ((self->x == object->x) && ((self->y + 16) == (object->y + object->height)) && object->extra == 1)
-				{
+		case ET_EXIT: {
+			if (object->state == PS_ATTACK) {
+				if ((self->x == object->x) && ((self->y + 16) == (object->y + object->height)) && object->extra == 1) {
 					self->frame = 0;
 
 					g_gamestate = STATE_IN_GAME_EXIT;
@@ -231,8 +226,6 @@ void process_object_interaction() {
 			}
 		}
 		break;
-
-
 		}
 	}
 }

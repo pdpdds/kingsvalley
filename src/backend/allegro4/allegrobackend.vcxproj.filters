@@ -4,42 +4,30 @@
     <Filter Include="src">
       <UniqueIdentifier>{1167c595-c6a0-47e5-a79a-30b96d709d6e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\allegro4">
-      <UniqueIdentifier>{7568f824-703d-488f-9d4f-5fb00da864ec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\common">
       <UniqueIdentifier>{f4215b28-a98d-4af1-965b-53668834c74c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\sdl2">
+    <Filter Include="src\allegro">
       <UniqueIdentifier>{b8216959-d6ba-4c49-810f-f155bc2b59ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cvector.h">
+    <ClInclude Include="..\common.h">
       <Filter>src\common</Filter>
     </ClInclude>
-    <ClInclude Include="ubox_common.h">
+    <ClInclude Include="..\cvector.h">
       <Filter>src\common</Filter>
     </ClInclude>
-    <ClInclude Include="common.h">
-      <Filter>src\common</Filter>
-    </ClInclude>
-    <ClInclude Include="ubox_sdl_common.h">
+    <ClInclude Include="..\ubox_common.h">
       <Filter>src\common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ubox_allegro.c">
-      <Filter>src\allegro4</Filter>
-    </ClCompile>
-    <ClCompile Include="ubox_common.c">
+    <ClCompile Include="..\ubox_common.c">
       <Filter>src\common</Filter>
     </ClCompile>
-    <ClCompile Include="ubox_sdl2.c">
-      <Filter>src\sdl2</Filter>
-    </ClCompile>
-    <ClCompile Include="ubox_sdl_common.c">
-      <Filter>src\common</Filter>
+    <ClCompile Include="..\ubox_allegro.c">
+      <Filter>src\allegro</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

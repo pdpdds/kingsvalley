@@ -1,17 +1,16 @@
+#include <ubox_common.h>
 #include "ubox_sdl_common.h"
-#include <ubox.h>
 #include "common.h"
 
-#if defined(SDL1) || defined(SDL2)
-/*void set_pixel(SDL_Surface* surface, int x, int y, Uint32 pixel)
-{
-	Uint32* const target_pixel = (Uint32*)((Uint8*)surface->pixels
-		+ y * surface->pitch
-		+ x * surface->format->BytesPerPixel);
-	*target_pixel = pixel;
-}*/
+const uint32_t rmask = 0x000000ff;
+const uint32_t gmask = 0x0000ff00;
+const uint32_t bmask = 0x00ff0000;
+const uint32_t amask = 0;
 
-
+FPSmanager fpsManager;
+int frameCount = 0;
+Uint32 lastTime = 0;
+float fps = 0.f;
 
 void set_pixel(SDL_Surface* surface, int x, int y, int color)
 {
@@ -62,180 +61,7 @@ void set_pixel(SDL_Surface* surface, int x, int y, int color)
 	}
 }
 
-uint8_t ubox_select_ctl()
-{
-	if (control_key == 0)
-		return UBOX_MSX_CTL_NONE;
 
-	return control_key;
-}
-
-void read_control_key()
-{
-
-	return;
-}
-
-
-uint8_t read_key(int row)
-{
-	if (row == 5)
-		return read_key_5;
-
-	return read_key_7;
-}
-
-uint8_t ubox_update() {
-
-	SDL_Event event;
-
-	while (SDL_PollEvent(&event))
-	{
-		switch (event.type)
-		{
-
-		case SDL_KEYDOWN:
-			switch (event.key.keysym.sym)
-			{
-
-			case SDLK_SPACE:
-				control_key |= UBOX_MSX_CTL_FIRE1;
-				break;
-			case SDLK_m:
-				control_key |= UBOX_MSX_CTL_FIRE2;
-				break;
-			case SDLK_UP:
-				control_key |= UBOX_MSX_CTL_UP;
-				break;
-			case SDLK_LEFT:
-				control_key |= UBOX_MSX_CTL_LEFT;
-				break;
-			case SDLK_RIGHT:
-				control_key |= UBOX_MSX_CTL_RIGHT;
-				break;
-			case SDLK_DOWN:
-				control_key |= UBOX_MSX_CTL_DOWN;
-				break;
-			case SDLK_ESCAPE:
-				read_key_7 |= UBOX_MSX_KEY_ESC;
-				control_key |= UBOX_MSX_CTL_EXIT;
-				break;
-			case SDLK_z:
-				read_key_5 |= UBOX_MSX_KEY_Z;
-				break;
-			}
-			break;
-
-		case SDL_KEYUP:
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_SPACE:
-				control_key &= ~(UBOX_MSX_CTL_FIRE1);
-				break;
-			case SDLK_m:
-				control_key &= ~(UBOX_MSX_CTL_FIRE2);
-				break;
-			case SDLK_UP:
-				control_key &= ~(UBOX_MSX_CTL_UP);
-				break;
-			case SDLK_LEFT:
-				control_key &= ~(UBOX_MSX_CTL_LEFT);
-				break;
-			case SDLK_RIGHT:
-				control_key &= ~(UBOX_MSX_CTL_RIGHT);
-				break;
-			case SDLK_DOWN:
-				control_key &= ~(UBOX_MSX_CTL_DOWN);
-				break;
-			case SDLK_ESCAPE:
-				control_key &= ~(UBOX_MSX_CTL_EXIT);
-				read_key_7 &= ~(UBOX_MSX_KEY_ESC);
-				break;
-			case SDLK_z:
-				control_key &= ~(UBOX_MSX_CTL_EXIT);
-				read_key_5 &= ~(UBOX_MSX_KEY_Z);
-				break;
-			}
-			break;
-		}
-	}
-
-	return 1;
-}
-
-
-
-void spman_hide_all_sprites()
-{
-	control_key = 0;
-	read_key_7 = 0;
-	read_key_5 = 0;
-	read_key_4 = 0;
-}
-
-
-void mplayer_play_effect(uint8_t effect_no, uint8_t chan, uint8_t inv_vol)
-{
-
-}
-
-
-void mplayer_play_effect_p(uint8_t effect_no, uint8_t chan, uint8_t inv_vol)
-{
-
-	/*if (effect_no == EFX_DEAD)
-	{
-		if (!effect_dead) {
-			effect_dead = Mix_LoadWAV("audio/Caught.wav");
-			if (effect_dead == NULL)
-			{
-				return;
-			}
-		}
-
-		Mix_PlayChannel(-1, effect_dead, 0);
-
-	}
-
-	else if (effect_no == EFX_DIG)
-	{
-		if (!effect_dig) {
-			effect_dig = Mix_LoadWAV("audio/Dig.wav");
-			if (effect_dig == NULL)
-			{
-				return;
-			}
-		}
-
-		Mix_PlayChannel(-1, effect_dig, 0);
-
-	}
-	else if (effect_no == EFX_DOOR)
-	{
-		if (!effect_door) {
-			effect_door = Mix_LoadWAV("audio/door.wav");
-			if (effect_door == NULL)
-			{
-				return;
-			}
-		}
-
-		Mix_PlayChannel(-1, effect_door, 0);
-
-	}*/
-
-
-}
-
-void mplayer_stop_effect_channel(uint8_t chan)
-{
-
-}
-
-uint8_t mplayer_is_sound_effect_on(uint8_t chan)
-{
-	return 0;
-}
 
 void* load_music(char* filename) {
 	return Mix_LoadMUS(filename);
@@ -262,37 +88,30 @@ SDL_Surface* load_png(const char* filename)
 	return IMG_Load(filename);
 }
 
-
-
-
-Uint32 TimeLeft(void)
-{
-	static Uint32 next_time = 0;
-
-	if (next_time == 0) {
-		next_time = TICK_INTERVAL;
-	}
-
-	Uint32 now;
-
-	now = SDL_GetTicks();
-	if (next_time <= now) {
-		next_time = now + TICK_INTERVAL;
-		return 0;
-	}
-	return (next_time - now);
-}
-
-void ubox_wait()
-{
-	SDL_Delay(TimeLeft());
-}
-
 void ubox_wait_for(uint8_t frames)
 {
 	uint32_t delay = (uint32_t)((frames / 60.0f) * 1000);
 	SDL_Delay(delay);
 }
 
+void ubox_wait()
+{
+	Uint32 frameStart = SDL_GetTicks();
 
-#endif
+	// Calculate FPS
+	frameCount++;
+	Uint32 currentTime = SDL_GetTicks();
+	Uint32 elapsedTime = currentTime - lastTime;
+	if (elapsedTime >= 1000) {
+		fps = frameCount / (elapsedTime / 1000.0f);
+
+		// Reset the frame count and time
+		frameCount = 0;
+		lastTime = currentTime;
+	}
+
+	SDL_framerateDelay(&fpsManager);
+}
+
+
+

@@ -57,7 +57,7 @@ void render_enemy_sprite(uint8_t sprite_attribute)
 		return;
 
 	sp.x = self->x - self->pivot_x;
-	sp.y = self->y + self->pivot_y;
+	sp.y = self->y - self->pivot_y;
 
 	uint8_t current_frame = 0;
 

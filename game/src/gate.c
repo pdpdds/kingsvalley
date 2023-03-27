@@ -187,6 +187,9 @@ void play_animation(uint8_t tile_x, uint8_t tile_y, uint8_t player_frame, uint8_
 		player->extra2++;
 	}
 }
+
+extern uint8_t is_blocked(uint8_t x, uint8_t y);
+
 uint8_t process_start_gate_animation(uint8_t tile_x, uint8_t tile_y)
 {
 	player->extra++;
@@ -213,14 +216,12 @@ uint8_t process_start_gate_animation(uint8_t tile_x, uint8_t tile_y)
 		tile = (player->extra % 4) ? GATE_LOCK_UP_TILE : BLANK_TILE;
 
 		break;
-	case 5:
-	{
+	case 5: {
 		ubox_put_tile(tile_x - 2, tile_y - 1, 0);
 		put_gate_tiles(tile_x - 1, tile_y - 1, 3);
 		put_player_sprite(0);
 
 		return 1;
-
 	}
 
 	}
@@ -231,8 +232,14 @@ uint8_t process_start_gate_animation(uint8_t tile_x, uint8_t tile_y)
 	{
 		if (++player->delay == FRAME_WAIT)
 		{
-			player->x -= 2;
-			player->y++;
+			
+
+			if (!is_blocked(player->x - 2, player->y + 1 + 15))
+			{
+				player->x -= 2;
+				player->y++;
+			}
+			
 
 			player->delay = 0;
 			if (++player->frame == WALK_CYCLE)
