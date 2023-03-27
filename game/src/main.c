@@ -225,11 +225,11 @@ void main()
     ubox_init_game_system(&info);
 
     ubox_load_music(SONG_SILENCE, "", 0);
-    ubox_load_music(SONG_IN_GAME, "audio/bgm.wav", 1);
-    ubox_load_music(SONG_GAME_OVER, "audio/gameover.wav", 0);
-    ubox_load_music(SONG_GAME_START, "audio/start.wav", 0);
+    ubox_load_music(SONG_IN_GAME, "./audio/bgm.wav", 1);
+    ubox_load_music(SONG_GAME_OVER, "./audio/gameover.wav", 0);
+    ubox_load_music(SONG_GAME_START, "./audio/start.wav", 0);
 
-    ubox_load_effect(EFX_DEAD, "audio/caught.wav", 0);
+    ubox_load_effect(EFX_DEAD, "./audio/caught.wav", 0);
 
 
     if (info._sprite_mode == SPRITE_PATTERN_IMAGE) {
