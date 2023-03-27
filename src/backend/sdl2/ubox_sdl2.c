@@ -350,22 +350,6 @@ void ubox_enable_screen() {
 
 uint8_t ubox_update() {
 
-	Uint32 frameStart = SDL_GetTicks();
-
-	// Calculate FPS
-	frameCount++;
-	Uint32 currentTime = SDL_GetTicks();
-	Uint32 elapsedTime = currentTime - lastTime;
-	if (elapsedTime >= 1000) {
-		fps = frameCount / (elapsedTime / 1000.0f);
-
-		// Reset the frame count and time
-		frameCount = 0;
-		lastTime = currentTime;
-	}
-
-	SDL_framerateDelay(&fpsManager);
-
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event))
