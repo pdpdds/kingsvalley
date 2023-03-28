@@ -19,7 +19,7 @@ jobs:
     - name: Build with DJGPP
       run: |
         # Go to DJGPP folder
-        . $GITHUB_ENV
+        SET $GITHUB_WORKSPACE/game/djgpp/bin;$GITHUB_WORKSPACE/game/djgpp/djgpp/i586-pc-msdosdjgpp;$GITHUB_WORKSPACE/game/djgpp/djgpp/bin;$GITHUB_WORKSPACE/game/djgpp/djgpp/nasm;$GITHUB_WORKSPACE/game/djgpp/djgpp/../tools;%PATH%
         cd game
         cd djgpp
         # Run djgpp.bat using cmd.exe
