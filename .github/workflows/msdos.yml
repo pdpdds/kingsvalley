@@ -10,7 +10,7 @@ jobs:
     - name: Install DJGPP
       run: |
         # Download DJGPP
-        curl -o djgpp.zip https://github.com/pdpdds/kingsvalley/releases/download/1.0/djgpp.zip
+        Invoke-WebRequest -Uri https://github.com/pdpdds/kingsvalley/releases/download/1.0/djgpp.zip -OutFile djgpp.zip        
         # Extract DJGPP
         powershell -Command "Expand-Archive -Path djgpp.zip -DestinationPath C:\djgpp"
     - name: Set environment variables
