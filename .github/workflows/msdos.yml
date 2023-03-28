@@ -16,7 +16,8 @@ jobs:
     - name: Build with DJGPP
       run: |
         # Go to DJGPP folder
-        SET $GITHUB_WORKSPACE\game\djgpp\djgpp\bin;$GITHUB_WORKSPACE\game\djgpp\djgpp\i586-pc-msdosdjgpp;$GITHUB_WORKSPACE\game\djgpp\djgpp\bin;$GITHUB_WORKSPACE\game\djgpp\djgpp\nasm;$GITHUB_WORKSPACE\game\djgpp\djgpp\..\tools;%PATH%
+        echo "PATH=$(echo ${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp/bin:${{ github.workspace }}/game/djgpp/djgpp/bin:${{ github.workspace }}/game/djgpp/djgpp/nasm:${{ github.workspace }}/game/djgpp/tools:$PATH)" >> $GITHUB_ENV
+        SET $GITHUB_ENV
         SET GCC_EXEC_PREFIX=$GITHUB_WORKSPACE\game\djgpp\djgpp\lib\gcc\
         SET DJGPP_GCC=gcc
         SET DJDIR=$GITHUB_WORKSPACE\game\djgpp\djgpp\i586-pc-msdosdjgpp
