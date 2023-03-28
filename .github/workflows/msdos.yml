@@ -16,10 +16,10 @@ jobs:
     - name: Build with DJGPP
       run: |
         # Go to DJGPP folder            
-        $Env:Path="${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp/bin;"
-        $Env:Path+="${{ github.workspace }}/game/djgpp/djgpp/bin;"
-        $Env:Path+="${{ github.workspace }}/game/djgpp/djgpp/nasm;"
-        $Env:Path+="${{ github.workspace }}/game/djgpp/tools;"
+        $Env:Path=";${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp/bin"
+        $Env:Path+=";${{ github.workspace }}/game/djgpp/djgpp/bin"
+        $Env:Path+=";${{ github.workspace }}/game/djgpp/djgpp/nasm"
+        $Env:Path+=";${{ github.workspace }}/game/djgpp/tools"
         cd game
         cd djgpp
         # Run djgpp.bat using cmd.exe
