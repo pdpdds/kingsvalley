@@ -15,14 +15,10 @@ jobs:
         powershell -Command "Expand-Archive -Path djgpp.zip -DestinationPath .\game\djgpp"    
     - name: Build with DJGPP
       run: |
-        # Go to DJGPP folder
-        echo "PATH=$(echo ${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp/bin:${{ github.workspace }}/game/djgpp/djgpp/bin:${{ github.workspace }}/game/djgpp/djgpp/nasm:${{ github.workspace }}/game/djgpp/tools:$PATH)" >> $GITHUB_AA
-        SET $GITHUB_AA
-        echo "GCC_EXEC=$(echo ${{ github.workspace }}/game/djgpp/djgpp/lib/gcc/)" >> $GITHUB_GCC_EXEC
-        SET $GITHUB_GCC_EXEC
+        # Go to DJGPP folder        
+        SET GCC_EXEC_PREFIX=${{ github.workspace }}\game\djgpp\djgpp\lib\gcc\
         SET DJGPP_GCC=gcc
-        echo "DJDIR=$(echo ${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp)" >> $GITHUB_DJDIR
-        SET $GITHUB_DJDIR
+        SET DJDIR=$(${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp
         cd game
         cd djgpp
         # Run djgpp.bat using cmd.exe
