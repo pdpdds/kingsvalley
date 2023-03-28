@@ -12,17 +12,14 @@ jobs:
         # Download DJGPP
         Invoke-WebRequest -Uri https://github.com/pdpdds/kingsvalley/releases/download/1.0/djgpp.zip -OutFile djgpp.zip        
         # Extract DJGPP
-        powershell -Command "Expand-Archive -Path djgpp.zip -DestinationPath .\game\djgpp"
-    - name: Set environment variables
-      run: |
-        echo 'SET $GITHUB_WORKSPACE/djgpp/bin;$GITHUB_WORKSPACE/djgpp/i586-pc-msdosdjgpp;$GITHUB_WORKSPACE/bin;$GITHUB_WORKSPACE/../bin;$GITHUB_WORKSPACE/nasm;$GITHUB_WORKSPACE/../tools;%PATH%' >> $GITHUB_ENV
+        powershell -Command "Expand-Archive -Path djgpp.zip -DestinationPath .\game\djgpp"    
     - name: Build with DJGPP
       run: |
         # Go to DJGPP folder
-        SET $GITHUB_WORKSPACE/game/djgpp/djgpp/bin;$GITHUB_WORKSPACE/game/djgpp/djgpp/i586-pc-msdosdjgpp;$GITHUB_WORKSPACE/game/djgpp/djgpp/bin;$GITHUB_WORKSPACE/game/djgpp/djgpp/nasm;$GITHUB_WORKSPACE/game/djgpp/djgpp/../tools;%PATH%
-        SET GCC_EXEC_PREFIX=$GITHUB_WORKSPACE/game/djgpp/djgpp/lib/gcc/
+        SET $GITHUB_WORKSPACE\game\djgpp\djgpp\bin;$GITHUB_WORKSPACE\game\djgpp\djgpp\i586-pc-msdosdjgpp;$GITHUB_WORKSPACE\game\djgpp\djgpp\bin;$GITHUB_WORKSPACE\game\djgpp\djgpp\nasm;$GITHUB_WORKSPACE\game\djgpp\djgpp\..\tools;%PATH%
+        SET GCC_EXEC_PREFIX=$GITHUB_WORKSPACE\game\djgpp\djgpp\lib\gcc\
         SET DJGPP_GCC=gcc
-        SET DJDIR=$GITHUB_WORKSPACE/game/djgpp/djgpp/i586-pc-msdosdjgpp
+        SET DJDIR=$GITHUB_WORKSPACE\game\djgpp\djgpp\i586-pc-msdosdjgpp
         cd game
         cd djgpp
         # Run djgpp.bat using cmd.exe
