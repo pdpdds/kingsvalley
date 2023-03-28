@@ -72,7 +72,7 @@ uint8_t pattern_enemy = 0;
 uint8_t pattern_attack = 0;
 uint8_t pattern_digging = 0;
 uint8_t pattern_player = 0;
-
+uint8_t pattern_door = 0;
 
 void allocate_pattern(uint8_t player_move_type) {
 	spman_init();
@@ -104,7 +104,6 @@ void allocate_pattern(uint8_t player_move_type) {
 		spman_alloc_pat(PAT_PLAYER_PICKAX_FLIP, (uint8_t*)playerpickax_sprite[0], 6, 1);
 		break;
 	}
-
 }
 
 void reset_sprite(uint8_t move_mode)

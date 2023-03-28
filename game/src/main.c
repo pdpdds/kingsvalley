@@ -33,8 +33,7 @@ size_t GetMapDataSize(const uint8_t* map)
 void ap_uncompress(const uint8_t* dst, const uint8_t* src)
 {
 
-   // size_t n = GetMapDataSize(src - 3);
-
+   // size_t n = GetMapDataSize(src - 3);    
     apultra_decompress(src, (uint8_t*)dst, 768, 32 * 24, 0, 0);
 }
 uint8_t* VIDEO_MEMORY_ADDRESS = 0;

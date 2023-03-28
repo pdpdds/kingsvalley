@@ -302,8 +302,7 @@ void ubox_init_game_system(GameSystemInfo* info)
 	}
 
 	set_window_title(g_system_info->_title_name);	
-
-	BITMAP* buffer = NULL; //create backbuffer surface
+	
 	g_tile_surface = create_bitmap_ex(g_system_info->_color_depth, g_system_info->_msx_screen_width, g_system_info->_msx_screen_height);
 	g_final_surface = create_bitmap_ex(g_system_info->_color_depth, g_system_info->_msx_screen_width, g_system_info->_msx_screen_height);
 
