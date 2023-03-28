@@ -1,0 +1,26 @@
+name: Build MS-DOS environment
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install DJGPP
+      run: |
+        # Download DJGPP
+        curl -O https://github.com/pdpdds/allegro4_dos/releases/tag/v1.0/djgpp.zip
+        # Extract DJGPP
+        powershell -Command "Expand-Archive -Path djgpp.zip -DestinationPath C:\djgpp"
+    - name: Set environment variables
+      run: |
+        echo 'SET PATH=C:\djgpp\bin;%PATH%' >> $GITHUB_ENV
+    - name: Build with DJGPP
+      run: |
+        # Go to DJGPP folder
+        cd C:\djgpp
+        # Run djgpp.bat
+        djgpp.bat
+        # Run make command
+        make
