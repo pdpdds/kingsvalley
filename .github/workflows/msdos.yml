@@ -16,10 +16,7 @@ jobs:
     - name: Build with DJGPP
       run: |
         # Go to DJGPP folder            
-        $Env:Path+=";${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp/bin"
-        $Env:Path+=";${{ github.workspace }}/game/djgpp/djgpp/bin"
-        $Env:Path+=";${{ github.workspace }}/game/djgpp/djgpp/nasm"
-        $Env:Path+=";${{ github.workspace }}/game/djgpp/tools"
+        $Env:Path="${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp/bin;${{ github.workspace }}/game/djgpp/djgpp/bin;${{ github.workspace }}/game/djgpp/djgpp/nasm;${{ github.workspace }}/game/djgpp/tools;$Env:Path"
         [Environment]::SetEnvironmentVariable("GCC_EXEC_PREFIX","${{ github.workspace }}/game/djgpp/djgpp/lib/gcc","User")
         [Environment]::SetEnvironmentVariable("DJGPP_GCC","gcc","User")
         [Environment]::SetEnvironmentVariable("DJDIR","${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp","User")
