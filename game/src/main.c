@@ -113,7 +113,7 @@ void draw_end_game()
      
     ubox_enable_screen();
 
-    while (1) {
+    while (ubox_update()) {
         if (ubox_read_keys(7) == UBOX_MSX_KEY_ESC)
             break;
 
