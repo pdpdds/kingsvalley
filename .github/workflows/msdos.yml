@@ -19,7 +19,7 @@ jobs:
         SET PATH=${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp/bin:${{ github.workspace }}/game/djgpp/djgpp/bin:${{ github.workspace }}/game/djgpp/djgpp/nasm:${{ github.workspace }}/game/djgpp/tools:$PATH
         SET GCC_EXEC_PREFIX=${{ github.workspace }}\game\djgpp\djgpp\lib\gcc\
         SET DJGPP_GCC=gcc
-        SET DJDIR=$(${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp
+        SET DJDIR=${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp
         cd game
         cd djgpp
         # Run djgpp.bat using cmd.exe
