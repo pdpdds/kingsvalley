@@ -17,7 +17,7 @@ jobs:
       run: |
         # Go to DJGPP folder    
         cmd.exe
-        PATH=${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp/bin:${{ github.workspace }}/game/djgpp/djgpp/bin:${{ github.workspace }}/game/djgpp/djgpp/nasm:${{ github.workspace }}/game/djgpp/tools
+        PATH=${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp/bin;${{ github.workspace }}/game/djgpp/djgpp/bin;${{ github.workspace }}/game/djgpp/djgpp/nasm;${{ github.workspace }}/game/djgpp/tools
         cd game
         cd djgpp
         # Run djgpp.bat using cmd.exe
