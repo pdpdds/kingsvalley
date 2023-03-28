@@ -20,6 +20,10 @@ jobs:
         $Env:Path+=";${{ github.workspace }}/game/djgpp/djgpp/bin"
         $Env:Path+=";${{ github.workspace }}/game/djgpp/djgpp/nasm"
         $Env:Path+=";${{ github.workspace }}/game/djgpp/tools"
+        [Environment]::SetEnvironmentVariable("GCC_EXEC_PREFIX","${{ github.workspace }}/game/djgpp/djgpp/lib/gcc","User")
+        [Environment]::SetEnvironmentVariable("DJGPP_GCC","gcc","User")
+        [Environment]::SetEnvironmentVariable("DJDIR","${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp","User")
+        
         cd game
         cd djgpp
         # Run djgpp.bat using cmd.exe
