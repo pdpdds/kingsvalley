@@ -19,10 +19,13 @@ jobs:
     - name: Build with DJGPP
       run: |
         # Go to DJGPP folder
-        SET $GITHUB_WORKSPACE/game/djgpp/bin;$GITHUB_WORKSPACE/game/djgpp/djgpp/i586-pc-msdosdjgpp;$GITHUB_WORKSPACE/game/djgpp/djgpp/bin;$GITHUB_WORKSPACE/game/djgpp/djgpp/nasm;$GITHUB_WORKSPACE/game/djgpp/djgpp/../tools;%PATH%
+        SET $GITHUB_WORKSPACE/game/djgpp/djgpp/bin;$GITHUB_WORKSPACE/game/djgpp/djgpp/i586-pc-msdosdjgpp;$GITHUB_WORKSPACE/game/djgpp/djgpp/bin;$GITHUB_WORKSPACE/game/djgpp/djgpp/nasm;$GITHUB_WORKSPACE/game/djgpp/djgpp/../tools;%PATH%
+        SET GCC_EXEC_PREFIX=$GITHUB_WORKSPACE/game/djgpp/djgpp/lib/gcc/
+        SET DJGPP_GCC=gcc
+        SET DJDIR=$GITHUB_WORKSPACE/game/djgpp/djgpp/i586-pc-msdosdjgpp
         cd game
         cd djgpp
         # Run djgpp.bat using cmd.exe
-        cmd.exe /C djgpp.bat
+        # cmd.exe /C djgpp.bat
         # Run make command
         make
