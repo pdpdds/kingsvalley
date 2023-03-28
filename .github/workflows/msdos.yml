@@ -1,4 +1,4 @@
-name: Build MS-DOS environment
+name: MS-DOS
 on: [push, pull_request]
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
       run: |
         # Go to DJGPP folder
         cd C:\djgpp
-        # Run djgpp.bat
-        djgpp.bat
+        # Run djgpp.bat using cmd.exe
+        cmd.exe /C djgpp.bat
         # Run make command
         make
