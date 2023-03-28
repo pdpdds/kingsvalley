@@ -23,3 +23,8 @@ jobs:
         # cmd.exe /C djgpp.bat
         # Run make command
         make
+    - name: Upload a Build Artifact(kings-msdos)                      
+      uses: actions/upload-artifact@v2.1.4
+      with:
+          name: kings-msdos
+          path: .\game\data
