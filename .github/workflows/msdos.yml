@@ -15,9 +15,8 @@ jobs:
         powershell -Command "Expand-Archive -Path djgpp.zip -DestinationPath .\game\djgpp"    
     - name: Build with DJGPP
       run: |
-        # Go to DJGPP folder    
-        cmd.exe
-        cmd.exe /C PATH=${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp/bin
+        # Go to DJGPP folder            
+        $Env:Path="${{ github.workspace }}/game/djgpp/djgpp/i586-pc-msdosdjgpp/bin;"
         cd game
         cd djgpp
         # Run djgpp.bat using cmd.exe
