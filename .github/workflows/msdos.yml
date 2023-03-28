@@ -19,7 +19,7 @@ jobs:
     - name: Build with DJGPP
       run: |
         # Go to DJGPP folder
-        source $GITHUB_ENV
+        . $GITHUB_ENV
         cd game
         cd djgpp
         # Run djgpp.bat using cmd.exe
