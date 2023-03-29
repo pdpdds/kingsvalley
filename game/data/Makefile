@@ -1,5 +1,5 @@
 OUTPUT := ../generated
-GENERATED := $(OUTPUT)/tiles.h $(OUTPUT)/title.h $(OUTPUT)/playermove.h $(OUTPUT)/playerknife.h $(OUTPUT)/playerpickax.h $(OUTPUT)/playerattack.h $(OUTPUT)/playerdigging.h $(OUTPUT)/enemy.h $(OUTPUT)/knife.h $(OUTPUT)/map.h $(OUTPUT)/map_summary.h
+GENERATED := $(OUTPUT)/tiles.h $(OUTPUT)/title.h $(OUTPUT)/playermove.h $(OUTPUT)/playerknife.h $(OUTPUT)/playerpickax.h $(OUTPUT)/playerattack.h $(OUTPUT)/playerdigging.h $(OUTPUT)/enemy.h $(OUTPUT)/knife.h $(OUTPUT)/door.h $(OUTPUT)/map.h $(OUTPUT)/map_summary.h
 
 all: $(GENERATED)
 
@@ -29,6 +29,9 @@ $(OUTPUT)/enemy.h: enemy.png
 	
 $(OUTPUT)/knife.h: knife.png
 	python ../tools/png2sprites.py -i knife_sprite $< > $@
+	
+$(OUTPUT)/door.h: gate.png
+	python ../tools/png2sprites.py -i door_sprite $< > $@
 	
 
 $(OUTPUT)/map.h:

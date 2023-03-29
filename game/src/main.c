@@ -138,8 +138,7 @@ void draw_game_over() {
     g_gamestate = STATE_TITLE;
 }
 
-void draw_stage_clear()
-{
+void draw_stage_clear() {
     ubox_disable_screen();
 
     put_text(11, 10, (uint8_t*)"STAGE CLEAR");
@@ -163,8 +162,7 @@ void draw_stage_reset() {
     
     put_text(12, 10, (uint8_t*)"STAGE ");
 
-    if (g_stage > 10)
-    {
+    if (g_stage > 10) {
         ubox_put_tile(18, 10, (g_stage / 10) + 16);
         ubox_put_tile(19, 10, (g_stage % 10) + 16);
     }
@@ -215,7 +213,7 @@ void main()
     info._room_height = 24;  
     info._fps = 30;
     info._show_fps = 0;
-    info._sprite_mode = SPRITE_PATTERN_IMAGE;
+    info._sprite_mode = SPRITE_PIXEL;
     strcpy(info._title_name, "King's Valley 1 - Recreation");
 
     ubox_init_game_system(&info);
@@ -235,6 +233,7 @@ void main()
         ubox_load_sprite(PAT_ATTACK, "./p_attack.png", 1);
         ubox_load_sprite(PAT_ENEMY, "./enemy.png", 1);
         ubox_load_sprite(PAT_KNIFE, "./knife.png", 1);
+        ubox_load_sprite(PAT_DOOR, "./gate.png", 1);
     }
     
 #endif

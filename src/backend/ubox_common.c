@@ -442,10 +442,14 @@ void render_sprites() {
 				flip = 1;
 			}
 
-			if (g_system_info->_sprite_mode == 0)
-				render_sprites_by_image(info, sp, pattern, flip);
-			else
+			switch (g_system_info->_sprite_mode) {
+			case SPRITE_PIXEL:
 				render_sprites_by_data(info, sp, pattern, flip);
+				break;
+			case SPRITE_PATTERN_IMAGE:
+				render_sprites_by_image(info, sp, pattern, flip);
+				break;
+			}		
 		}
 	}
 

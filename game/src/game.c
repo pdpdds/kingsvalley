@@ -21,6 +21,7 @@
 #include <playerdigging.h>
 #include <enemy.h>
 #include <knife.h>
+#include <door.h>
 #include <game_util.h>
 
 #include "item.h"
@@ -77,8 +78,11 @@ uint8_t pattern_door = 0;
 void allocate_pattern(uint8_t player_move_type) {
 	spman_init();
 
-	pattern_knife = spman_alloc_pat(PAT_KNIFE, (uint8_t*)knife_sprite[0], 8, 0);
-	spman_alloc_pat(PAT_KNIFE_FLIP, (uint8_t*)knife_sprite[0], 8, 1);
+	pattern_knife = spman_alloc_pat(PAT_KNIFE, (uint8_t*)knife_sprite[0], 4, 0);
+	spman_alloc_pat(PAT_KNIFE_FLIP, (uint8_t*)knife_sprite[0], 4, 1);
+
+	pattern_door = spman_alloc_pat(PAT_DOOR, (uint8_t*)door_sprite[0], 4, 0);
+	spman_alloc_pat(pattern_door, (uint8_t*)door_sprite[0], 4, 1);
 
 	pattern_enemy = spman_alloc_pat(PAT_ENEMY, (uint8_t*)enemy_sprite[0], 6, 0);
 	spman_alloc_pat(PAT_ENEMY_FLIP, (uint8_t*)enemy_sprite[0], 6, 1);
@@ -403,35 +407,25 @@ void process_door_animation(uint8_t start)
 		player->delay = 0;
 	}
 	
-	uint8_t end = 0;
-	while (!end) {
+	uint8_t quit = 0;
+	while (!quit) {
 
-		while (ubox_update() && end == 0)
-		{
-			if (start) {
-				if (process_start_gate_animation(tile_x, tile_y)) {
-
-					g_gamestate = STATE_IN_GAME;
-					end = 1;
-					mplayer_init(SONG, SONG_IN_GAME);
-
-					break;
-				}
-			}
-			else {
-				if (process_end_gate_animation(tile_x, tile_y)) {
+		while (ubox_update() && quit == 0) {
+							if (process_end_gate_animation(tile_x, tile_y)) {
 
 					g_gamestate = STATE_GAME_CLEAR;
-					end = 1;
+					quit = 1;
 					break;
 				}
-			}
+			
 
 			ubox_wait();
 			spman_update();
 		}
 	}
 }
+
+extern void run_door_opening();
 
 void run_game(uint8_t stage) {
 	invuln = 0;
@@ -454,25 +448,26 @@ void run_game(uint8_t stage) {
 
 	ubox_enable_screen();
 
-	uint8_t end = 0;
+	uint8_t quit = 0;
+	while (!quit) {
 
-	while (!end) {
-
-		while (ubox_update() > 0 && end == 0) {		
+		while (ubox_update() > 0 && quit == 0) {
 			
 			if (ubox_read_keys(7) == UBOX_MSX_KEY_ESC) {
-				end = 1;
+				quit = 1;
 				break;
 			}			
 
 			switch (g_gamestate)
 			{
 			case STATE_GAME_CLEAR:
-				end = 1;
+				quit = 1;
 				break;
 			case STATE_IN_GAME_ENTER:
 				mplayer_play_effect_p(EFX_DOOR, EFX_CHAN_NO, 0);
-				process_door_animation(1);
+				run_door_opening();
+				g_gamestate = STATE_IN_GAME;
+				mplayer_init(SONG, SONG_IN_GAME);
 				break;
 			case STATE_IN_GAME_EXIT:
 				process_door_animation(0);
@@ -481,11 +476,11 @@ void run_game(uint8_t stage) {
 			case STATE_IN_GAME:
 			case STATE_GAME_RESET:
 			case STATE_GAME_OVER:
-				end = process_game();
+				quit = process_game();
 				break;
 			}
 
-			if (end)
+			if (quit)
 				break;
 
 			ubox_wait();

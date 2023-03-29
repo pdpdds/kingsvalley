@@ -11,5 +11,6 @@
 #include <playerdigging.h>
 #include <enemy.h>
 #include <knife.h>
+#include <door.h>
 #include <map_summary.h>
 

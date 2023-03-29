@@ -211,7 +211,7 @@ void render_knife() {
 
 	uint8_t current_frame = knife_frames[self->frame];
 
-	sp.pattern = self->pat + (current_frame + (self->dir) * 8) * 4;
+	sp.pattern = self->pat + (current_frame + (self->dir) * 4) * 4;
 	sp.attr = 14;
 	spman_alloc_sprite(&sp);
 }

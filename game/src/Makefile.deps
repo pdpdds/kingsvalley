@@ -6,8 +6,8 @@
 ../build/data.rel: data.c ../generated/tiles.h ../generated/playermove.h \
  ../generated/playerpickax.h ../generated/playerknife.h \
  ../generated/playerattack.h ../generated/playerdigging.h \
- ../generated/enemy.h ../generated/knife.h ../generated/map_summary.h \
- ../generated/map.h
+ ../generated/enemy.h ../generated/knife.h ../generated/door.h \
+ ../generated/map_summary.h ../generated/map.h
 ../build/enemy.rel: enemy.c enemy.h game.h game_util.h ../../include/ubox.h \
  ../../include/spman.h ../../include/ubox.h ../../include/mplayer.h \
  main.h
@@ -16,8 +16,8 @@
  game.h ../generated/map_summary.h ../generated/playermove.h \
  ../generated/playerpickax.h ../generated/playerknife.h \
  ../generated/playerattack.h ../generated/playerdigging.h \
- ../generated/enemy.h ../generated/knife.h item.h gate.h pushdoor.h \
- player.h enemy.h jewel.h trap.h character.h
+ ../generated/enemy.h ../generated/knife.h ../generated/door.h item.h \
+ gate.h pushdoor.h player.h enemy.h jewel.h trap.h character.h
 ../build/game_util.rel: game_util.c game_util.h game.h ../../include/ubox.h \
  ../../include/mplayer.h
 ../build/gate.rel: gate.c ../../include/ubox.h ../../include/spman.h \

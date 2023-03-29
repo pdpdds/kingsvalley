@@ -3,11 +3,7 @@
 #include "game_util.h"
 #include "game.h"
 
-extern void change_object_state(struct entity* object, uint8_t state, uint8_t move_type);
-extern void draw_hud();
-
-
-
+extern void render_player_sprite();
 
 #define GATE_TILE1 108
 #define GATE_TILE2 109
@@ -93,94 +89,42 @@ void update_exit() {
 
 }
 
-uint8_t get_pattern_gate() {
-	struct entity* knife = find_object_by_type(ET_KNIFE);
-	return knife->pat;
-}
-
+extern uint8_t pattern_door;
 
 void put_gate_sprite(uint8_t tile_x, uint8_t tile_y) {
-	uint8_t pattern_gate = get_pattern_gate();
 	sp.x = (tile_x + 2) * 8;
-	sp.y = (tile_y - 2) * 8 - 1;
+	sp.y = (tile_y - 2) * 8;
 
-	for (uint8_t i = 0; i < 4; i++) {
-		sp.pattern = pattern_gate + (4 + i) * 4;
+	for (int8_t i = 0; i <  4; i++) {
+		sp.pattern = pattern_door + i * 4;
 		sp.attr = 1 + i % 2;
 		spman_alloc_fixed_sprite(&sp);
 
 		if (i == 1)
 			sp.y += 16;
 	}
-
 }
 
-void put_player_sprite(uint8_t frame)
-{
-	sp.x = player->x - player->pivot_x;
-	sp.y = player->y + player->pivot_y;
 
-	uint8_t current_frame = walk_frames[frame];
+void play_animation(uint8_t tile_x, uint8_t tile_y, uint8_t count, uint8_t step, uint8_t tile) {
 
-	sp.pattern = player->pat + (current_frame * 2 + 6) * 4;
-	sp.attr = 14;
-	spman_alloc_fixed_sprite(&sp);
-
-	sp.pattern = sp.pattern + 4;
-	sp.attr = 6;
-	spman_alloc_fixed_sprite(&sp);
-}
-
-void play_animation(uint8_t tile_x, uint8_t tile_y, uint8_t player_frame, uint8_t count, uint8_t step, uint8_t tile) {
-
-#if defined(WIN32) || defined(__linux) || defined(DJGPP)
-	self = player;
-	ubox_put_tile(tile_x - 2, tile_y - 1, tile);
-	put_gate_tiles(tile_x - 1, tile_y - 1, step);
-	put_player_sprite(player_frame);
-
-
-	//if (player->extra2 < 2)
-	//	put_gate_sprite(tile_x, tile_y);
-
-	if (player->extra2 < 2)
-	{
-		uint8_t pattern_gate = get_pattern_gate();
-		sp.x = (tile_x + 2) * 8;
-		sp.y = (tile_y - 2) * 8 - 1;
-
-		sp.pattern = pattern_gate + (5) * 4;
-		sp.attr = 2;
-		spman_alloc_fixed_sprite(&sp);
-
-
-		sp.pattern = pattern_gate + (4) * 4;
-		sp.attr = 1;
-		spman_alloc_fixed_sprite(&sp);
-
-		sp.y += 16;
-
-		sp.pattern = pattern_gate + (7) * 4;
-		sp.attr = 2;
-		spman_alloc_fixed_sprite(&sp);
-
-
-		sp.pattern = pattern_gate + (6) * 4;
-		sp.attr = 1;
-		spman_alloc_fixed_sprite(&sp);
-	}
-
-
-#else
 	put_gate_tiles(tile_x - 1, tile_y - 1, step);
 	ubox_put_tile(tile_x - 2, tile_y - 1, tile);
+
+#if !defined(__SDCC) 
+	render_player_sprite();
 
 	if (player->extra2 < 2)
 		put_gate_sprite(tile_x, tile_y);
 
-	put_player_sprite(player_frame);
+#else
+	if (player->extra2 < 2)
+		put_gate_sprite(tile_x, tile_y);
+
+	render_player_sprite();
 #endif
 
+	
 	if (player->extra > count)
 	{
 		player->extra = 0;
@@ -190,65 +134,6 @@ void play_animation(uint8_t tile_x, uint8_t tile_y, uint8_t player_frame, uint8_
 
 extern uint8_t is_blocked(uint8_t x, uint8_t y);
 
-uint8_t process_start_gate_animation(uint8_t tile_x, uint8_t tile_y)
-{
-	player->extra++;
-
-	uint8_t frame = 0;
-	uint8_t count = 30;
-	uint8_t step = 0;
-	uint8_t tile = GATE_LOCK_DOWN_TILE;
-
-	switch (player->extra2)
-	{
-	case 1:
-		frame = player->frame;
-		count = 8 * FRAME_WAIT;
-		break;
-	case 2:
-		step = 1;
-		break;
-	case 3:
-		step = 2;
-		break;
-	case 4:
-		step = 2;
-		tile = (player->extra % 4) ? GATE_LOCK_UP_TILE : BLANK_TILE;
-
-		break;
-	case 5: {
-		ubox_put_tile(tile_x - 2, tile_y - 1, 0);
-		put_gate_tiles(tile_x - 1, tile_y - 1, 3);
-		put_player_sprite(0);
-
-		return 1;
-	}
-
-	}
-
-	play_animation(tile_x, tile_y, frame, count, step, tile);
-
-	if (player->extra2 == 1)
-	{
-		if (++player->delay == FRAME_WAIT)
-		{
-			
-
-			if (!is_blocked(player->x - 2, player->y + 1 + 15))
-			{
-				player->x -= 2;
-				player->y++;
-			}
-			
-
-			player->delay = 0;
-			if (++player->frame == WALK_CYCLE)
-				player->frame = 0;
-		}
-	}
-
-	return 0;
-}
 
 uint8_t process_end_gate_animation(uint8_t tile_x, uint8_t tile_y)
 {
@@ -258,7 +143,7 @@ uint8_t process_end_gate_animation(uint8_t tile_x, uint8_t tile_y)
 	count++;
 
 	put_gate_sprite(tile_x, tile_y);
-	put_player_sprite(player->frame);
+	render_player_sprite();
 
 
 
@@ -281,4 +166,73 @@ uint8_t process_end_gate_animation(uint8_t tile_x, uint8_t tile_y)
 
 
 	return result;
+}
+
+void run_door_opening()
+{
+	self = player;
+
+	uint8_t tile_x = player->x >> 3;
+	uint8_t tile_y = player->y >> 3;
+
+
+	player->x += 8;
+	player->y -= 8;
+	player->dir = 1;
+	player->delay = 0;
+
+	uint8_t count = 30;
+	uint8_t step = 0;
+	uint8_t tile = GATE_LOCK_DOWN_TILE;
+	
+	while (1) {
+
+		ubox_update();
+
+		player->extra++;
+
+		switch (player->extra2) {
+		case 1:
+			count = 8 * FRAME_WAIT;
+			break;
+		case 2:
+			step = 1;
+			break;
+		case 3:
+			step = 2;
+			break;
+		case 4:
+			step = 2;
+			tile = (player->extra % 4) ? GATE_LOCK_UP_TILE : BLANK_TILE;
+
+			break;
+		case 5: {
+			ubox_put_tile(tile_x - 2, tile_y - 1, 0);
+			put_gate_tiles(tile_x - 1, tile_y - 1, 3);
+			render_player_sprite();
+
+			return;
+		}
+
+		}
+
+		play_animation(tile_x, tile_y, count, step, tile);
+
+		if (player->extra2 == 1) {
+			if (++player->delay == FRAME_WAIT) {
+
+				if (!is_blocked(player->x - 2, player->y + 1 + 15)) {
+					player->x -= 2;
+					player->y++;
+				}
+
+				player->delay = 0;
+				if (++player->frame == WALK_CYCLE)
+					player->frame = 0;
+			}
+		}
+
+		ubox_wait();
+		spman_update();
+	}
 }
