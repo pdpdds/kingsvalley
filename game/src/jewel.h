@@ -3,5 +3,4 @@
 
 void update_jewel();
 
-
 #endif

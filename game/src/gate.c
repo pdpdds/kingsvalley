@@ -91,13 +91,13 @@ void update_exit() {
 
 extern uint8_t pattern_door;
 
-void put_gate_sprite(uint8_t tile_x, uint8_t tile_y) {
-	sp.x = (tile_x + 2) * 8;
-	sp.y = (tile_y - 2) * 8;
+void put_gate_sprite(uint8_t x, uint8_t y) {
+	sp.x = x;
+	sp.y = y;
 
 	for (int8_t i = 0; i <  4; i++) {
 		sp.pattern = pattern_door + i * 4;
-		sp.attr = 1 + i % 2;
+		sp.attr = 2 - i % 2;
 		spman_alloc_fixed_sprite(&sp);
 
 		if (i == 1)
@@ -115,11 +115,11 @@ void play_animation(uint8_t tile_x, uint8_t tile_y, uint8_t count, uint8_t step,
 	render_player_sprite();
 
 	if (player->extra2 < 2)
-		put_gate_sprite(tile_x, tile_y);
+		put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
 
 #else
 	if (player->extra2 < 2)
-		put_gate_sprite(tile_x, tile_y);
+		put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
 
 	render_player_sprite();
 #endif
@@ -142,11 +142,8 @@ uint8_t process_end_gate_animation(uint8_t tile_x, uint8_t tile_y)
 
 	count++;
 
-	put_gate_sprite(tile_x, tile_y);
+	put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
 	render_player_sprite();
-
-
-
 
 	if (++player->delay == 2)
 	{

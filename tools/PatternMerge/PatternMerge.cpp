@@ -19,17 +19,17 @@ typedef struct tag_Color
 Uint32 SDL_GetPixel(SDL_Surface* surface, int x, int y);
 bool SetPixel(SDL_Surface* surface, int x, int y, uint8_t r, uint8_t g, uint8_t b);
 
-SDL_Surface* mergeTiles(SDL_Surface* tiles[], int mergeTileStart, int mergeTileEnd, Uint32 backgroundColor, Color secondColor) {
+SDL_Surface* mergeTiles(SDL_Surface* tiles[], int pattern_start_index, int pattern_end_index, Uint32 backgroundColor, Color secondColor) {
     // Create the output surface
-    int tileSizeX = (mergeTileEnd - mergeTileStart + 1)* TILE_SIZE / 2;
+    int tileSizeX = (pattern_end_index - pattern_start_index + 1)* TILE_SIZE / 2;
     SDL_Surface* outputSurface = SDL_CreateRGBSurface(0, tileSizeX, TILE_SIZE, 24, 0, 0, 0, 0);
 
-    int mergeloop = (mergeTileEnd - mergeTileStart + 1) / 2;
+    int mergeloop = (pattern_end_index - pattern_start_index + 1) / 2;
 
     for (int i = 0; i < mergeloop; i++)
     {
-        int tileIndex1 = (i * 2 + mergeTileStart) ;
-        int tileIndex2 = (i * 2 + mergeTileStart) + 1;
+        int tileIndex1 = (i * 2 + pattern_start_index) ;
+        int tileIndex2 = (i * 2 + pattern_start_index) + 1;
         // Copy the pixels from the tiles to the output surface
         for (int y = 0; y < TILE_SIZE; y++) {
             for (int x = 0; x < TILE_SIZE; x++) {
@@ -47,10 +47,7 @@ SDL_Surface* mergeTiles(SDL_Surface* tiles[], int mergeTileStart, int mergeTileE
                 Uint32 tile2Pixel = SDL_GetPixel(tiles[tileIndex2], x, y);
 
                 if (x < TILE_SIZE && y < TILE_SIZE && tile2Pixel != backgroundColor) {
-                    /*Color current;
-                    current.R = tile2Pixel;
-                    current.G = tile2Pixel >> 8;
-                    current.B = tile2Pixel >> 16;*/
+               
                     SetPixel(outputSurface, x + TILE_SIZE * i, y, secondColor.R, secondColor.G, secondColor.B);
 
                 }
@@ -84,6 +81,23 @@ Uint32 SDL_GetPixel(SDL_Surface * surface, int x, int y) {
 }
 
 
+Uint32 get_second_color(SDL_Surface* tiles[], int index, Uint32 background) {
+
+    for (int y = 0; y < TILE_SIZE; y++) {
+        for (int x = 0; x < TILE_SIZE; x++) {
+
+            Uint32 tile2Pixel = SDL_GetPixel(tiles[index], x, y);
+
+            if (x < TILE_SIZE && y < TILE_SIZE && tile2Pixel != background) {
+                return tile2Pixel;
+
+            }
+        }
+    }
+
+    return 0;
+}
+
 #undef main
 int main(int argc, char* argv[]) {
     // Initialize SDL and SDL_image
@@ -91,8 +105,8 @@ int main(int argc, char* argv[]) {
     IMG_Init(IMG_INIT_PNG);
 
     // Check that a command-line argument was provided
-    if (argc != 2) {
-        std::cerr << "Usage: " << argv[0] << " <input_file.png>" << std::endl;
+    if (argc != 4) {
+        std::cerr << "Usage: " << argv[0] << " <input_file.png> <pattern start index> <pattern end index>" << std::endl;
         return 1;
     }
 
@@ -114,12 +128,19 @@ int main(int argc, char* argv[]) {
     NUM_TILES_Y = inputSurface->h / 16;
     NUM_TILES = NUM_TILES_X * NUM_TILES_Y;
     NUM_MERGE_COUNT = NUM_TILES / 2;
+
+    int pattern_start_index = atoi(argv[2]);
+    int pattern_end_index = atoi(argv[3]);
+
+    if ((pattern_end_index <= pattern_start_index) || pattern_end_index >= NUM_TILES) {
+        std::cerr << "invalid pattern index" << std::endl;
+        return 1;
+    }
     
     // Create an array to hold the individual tiles
     // Allocate the array
     SDL_Surface** tiles = (new SDL_Surface * [NUM_TILES]);
 
-    
     // Extract the tiles from the input image
     for (int i = 0; i < NUM_TILES_X; i++) {
         for (int j = 0; j < NUM_TILES_Y; j++) {
@@ -131,24 +152,19 @@ int main(int argc, char* argv[]) {
             SDL_BlitSurface(inputSurface, &srcRect, tiles[i + j * NUM_TILES_X], &dstRect);
         }
     }
-    /*Uint32 background = 16711935;
+    Uint32 background = 16711935; //RGBA(255,0,255,0)
     Color current;
     current.R = background;
     current.G = background >> 8;
     current.B = background >> 16;
-    */
-    //Uint32 background = SDL_GetPixel(inputSurface, 8, 0);
-
-    int mergeTileStart = 54;
-    int mergeTileEnd = 55;
-    Uint32 background = 0;
-
-    Uint32 secondColor = 0xbb5555;
+    
+    Uint32 secondColor = get_second_color(tiles, pattern_start_index + 1, background);
     Color color;
     color.R = secondColor;
     color.G = secondColor >> 8;
     color.B = secondColor >> 16;
-    SDL_Surface* outputSurface = mergeTiles(tiles, mergeTileStart, mergeTileEnd, background, color);
+
+    SDL_Surface* outputSurface = mergeTiles(tiles, pattern_start_index, pattern_end_index, background, color);
 
     // Write the output image to a new PNG file
     IMG_SavePNG(outputSurface, "output.png");

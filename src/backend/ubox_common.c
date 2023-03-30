@@ -14,7 +14,6 @@ typedef struct tag_pattern_info
 }pattern_info;
 
 
-
 extern void read_control_key();
 extern uint8_t read_key(int row);
 
@@ -465,6 +464,7 @@ void* create_texture_from_data(void* array_data, int sprite_len, int sprite_size
 	assert(surface > 0);
 
 	uint8_t color = 0;
+	uint8_t attr_color = 5;
 	for (int k = 0; k < sprite_len; k++) {
 		for (int i = 0; i < 4 * 8; i++)
 		{
@@ -475,21 +475,15 @@ void* create_texture_from_data(void* array_data, int sprite_len, int sprite_size
 
 				mask = 1 << (7 - j);
 
-				if (color & mask) {
-					if (flip)
-						ubox_putpixel(surface, k * 16 + 15 - ((i / 16) * 8 + j), (i % 16), 5);
-					else
-						ubox_putpixel(surface, k * 16 + ((i / 16) * 8 + j), (i % 16), 5);
+				if (color & mask)
+					attr_color = 5;
+				else
+					attr_color = 0;
 
-				}
-				else {
-
-					if (flip)
-
-						ubox_putpixel(surface, k * 16 + 15 - ((i / 16) * 8 + j), (i % 16), 0);
-					else
-						ubox_putpixel(surface, k * 16 + ((i / 16) * 8 + j), (i % 16), 0);
-				}
+				if (flip)
+					ubox_putpixel(surface, k * 16 + 15 - ((i / 16) * 8 + j), (i % 16), attr_color);
+				else
+					ubox_putpixel(surface, k * 16 + ((i / 16) * 8 + j), (i % 16), attr_color);
 			}
 		}
 	}

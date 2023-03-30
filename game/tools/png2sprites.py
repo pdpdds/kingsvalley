@@ -92,7 +92,8 @@ def main():
 
             if not cols:
                 continue
-
+            cols = sorted(cols)
+            cols = reversed(cols)
             for c in cols:
                 frame_colors.append(c)
                 frame = []
