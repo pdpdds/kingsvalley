@@ -65,7 +65,7 @@ x64
 *.rel
 *.lst
 *.sym
-bomb
+bombs
 gulkave
 game/data/kings
 game/data/CWSDPMI.SWP

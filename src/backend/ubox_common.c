@@ -483,19 +483,12 @@ void* create_texture_from_data(void* array_data, int sprite_len, int sprite_size
 
 				}
 				else {
-#if defined(DJGPP)
-					if (flip)
-						ubox_putpixel(surface, k * 16 + 15 - ((i / 16) * 8 + j), (i % 16), 0);
-					else
-						ubox_putpixel(surface, k * 16 + ((i / 16) * 8 + j), (i % 16), 0);
 
-#else
 					if (flip)
 
 						ubox_putpixel(surface, k * 16 + 15 - ((i / 16) * 8 + j), (i % 16), 0);
 					else
 						ubox_putpixel(surface, k * 16 + ((i / 16) * 8 + j), (i % 16), 0);
-#endif
 				}
 			}
 		}
