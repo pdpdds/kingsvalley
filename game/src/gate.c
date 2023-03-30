@@ -105,131 +105,173 @@ void put_gate_sprite(uint8_t x, uint8_t y) {
 	}
 }
 
-
-void play_animation(uint8_t tile_x, uint8_t tile_y, uint8_t count, uint8_t step, uint8_t tile) {
-
-	put_gate_tiles(tile_x - 1, tile_y - 1, step);
-	ubox_put_tile(tile_x - 2, tile_y - 1, tile);
-
-#if !defined(__SDCC) 
-	render_player_sprite();
-
-	if (player->extra2 < 2)
-		put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
-
-#else
-	if (player->extra2 < 2)
-		put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
-
-	render_player_sprite();
-#endif
-
-	
-	if (player->extra > count)
-	{
-		player->extra = 0;
-		player->extra2++;
-	}
-}
-
 extern uint8_t is_blocked(uint8_t x, uint8_t y);
-
-
-uint8_t process_end_gate_animation(uint8_t tile_x, uint8_t tile_y)
-{
-	static uint8_t count = 0;
-	uint8_t result = 0;
-
-	count++;
-
-	put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
-	render_player_sprite();
-
-	if (++player->delay == 2)
-	{
-		player->x += 2;
-		player->y--;
-
-		player->delay = 0;
-		if (++player->frame == WALK_CYCLE)
-			player->frame = 0;
-	}
-
-	if (count >= 8 * FRAME_WAIT) {
-		count = 0;
-		result = 1;
-	}
-
-
-
-	return result;
-}
 
 void run_door_opening()
 {
 	self = player;
 
-	uint8_t tile_x = player->x >> 3;
-	uint8_t tile_y = player->y >> 3;
+	uint8_t tile_x = self->x >> 3;
+	uint8_t tile_y = self->y >> 3;
+
+	self->x += 8;
+	self->y -= 8;
+	self->dir = 1;
 
 
-	player->x += 8;
-	player->y -= 8;
-	player->dir = 1;
-	player->delay = 0;
-
-	uint8_t count = 30;
 	uint8_t step = 0;
-	uint8_t tile = GATE_LOCK_DOWN_TILE;
-	
+	uint8_t count = 0;
+
 	while (1) {
 
 		ubox_update();
 
-		player->extra++;
-
-		switch (player->extra2) {
+		switch (step) {
+		case 0:
+			ubox_put_tile(tile_x - 2, tile_y - 1, GATE_LOCK_UP_TILE);
+			put_gate_tiles(tile_x - 1, tile_y - 1, 0); 
+			if (count > 30) {
+				count = 0;
+				step++;
+			}
+			break;
 		case 1:
-			count = 8 * FRAME_WAIT;
+			if (++self->delay == FRAME_WAIT) {
+
+				if (!is_blocked(self->x - 2, self->y + 1 + 15)) {
+					self->x -= 2;
+					self->y++;
+
+					if (++self->frame == WALK_CYCLE)
+						self->frame = 0;
+				}
+				else 
+					self->frame = 0;
+
+				self->delay = 0;
+			}
+
+			if (count > 30) {
+				count = 0;
+				step++;
+			}
 			break;
 		case 2:
-			step = 1;
+			if (count > 30) {
+				count = 0;
+				step++;
+			}
 			break;
 		case 3:
-			step = 2;
+			put_gate_tiles(tile_x - 1, tile_y - 1, 1);
+			if (count > 30) {
+				count = 0;
+				step++;
+			}
 			break;
 		case 4:
-			step = 2;
-			tile = (player->extra % 4) ? GATE_LOCK_UP_TILE : BLANK_TILE;
-
+			put_gate_tiles(tile_x - 1, tile_y - 1, 2);
+			if (count > 30) {
+				count = 0;
+				step++;
+			}
 			break;
-		case 5: {
-			ubox_put_tile(tile_x - 2, tile_y - 1, 0);
+		case 5:
+	
+			ubox_put_tile(tile_x - 2, tile_y - 1, (count % 4) ? GATE_LOCK_UP_TILE : BLANK_TILE);
+			if (count > 30) {
+				count = 0;
+				step++;
+			}
+			break;
+		case 6: 
 			put_gate_tiles(tile_x - 1, tile_y - 1, 3);
-			render_player_sprite();
-
+			ubox_put_tile(tile_x - 2, tile_y - 1, BLANK_TILE);
 			return;
 		}
 
-		}
+		count++;
 
-		play_animation(tile_x, tile_y, count, step, tile);
+#if defined(__SDCC) 
+		if(step < 3)
+			put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
 
-		if (player->extra2 == 1) {
-			if (++player->delay == FRAME_WAIT) {
+		render_player_sprite();
+#else
+		render_player_sprite();
 
-				if (!is_blocked(player->x - 2, player->y + 1 + 15)) {
-					player->x -= 2;
-					player->y++;
-				}
-
-				player->delay = 0;
-				if (++player->frame == WALK_CYCLE)
-					player->frame = 0;
-			}
-		}
+		if (step < 3)
+			put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
+#endif
 
 		ubox_wait();
 		spman_update();
 	}
 }
+
+void run_door_exit()
+{
+	self = player;
+
+	uint8_t tile_x = self->x >> 3;
+	uint8_t tile_y = self->y >> 3;
+
+	self->delay = 0;
+
+
+	uint8_t step = 0;
+	uint8_t count = 0;
+
+	while (1) {
+
+		ubox_update();
+
+		switch (step) {
+		case 0:
+			if (++self->delay == FRAME_WAIT) {
+
+				if (count < 15) {
+					self->x += 2;
+					self->y--;
+
+					if (++self->frame == WALK_CYCLE)
+						self->frame = 0;
+				}
+				else
+					self->frame = 0;
+				
+
+				self->delay = 0;
+			}
+
+			if (count > 30) {
+				count = 0;
+				step++;
+			}
+			
+			break;
+		case 1:
+			return;
+		}
+
+		count++;
+
+#if defined(__SDCC) 
+		if (step < 3)
+			put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
+		if (count < 15)
+		render_player_sprite();
+#else
+		if(count < 15)
+		render_player_sprite();
+
+		if (step < 3)
+			put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
+#endif
+
+		ubox_wait();
+		spman_update();
+	}
+}
+
+

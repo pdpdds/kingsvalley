@@ -418,6 +418,7 @@ void render_sprites() {
 	if (!g_allocated_patterns)
 		return;
 
+
 	struct sprite_attr* vec_info = (struct sprite_attr*)g_allocated_patterns;
 
 	if (g_pattern_info) {

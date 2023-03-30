@@ -389,43 +389,6 @@ uint8_t process_game() {
 	return 0;
 }
 
-void process_door_animation(uint8_t start)
-{
-	self = player;
-
-	uint8_t tile_x = player->x >> 3;
-	uint8_t tile_y = player->y >> 3;
-
-	if (start) {
-		player->x += 8;
-		player->y -= 8;
-		player->dir = 1;
-		player->delay = 0;
-	}
-	else {
-		player->dir = 0;
-		player->delay = 0;
-	}
-	
-	uint8_t quit = 0;
-	while (!quit) {
-
-		while (ubox_update() && quit == 0) {
-							if (process_end_gate_animation(tile_x, tile_y)) {
-
-					g_gamestate = STATE_GAME_CLEAR;
-					quit = 1;
-					break;
-				}
-			
-
-			ubox_wait();
-			spman_update();
-		}
-	}
-}
-
-extern void run_door_opening();
 
 void run_game(uint8_t stage) {
 	invuln = 0;
@@ -470,7 +433,8 @@ void run_game(uint8_t stage) {
 				mplayer_init(SONG, SONG_IN_GAME);
 				break;
 			case STATE_IN_GAME_EXIT:
-				process_door_animation(0);
+				run_door_exit();
+				g_gamestate = STATE_GAME_CLEAR;
 				break;
 
 			case STATE_IN_GAME:

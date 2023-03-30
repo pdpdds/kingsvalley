@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 void update_exit();
-
-uint8_t process_end_gate_animation(uint8_t tile_x, uint8_t tile_y);
+void run_door_opening();
+void run_door_exit();
 
 #endif
