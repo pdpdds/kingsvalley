@@ -35,7 +35,7 @@ extern void render_player_sprite();
 #define GATE_TILE23 129
 
 
-const unsigned char gate_sprite[4][12] = {
+const unsigned char gate_tiles[4][12] = {
 {
 GATE_TILE1, GATE_TILE2, GATE_TILE3,
 GATE_TILE4, BLANK_TILE, GATE_TILE5,
@@ -64,8 +64,8 @@ BLANK_TILE, BLANK_TILE, BLANK_TILE,
 
 void put_gate_tiles(uint8_t tile_x, uint8_t  tile_y, uint8_t step) {
 	for (uint8_t i = 0; i < 12; i++) {
-		update_map_data_by_position((tile_x + i / 3) * 8, (tile_y + i % 3) * 8, gate_sprite[step][i]);
-		ubox_put_tile(tile_x + i / 3, tile_y + i % 3, gate_sprite[step][i]);
+		update_map_data_by_position((tile_x + i / 3) * 8, (tile_y + i % 3) * 8, gate_tiles[step][i]);
+		ubox_put_tile(tile_x + i / 3, tile_y + i % 3, gate_tiles[step][i]);
 	}
 }
 
@@ -117,7 +117,6 @@ void run_door_opening()
 	self->x += 8;
 	self->y -= 8;
 	self->dir = 1;
-
 
 	uint8_t step = 0;
 	uint8_t count = 0;
@@ -192,25 +191,19 @@ void run_door_opening()
 
 		count++;
 
-#if defined(__SDCC) 
 		if(step < 3)
 			put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
 
 		render_player_sprite();
-#else
-		render_player_sprite();
 
-		if (step < 3)
-			put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
-#endif
 
 		ubox_wait();
 		spman_update();
 	}
 }
 
-void run_door_exit()
-{
+#define PLAYER_HIDE_COUNT 15
+void run_door_exit() {
 	self = player;
 
 	uint8_t tile_x = self->x >> 3;
@@ -218,56 +211,36 @@ void run_door_exit()
 
 	self->delay = 0;
 
-
-	uint8_t step = 0;
 	uint8_t count = 0;
 
 	while (1) {
 
 		ubox_update();
 
-		switch (step) {
-		case 0:
-			if (++self->delay == FRAME_WAIT) {
 
-				if (count < 15) {
-					self->x += 2;
-					self->y--;
+		if (++self->delay == FRAME_WAIT) {
 
-					if (++self->frame == WALK_CYCLE)
-						self->frame = 0;
-				}
-				else
+			if (count < PLAYER_HIDE_COUNT) {
+				self->x += 2;
+				self->y--;
+
+				if (++self->frame == WALK_CYCLE)
 					self->frame = 0;
-				
-
-				self->delay = 0;
 			}
 
-			if (count > 30) {
-				count = 0;
-				step++;
-			}
-			
-			break;
-		case 1:
+			self->delay = 0;
+		}
+
+		if (count > 30) {
 			return;
 		}
 
+
 		count++;
 
-#if defined(__SDCC) 
-		if (step < 3)
-			put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
-		if (count < 15)
-		render_player_sprite();
-#else
-		if(count < 15)
-		render_player_sprite();
-
-		if (step < 3)
-			put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
-#endif
+		put_gate_sprite((tile_x + 2) * 8, (tile_y - 2) * 8);
+		if (count < PLAYER_HIDE_COUNT)
+			render_player_sprite();
 
 		ubox_wait();
 		spman_update();

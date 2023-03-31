@@ -19,7 +19,6 @@ void update_pushdoor() {
 		return;
 	}
 
-
 	if (!player->dir && self->dir) {
 		if ((player->x + 8) == self->x)
 			self->extra++;

@@ -246,6 +246,7 @@ void main()
 
     ubox_set_tiles_colors((uint8_t*)tiles_colors);
     ubox_set_tiles((uint8_t*)tiles);  
+    //ubox_set_tiles_from_file("tiles.png");
 
     ubox_fill_screen(WHITESPACE_TILE);
 

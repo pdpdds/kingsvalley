@@ -367,6 +367,7 @@ uint8_t spman_alloc_pat(uint8_t type, uint8_t* data, uint8_t len, uint8_t flip)
 void spman_alloc_sprite(struct sprite_attr* sp) {
 
 	cvector_push_back(g_allocated_patterns, *sp);
+	
 }
 
 
@@ -414,43 +415,52 @@ void render_sprites_by_data(pattern_info* info, struct sprite_attr* sp, uint8_t 
 	}
 }
 
+void render_sprite(struct sprite_attr* sp) {
+	uint8_t found = 0;
+	uint8_t flip = 0;
+	pattern_info* info = cvector_begin(g_pattern_info);
+	for (; info != cvector_end(g_pattern_info); ++info) {
+
+		if ((info->pattern <= sp->pattern) && (sp->pattern < (info->pattern + (info->len)))) {
+			found = 1;
+			break;
+		}
+	}
+
+	assert(found);
+
+	uint8_t pattern = sp->pattern - info->pattern;
+	if (info->flip) {
+		flip = 1;
+	}
+
+	switch (g_system_info->_sprite_mode) {
+	case SPRITE_PIXEL:
+		render_sprites_by_data(info, sp, pattern, flip);
+		break;
+	case SPRITE_PATTERN_IMAGE:
+		render_sprites_by_image(info, sp, pattern, flip);
+		break;
+	}
+}
+
 void render_sprites() {
 	if (!g_allocated_patterns)
 		return;
 
-
-	struct sprite_attr* vec_info = (struct sprite_attr*)g_allocated_patterns;
-
 	if (g_pattern_info) {
-		for (struct sprite_attr* sp = cvector_begin(vec_info); sp != cvector_end(vec_info); ++sp) {
-			pattern_info* vec_info = (pattern_info*)g_pattern_info;
-			uint8_t found = 0;
-			uint8_t flip = 0;
-			pattern_info* info = cvector_begin(vec_info);
-			for (; info != cvector_end(vec_info); ++info) {
 
-				if ((info->pattern <= sp->pattern) && (sp->pattern < (info->pattern + (info->len)))) {
-					found = 1;
-					break;
-				}
-			}
+		struct sprite_attr* sp = cvector_end(g_allocated_patterns);
 
-			assert(found);
+		while (sp != cvector_begin(g_allocated_patterns))
+		{
+			sp--;
 
-			uint8_t pattern = sp->pattern - info->pattern;
-			if (info->flip) {
-				flip = 1;
-			}
-
-			switch (g_system_info->_sprite_mode) {
-			case SPRITE_PIXEL:
-				render_sprites_by_data(info, sp, pattern, flip);
-				break;
-			case SPRITE_PATTERN_IMAGE:
-				render_sprites_by_image(info, sp, pattern, flip);
-				break;
-			}		
+			render_sprite(sp);
 		}
+
+		if(sp == cvector_begin(g_allocated_patterns))
+			render_sprite(sp);
 	}
 
 	cvector_free(g_allocated_patterns);
