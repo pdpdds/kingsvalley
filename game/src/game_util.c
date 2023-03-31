@@ -71,6 +71,14 @@ struct entity* find_object_by_tile_index(uint8_t tile_x, uint8_t tile_y) {
     return 0;
 }
 
+uint8_t is_blocked(uint8_t x, uint8_t y) {
+
+    if (is_map_blocked(x, y) || is_map_blocked(x + 7, y))
+        return 1;
+
+    return 0;
+}
+
 // x and y in pixels
 uint8_t is_map_blocked(uint8_t x, uint8_t y)
 {
@@ -100,11 +108,7 @@ uint8_t is_movable_tile(uint8_t tileIndex)
 }
 
 
-
-
-
-uint8_t is_intersect_by_rect(struct rect_* object1, struct rect_* object2)
-{
+uint8_t is_intersect_by_rect(struct rect_* object1, struct rect_* object2) {
     if ((object1->x + object1->width) <= object2->x)
         return 0;
 

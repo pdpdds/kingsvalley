@@ -49,16 +49,13 @@ uint8_t escape_stair() {
 			return 0;
 	}
 
-
-
 	return 1;
 }
 
 void update_character_stair() {
 
 	uint8_t move_offset = 1;
-	if (self->flags & 128)
-	{
+	if (self->flags & 128) {
 		move_offset *= 2;
 	}
 
@@ -80,11 +77,8 @@ void update_character_stair() {
 		else
 			next_y = self->y - move_offset;
 	}
-	else return;
-
-	
-
-
+	else 
+		return;
 
 	if (escape_stair())
 		change_object_state(self, PS_FALL, self->movetype);
@@ -457,18 +451,6 @@ void update_character_movable_door()
 }
 
 
-uint8_t is_blocked(uint8_t x, uint8_t y) {
-
-
-
-	if (is_map_blocked(x, y) || is_map_blocked(x + 7, y))
-		return 1;
-
-
-	return 0;
-}
-
-
 void update_character_jump()
 {
 	uint8_t next_x = self->x;
@@ -522,20 +504,18 @@ void update_character_jump()
 	}
 }
 
-void move_object()
+void update_character_room()
 {
-	if (self->state == PS_JUMP || PS_MOVE == self->state)
-	{
-		if (!self->dir)
-		{
+	if (self->state == PS_JUMP || 
+		self->state == PS_MOVE ) {
+		if (!self->dir) { //right move
 			if (self->x >= 255 - 8)
 			{
 				self->x = 1;
 				self->roomId += 1;
 			}
 		}
-		else
-		{
+		else {
 			if (self->x <= 4)
 			{
 
@@ -575,5 +555,5 @@ void update_character() {
 		break;
 	}
 
-	move_object();
+	update_character_room();
 }

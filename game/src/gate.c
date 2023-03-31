@@ -105,8 +105,6 @@ void put_gate_sprite(uint8_t x, uint8_t y) {
 	}
 }
 
-extern uint8_t is_blocked(uint8_t x, uint8_t y);
-
 void run_door_opening()
 {
 	self = player;

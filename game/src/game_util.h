@@ -19,6 +19,7 @@ void put_text(uint8_t x, uint8_t y, const uint8_t* text);
 
 
 uint8_t is_map_blocked(uint8_t x, uint8_t y);
+uint8_t is_blocked(uint8_t x, uint8_t y);
 uint8_t check_floor(uint8_t x, uint8_t y, uint8_t width);
 
 //object collison
