@@ -10,6 +10,9 @@
     <Filter Include="src\allegro">
       <UniqueIdentifier>{b8216959-d6ba-4c49-810f-f155bc2b59ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\allegro\decoder">
+      <UniqueIdentifier>{d4b5c35d-f01b-4e46-8a4e-b7fd30222518}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common.h">
@@ -28,6 +31,30 @@
     </ClCompile>
     <ClCompile Include="ubox_allegro.c">
       <Filter>src\allegro</Filter>
+    </ClCompile>
+    <ClCompile Include="almp3.c">
+      <Filter>src\allegro</Filter>
+    </ClCompile>
+    <ClCompile Include="decoder\common.c">
+      <Filter>src\allegro\decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="decoder\dct64_i386.c">
+      <Filter>src\allegro\decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="decoder\decode_i386.c">
+      <Filter>src\allegro\decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="decoder\interface.c">
+      <Filter>src\allegro\decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="decoder\layer2.c">
+      <Filter>src\allegro\decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="decoder\layer3.c">
+      <Filter>src\allegro\decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="decoder\tabinit.c">
+      <Filter>src\allegro\decoder</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

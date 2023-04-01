@@ -2,6 +2,7 @@
 #include "common.h"
 #include <allegro.h>
 #include <alpng.h>
+#include <almp3.h>
 
 #ifdef WIN32
 #pragma comment(lib, "alleg.lib")
@@ -283,6 +284,8 @@ void ubox_init_game_system(GameSystemInfo* info)
 	LOCK_FUNCTION(ticker); //Set timer function
 	install_int_ex(ticker, BPS_TO_TIMER(g_system_info->_fps));
 
+	set_volume_per_voice(0);
+
 	//intialze sound
 	if (install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL)) {
 		allegro_message("Sound Error: %s\n", allegro_error);
@@ -311,16 +314,93 @@ void ubox_init_game_system(GameSystemInfo* info)
 	init_key_values();
 }
 
+#define DATASZ  (1<<15) /* (32768) amount of data to read from disk each time */
+#define BUFSZ   (1<<16) /* (65536) size of audiostream buffer */
+
+typedef struct {
+	PACKFILE* f;
+	ALMP3_MP3STREAM* s;
+} MP3FILE;
+
+
+MP3FILE* open_mp3_file(char* filename) {
+	MP3FILE* p = NULL;
+	PACKFILE* f = NULL;
+	ALMP3_MP3STREAM* s = NULL;
+	char data[DATASZ];
+	int len;
+
+	if (!(p = (MP3FILE*)malloc(sizeof(MP3FILE))))
+		goto error;
+	if (!(f = pack_fopen(filename, F_READ)))
+		goto error;
+	if ((len = pack_fread(data, DATASZ, f)) <= 0)
+		goto error;
+	if (len < DATASZ) {
+		if (!(s = almp3_create_mp3stream(data, len, TRUE)))
+			goto error;
+	}
+	else {
+		if (!(s = almp3_create_mp3stream(data, DATASZ, FALSE)))
+			goto error;
+	}
+	p->f = f;
+	p->s = s;
+	return p;
+
+error:
+	pack_fclose(f);
+	free(p);
+	return NULL;
+}
+
+
+int play_mp3_file(MP3FILE* mp3, int buflen, int vol, int pan) {
+	return almp3_play_mp3stream(mp3->s, buflen, vol, pan);
+}
+
+
+void close_mp3_file(MP3FILE* mp3) {
+	if (mp3) {
+		pack_fclose(mp3->f);
+		almp3_destroy_mp3stream(mp3->s);
+		free(mp3);
+	}
+}
+
+
+int poll_mp3_file(MP3FILE* mp3) {
+	char* data;
+	long len;
+
+	data = (char*)almp3_get_mp3stream_buffer(mp3->s);
+	if (data) {
+		len = pack_fread(data, DATASZ, mp3->f);
+		if (len < DATASZ)
+			almp3_free_mp3stream_buffer(mp3->s, len);
+		else
+			almp3_free_mp3stream_buffer(mp3->s, -1);
+	}
+
+	return almp3_poll_mp3stream(mp3->s);
+}
+
+
+
 void* load_music(char* filename) {
 	return load_sample(filename);
+
+	//return open_mp3_file(filename);
 }
 
 void play_music(void* data, uint8_t loop) {
 	//play_sample(data, 255, 128, 1000, loop);
 	play_sample(data, 255, 0, 1000, loop);
+	//play_mp3_file(data, BUFSZ, 255, 128);
 }
 
 void stop_music(void* data) {
+	//close_mp3_file(data);
 	stop_sample(data);
 }
 

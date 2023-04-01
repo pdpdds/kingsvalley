@@ -25,6 +25,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ubox_common.c" />
+    <ClCompile Include="almp3.c" />
+    <ClCompile Include="decoder\common.c" />
+    <ClCompile Include="decoder\dct64_i386.c" />
+    <ClCompile Include="decoder\decode_i386.c" />
+    <ClCompile Include="decoder\interface.c" />
+    <ClCompile Include="decoder\layer2.c" />
+    <ClCompile Include="decoder\layer3.c" />
+    <ClCompile Include="decoder\tabinit.c" />
     <ClCompile Include="ubox_allegro.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -96,9 +104,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>SDL2;UBOX_API_EXPORTS;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UBOX_API_EXPORTS;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../;../../../tools/apultra/src;../../../include;$(ALLEGRO4DOS)\include;$(ALLEGRO4DOS)\alpng13\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../;../../../tools/apultra/src;../../../include;$(ALLEGRO4DOS)\include;$(ALLEGRO4DOS)\alpng13\src;../../../src/backend/allegro4;../../../src/backend/allegro4/decoder</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4090;4819;4113</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -120,7 +128,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>SDL2;UBOX_API_EXPORTS; _NO_CRT_STDIO_INLINE;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../;../../../tools/apultra/src;../../../include;$(ALLEGRO4DOS)\include;$(ALLEGRO4DOS)\alpng13\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../;../../../tools/apultra/src;../../../include;$(ALLEGRO4DOS)\include;$(ALLEGRO4DOS)\alpng13\src;../../../src/backend/allegro4;../../../src/backend/allegro4/decoder</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4090;4819;4113</DisableSpecificWarnings>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <ExceptionHandling>false</ExceptionHandling>
