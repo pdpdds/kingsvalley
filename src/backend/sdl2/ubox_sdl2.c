@@ -176,6 +176,8 @@ extern void ubox_init_game_system(GameSystemInfo* info)
 		return;
 	}
 
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+
 #if defined(__ANDROID__)
 	g_window = SDL_CreateWindow(info->_title_name, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 448, SDL_WINDOW_FULLSCREEN);
 #elif defined(__linux)
