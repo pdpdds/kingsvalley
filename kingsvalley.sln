@@ -13,12 +13,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL2Backend", "src\backend\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "apultra", "tools\apultra\VS2017\apultra.vcxproj", "{3F30FEE8-63C5-4D39-A175-EDD7EA93E9B8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bombs", "bombs\msvc\bombs\bombs.vcxproj", "{243B460F-8DAD-48F9-AFA1-02187B585C9A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3F30FEE8-63C5-4D39-A175-EDD7EA93E9B8} = {3F30FEE8-63C5-4D39-A175-EDD7EA93E9B8}
-		{A4AEEA7B-9060-4D11-9AFE-7FE2700D7518} = {A4AEEA7B-9060-4D11-9AFE-7FE2700D7518}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -37,10 +31,6 @@ Global
 		{3F30FEE8-63C5-4D39-A175-EDD7EA93E9B8}.Debug|x86.Build.0 = Debug|Win32
 		{3F30FEE8-63C5-4D39-A175-EDD7EA93E9B8}.Release|x86.ActiveCfg = Release|Win32
 		{3F30FEE8-63C5-4D39-A175-EDD7EA93E9B8}.Release|x86.Build.0 = Release|Win32
-		{243B460F-8DAD-48F9-AFA1-02187B585C9A}.Debug|x86.ActiveCfg = Debug|Win32
-		{243B460F-8DAD-48F9-AFA1-02187B585C9A}.Debug|x86.Build.0 = Debug|Win32
-		{243B460F-8DAD-48F9-AFA1-02187B585C9A}.Release|x86.ActiveCfg = Release|Win32
-		{243B460F-8DAD-48F9-AFA1-02187B585C9A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
