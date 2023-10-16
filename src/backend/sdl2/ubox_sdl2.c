@@ -9,8 +9,8 @@ SDL_Surface* load_png(const char* filename);
 SDL_Window* g_window;
 SDL_Renderer* g_renderer;
 SDL_Texture* g_tile_texture;
-SDL_Texture* g_background_texture;
-SDL_Texture* g_background_texture2;
+SDL_Texture* g_background_front_texture;
+SDL_Texture* g_background_back_texture;
 TTF_Font* g_font = 0;
 
 
@@ -155,7 +155,7 @@ void ubox_put_tile(uint8_t x, uint8_t y, uint8_t tile)
 	dstRect.w = TILE_SIZE;
 	dstRect.h = TILE_SIZE;
 	
-	SDL_SetRenderTarget(g_renderer, g_background_texture);
+	SDL_SetRenderTarget(g_renderer, g_background_front_texture);
 	SDL_RenderCopy(g_renderer, g_tile_texture, &srcRect, &dstRect);	
 	SDL_SetRenderTarget(g_renderer, NULL);
 }
@@ -209,10 +209,10 @@ extern void ubox_init_game_system(GameSystemInfo* info)
 		return;
 	}
 
-	g_background_texture = SDL_CreateTexture(g_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, g_system_info->_msx_screen_width, g_system_info->_msx_screen_height);
-	g_background_texture2 = SDL_CreateTexture(g_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, g_system_info->_msx_screen_width, g_system_info->_msx_screen_height);
+	g_background_front_texture = SDL_CreateTexture(g_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, g_system_info->_msx_screen_width, g_system_info->_msx_screen_height + 8);
+	g_background_back_texture = SDL_CreateTexture(g_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, g_system_info->_msx_screen_width, g_system_info->_msx_screen_height + 8);
 
-	//SDL_RenderSetLogicalSize(g_renderer, g_system_info->_room_width * TILE_WIDTH, (g_system_info->_room_height) * TILE_HEIGHT);	
+	SDL_RenderSetLogicalSize(g_renderer, g_system_info->_room_width * TILE_WIDTH, (g_system_info->_room_height) * TILE_HEIGHT);	
 	
 	SDL_initFramerate(&fpsManager);
 	SDL_setFramerate(&fpsManager, g_system_info->_fps);
@@ -336,17 +336,16 @@ void show_fps() {
 void spman_update() {	
 	SDL_Rect destRect = { 0, 0, g_system_info->_room_width * TILE_WIDTH, g_system_info->_room_height * TILE_HEIGHT };
 	
-	SDL_SetRenderTarget(g_renderer, g_background_texture2);
-	SDL_RenderCopy(g_renderer, g_background_texture, NULL, NULL);
+	SDL_SetRenderTarget(g_renderer, g_background_back_texture);
+	SDL_RenderCopy(g_renderer, g_background_front_texture, NULL, NULL);
 	render_sprites();
 	
 	if(g_system_info->_show_fps)
 		show_fps();
 
 	SDL_SetRenderTarget(g_renderer, NULL);
-	SDL_RenderCopy(g_renderer, g_background_texture2, NULL, NULL);
+	SDL_RenderCopy(g_renderer, g_background_back_texture, NULL, NULL);
 	//SDL_RenderCopy(g_renderer, g_background_texture2, NULL, &destRect);
-
 
 	SDL_RenderPresent(g_renderer);
 }
@@ -431,4 +430,29 @@ uint8_t ubox_update() {
 	}
 
 	return 1;
+}
+
+void ubox_scroll_update(uint8_t pixel_offset) {
+	
+	
+	SDL_Rect srcRect = { 0, 0, g_system_info->_room_width * TILE_WIDTH, (g_system_info->_room_height - 2) * TILE_HEIGHT -  pixel_offset };
+	SDL_Rect destRect = { 0, pixel_offset  , g_system_info->_room_width * TILE_WIDTH, (g_system_info->_room_height - 2) * TILE_HEIGHT - pixel_offset };
+
+
+	SDL_SetRenderTarget(g_renderer, g_background_back_texture);
+	SDL_RenderCopy(g_renderer, g_background_front_texture, &srcRect, &destRect);
+
+	SDL_Rect srcRect2 = { 0, (g_system_info->_room_height) * TILE_HEIGHT + 8 - pixel_offset, g_system_info->_room_width * TILE_WIDTH, pixel_offset };
+	SDL_Rect destRect2 = { 0, 0  , g_system_info->_room_width * TILE_WIDTH,  pixel_offset };
+	SDL_RenderCopy(g_renderer, g_background_front_texture, &srcRect2, &destRect2);
+
+	render_sprites();
+
+	if (g_system_info->_show_fps)
+		show_fps();
+
+	SDL_SetRenderTarget(g_renderer, NULL);
+	SDL_Rect frontRect = { 0, 0  , g_system_info->_room_width * TILE_WIDTH, (g_system_info->_room_height) * TILE_HEIGHT};
+	SDL_RenderCopy(g_renderer, g_background_back_texture, &frontRect, NULL);
+	SDL_RenderPresent(g_renderer);
 }

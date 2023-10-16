@@ -49,7 +49,10 @@ extern "C" Color sprite_pallete[16] =
 int main(int argc, char** argv)
 {
 	if (argc != 2)
+	{
+		printf("usage: tileconverter.exe filename\n");
 		return 0;
+	}
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{

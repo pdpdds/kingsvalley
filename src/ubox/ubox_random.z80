@@ -1,0 +1,38 @@
+.globl _ubox_randomize
+.globl _ubox_random
+.globl _rand_seed
+
+_ubox_randomize::
+		ld		(_rand_seed), hl
+		ret
+
+_ubox_random::
+		ld		hl, (_rand_seed)
+		ld		b, h
+		ld		a, l
+		; HL = HL >> 1
+		srl		h
+		rr		l
+		; L = L xor ((not a) and 0x29)
+		cpl
+		and		#0x29
+		xor		l
+		ld		l, a
+		; H = (H xor ((not b) and 0x15)) or (((not b) << 7) & 0x80)
+		ld		a, b
+		cpl
+		ld		b, a
+		and		#15
+		xor		h
+		ld		h, a
+		ld		a, b
+		rrca				
+		and		#0x80
+		or		h
+		ld		h, a
+		ld		(_rand_seed), hl
+		ret
+
+.area _DATA
+_rand_seed:
+		.dw		#0

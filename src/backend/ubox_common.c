@@ -178,8 +178,8 @@ void ubox_fill_screen(uint8_t tile) {
 
 void ubox_write_vm(uint8_t* dst, uint16_t len, uint8_t* src)
 {
-	if ((dst + len) > (uint8_t * )(VM_WIDTH * VM_HEIGHT))
-		return;
+	//if ((dst + len) > (uint8_t * )(VM_WIDTH * VM_HEIGHT))
+	//	return;
 
 	if (dst == 0 && 0 == (len % VM_WIDTH)) {
 
@@ -237,7 +237,7 @@ void ubox_load_music(uint8_t music_index, char* filename, uint8_t loop) {
 	if (strlen(filename) != 0) {
 		music = load_music(filename);
 
-		assert(music);
+		//assert(music);
 	}
 
 	music_info element = { music_index, loop, music };

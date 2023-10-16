@@ -181,6 +181,9 @@ UBOX_EXPORT_API void ubox_wvdp(uint8_t reg, uint8_t data);
  */
 UBOX_EXPORT_API uint8_t ubox_get_vsync_freq();
 
+
+//int8_t get_cos(uint16_t angle) __z88dk_fastcall;
+
 // *INDENT-OFF*
 /**
  * This macro waits for the *vsync* interrupt.
@@ -392,6 +395,11 @@ UBOX_EXPORT_API void ubox_wait();
 UBOX_EXPORT_API void ubox_wait_for(uint8_t frames) __z88dk_fastcall;
 
 extern uint8_t ubox_tick;
+extern int8_t ubox_sin;
+extern int8_t ubox_cos;
+
+extern void ubox_randomize(uint16_t seed) __z88dk_fastcall;
+extern uint16_t ubox_random();
 
 /**
  * Sets `ubox_tick` to zero.
@@ -402,6 +410,8 @@ UBOX_EXPORT_API void ubox_reset_tick();
 
 // @dummy functions
 UBOX_EXPORT_API uint8_t ubox_update();
+
+UBOX_EXPORT_API void ubox_scroll_update(uint8_t background_wait);
 
 // @Sprite functions
 //

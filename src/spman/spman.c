@@ -64,6 +64,7 @@ void spman_alloc_fixed_sprite(struct sprite_attr *sp)
         return;
     }
 #endif
+   // sp->y -= 1;
     memcpy(&sp_fixed[sp_last_fixed_sprite++], sp, 4);
 }
 
@@ -76,6 +77,7 @@ void spman_alloc_sprite(struct sprite_attr *sp)
         return;
     }
 #endif
+    //sp->y -= 1;
     memcpy(&sp_buffer[sp_last_sprite++], sp, 4);
 }
 
