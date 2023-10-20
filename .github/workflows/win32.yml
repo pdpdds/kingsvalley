@@ -33,11 +33,11 @@ jobs:
         git clone https://github.com/microsoft/vcpkg
         bootstrap-vcpkg.bat
         vcpkg integrate install
-        vcpkg install sdl2
-        vcpkg install sdl2-image
-        vcpkg install sdl2-mixer
-        vcpkg install sdl2-ttf
-        vcpkg install sdl2-gfx
+        vcpkg install sdl2:x86-windows
+        vcpkg install sdl2-image:x86-windows
+        vcpkg install sdl2-mixer:x86-windows
+        vcpkg install sdl2-ttf:x86-windows
+        vcpkg install sdl2-gfx:x86-windows
         
     - name: Build
       # working-directory: ${{env.GITHUB_WORKSPACE}}
