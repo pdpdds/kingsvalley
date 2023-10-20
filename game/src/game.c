@@ -61,7 +61,6 @@ static uint8_t get_entity_count(const uint8_t* mapData)
 	//if *m is 0xff it means map data over.
 	while (*m != 0xff) {
 		entityCount++;
-
 		m += 5;
 	}
 
@@ -76,8 +75,7 @@ uint8_t pattern_player = 0;
 uint8_t pattern_door = 0;
 
 void allocate_pattern(uint8_t player_move_type) {
-	spman_init();
-
+	
 	pattern_knife = spman_alloc_pat(PAT_KNIFE, (uint8_t*)knife_sprite[0], 4, 0);
 	spman_alloc_pat(PAT_KNIFE_FLIP, (uint8_t*)knife_sprite[0], 4, 1);
 
@@ -112,6 +110,8 @@ void allocate_pattern(uint8_t player_move_type) {
 
 void reset_sprite(uint8_t move_mode)
 {
+	spman_init();
+
 	allocate_pattern(move_mode);
 
 	struct entity* object = entities;
@@ -403,6 +403,7 @@ void run_game(uint8_t stage) {
 	ubox_disable_screen();
 	ubox_fill_screen(WHITESPACE_TILE);
 
+	spman_init();
 	init_map_entities(stage);
 
 	draw_map(g_cur_room_id);
